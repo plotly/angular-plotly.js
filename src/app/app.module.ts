@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
+import { DemoModule } from './demo/demo.module';
 import { AppComponent } from './app.component';
+import { PlotlyModule } from './plotly/plotly.module';
 
 
 @NgModule({
@@ -10,9 +12,11 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    PlotlyModule,
+    DemoModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -120,13 +120,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "plotly",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "plotly",
       "kebab-case"
     ],
     "no-output-on-prefix": true,
