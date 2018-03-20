@@ -9,7 +9,7 @@ import { PlotlyModule } from './plotly/plotly.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
