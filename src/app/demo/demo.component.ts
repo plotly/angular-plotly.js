@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'plotly-demo',
-  templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.css']
+    selector: 'plotly-demo',
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class DemoComponent implements OnInit {
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-    console.log('sim');
-  }
+    ngOnInit() {
+        console.log('sim');
+    }
 
 }
