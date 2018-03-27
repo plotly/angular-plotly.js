@@ -3,7 +3,7 @@
 * [x] Create the initial component wrapper
 * [x] Add the `data`, `layout`, `config` and `style` properties with typings
 * [x] Create the watcher to update the component once one of these properties change
-* [ ] Create an initial demo with a simple plot
+* [x] Create an initial demo with a simple plot
 
 # 0.2
 
