@@ -4,9 +4,6 @@ import { PlotComponent } from './plot.component';
 import { PlotlyService } from '../plotly.service';
 import { SimpleChange } from '@angular/core';
 
-class PlotlyServiceMock {
-
-}
 
 describe('PlotComponent', () => {
     let component: PlotComponent;
