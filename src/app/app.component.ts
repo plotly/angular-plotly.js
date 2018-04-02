@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 @Component({
     // tslint:disable-next-line component-selector
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    template: '<div><plotly-demo></plotly-demo></div>',
 })
 export class AppComponent {
     title = 'Angular Plotly';
