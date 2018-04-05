@@ -7,7 +7,7 @@
 
 # 0.2
 
-* [ ] Add the missing properties (e.g.: `revision`, `frames`, `divId`, `className`, `debug`, `useResizeHandler`)
+* [x] Add the missing properties (e.g.: `revision`, `frames`, `divId`, `className`, `debug`, `useResizeHandler`)
 * [ ] Add the events watchers in the component
 * [ ] Setup the plotly folder (module) as the app for publishing
 * [ ] Write tests which guaranties the `npm link` and `import { PlotlyModule } from 'angular-plotly.js'`

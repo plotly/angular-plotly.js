@@ -20,8 +20,10 @@ export class PlotComponent implements OnInit, OnChanges {
     @Input() revision: number = 0;
     @Input() className: string = '';
     @Input() debug: boolean = false;
+    @Input() useResizeHandler: boolean = false;
 
     public plotlyInstance: Plotly.PlotlyHTMLElement;
+    public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
 
     constructor(public plotly: PlotlyService, public window: Window) {}
 
@@ -53,6 +55,8 @@ export class PlotComponent implements OnInit, OnChanges {
         if (shouldUpdate) {
             this.update();
         }
+
+        this.updateWindowResizeHandler();
     }
 
     update() {
@@ -60,6 +64,20 @@ export class PlotComponent implements OnInit, OnChanges {
         this.plotly.plot(this.plotlyInstance, this.data, this.layout, this.config).then(plotlyInstance => {
             (this.window as any).gd = this.debug ? plotlyInstance : undefined;
         });
+    }
+
+    updateWindowResizeHandler() {
+        if (this.useResizeHandler) {
+            if (!this.resizeHandler) {
+                this.resizeHandler = () => this.plotly.resize(this.plotlyInstance);
+                this.window.addEventListener('resize', this.resizeHandler as any);
+            }
+        } else {
+            if (typeof this.resizeHandler === 'function') {
+                this.window.addEventListener('resize', this.resizeHandler as any);
+                this.resizeHandler = undefined;
+            }
+        }
     }
 
 }

@@ -13,13 +13,13 @@ describe('PlotComponent', () => {
 
     beforeEach(async(() => {
         const pSpy = jasmine.createSpyObj('PlotlyService', ['newPlot', 'plot']);
-        const wSpy = {} as any;
+        const wSpy = jasmine.createSpyObj('Window', ['addEventListener', 'removeEventListener']);
 
         TestBed.configureTestingModule({
             declarations: [PlotComponent],
             providers: [
                 { provide: PlotlyService, useValue: pSpy },
-                { provide: Window, useValue: wSpy },
+                { provide: Window, useFactory: () => wSpy },
             ],
         }).compileComponents();
 
@@ -97,11 +97,28 @@ describe('PlotComponent', () => {
         });
 
         expect((windowSpy as any).gd).toBeUndefined();
+        component.plotlyInstance = document.createElement('div') as any;
         component.debug = true;
         component.ngOnChanges({'debug': new SimpleChange(false, component.debug, false)});
         fixture.detectChanges();
 
         expect((windowSpy as any).gd).toBeDefined();
         expect(component.update).toHaveBeenCalled();
+    });
+
+    it('should add handler into window.resize when useResizeHandler=true', () => {
+        expect(windowSpy.addEventListener).not.toHaveBeenCalled();
+        expect(component.resizeHandler).toBeUndefined();
+
+        component.useResizeHandler = true;
+        component.updateWindowResizeHandler();
+        expect(component.resizeHandler).toBeDefined();
+        expect(windowSpy.addEventListener).toHaveBeenCalledWith('resize', component.resizeHandler);
+        const cache_resizeHandler = component.resizeHandler;
+
+        component.useResizeHandler = false;
+        component.updateWindowResizeHandler();
+        expect(component.resizeHandler).toBeUndefined();
+        expect(windowSpy.removeEventListener).toHaveBeenCalledWith('resize', cache_resizeHandler);
     });
 });

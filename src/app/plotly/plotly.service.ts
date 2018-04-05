@@ -15,4 +15,8 @@ export class PlotlyService {
         return this.plotly.plot(div, data, layout);
     }
 
+    public resize(div: Plotly.PlotlyHTMLElement): void {
+        return this.plotly.Plots.resize(div);
+    }
+
 }
