@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "@types/d3": "^5.0.0",
     "core-js": "^2.4.1",
     "plotly.js": "^1.35.2",
     "rxjs": "^5.5.6",
