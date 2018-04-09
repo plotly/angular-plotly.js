@@ -2,10 +2,11 @@ import { Component, Input, ViewChild, OnInit, OnChanges, ElementRef, SimpleChang
 import { PlotlyService } from '../plotly.service';
 import { NgClass } from '@angular/common';
 
+
 @Component({
     selector: 'plotly-plot',
     template: `<div #plot [attr.id]="divId" [className]="className" [ngStyle]="style"></div>`,
-    providers: [PlotlyService, {provide: Window, useValue: window}],
+    providers: [PlotlyService, { provide: Window, useFactory: () => window }],
 })
 export class PlotComponent implements OnInit, OnChanges {
 
@@ -14,7 +15,7 @@ export class PlotComponent implements OnInit, OnChanges {
     @Input() data?: Plotly.Data[];
     @Input() layout?: Partial<Plotly.Layout>;
     @Input() config?: Partial<Plotly.Config>;
-    @Input() style?: {[key: string]: string};
+    @Input() style?: { [key: string]: string };
 
     @Input() divId?: string;
     @Input() revision: number = 0;
@@ -25,7 +26,7 @@ export class PlotComponent implements OnInit, OnChanges {
     public plotlyInstance: Plotly.PlotlyHTMLElement;
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
 
-    constructor(public plotly: PlotlyService, public window: Window) {}
+    constructor(public plotly: PlotlyService, public window: Window) { }
 
     ngOnInit() {
         this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config).then(plotlyInstance => {
@@ -74,7 +75,7 @@ export class PlotComponent implements OnInit, OnChanges {
             }
         } else {
             if (typeof this.resizeHandler === 'function') {
-                this.window.addEventListener('resize', this.resizeHandler as any);
+                this.window.removeEventListener('resize', this.resizeHandler as any);
                 this.resizeHandler = undefined;
             }
         }

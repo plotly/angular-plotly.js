@@ -23,6 +23,7 @@
 
 # 0.4
 
+* [ ] Create a better `plotly.js.d.ts` file
 * [ ] Customizing the plotly.js bundle
 * [ ] Loading from a `<script>` tag (Make it possible to load in [codepen.io](https://codepen.io/), [jsfiddle](https://jsfiddle.net/))
 * [ ] Create a Demo similar to an editor, where it's possible to change the value and see the

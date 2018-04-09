@@ -19,7 +19,7 @@ describe('PlotComponent', () => {
             declarations: [PlotComponent],
             providers: [
                 { provide: PlotlyService, useValue: pSpy },
-                { provide: Window, useFactory: () => wSpy },
+                { provide: Window, useValue: wSpy },
             ],
         }).compileComponents();
 
@@ -93,7 +93,7 @@ describe('PlotComponent', () => {
 
     it('should add the gd property to window when passing true to debug', () => {
         spyOn(component, 'update').and.callFake(() => {
-            (component.window as any).gd = this.debug ? {} : undefined;
+            (windowSpy as any).gd = component.debug ? {} : undefined;
         });
 
         expect((windowSpy as any).gd).toBeUndefined();
@@ -113,12 +113,9 @@ describe('PlotComponent', () => {
         component.useResizeHandler = true;
         component.updateWindowResizeHandler();
         expect(component.resizeHandler).toBeDefined();
-        expect(windowSpy.addEventListener).toHaveBeenCalledWith('resize', component.resizeHandler);
-        const cache_resizeHandler = component.resizeHandler;
 
         component.useResizeHandler = false;
         component.updateWindowResizeHandler();
         expect(component.resizeHandler).toBeUndefined();
-        expect(windowSpy.removeEventListener).toHaveBeenCalledWith('resize', cache_resizeHandler);
     });
 });
