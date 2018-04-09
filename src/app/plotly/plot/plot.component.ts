@@ -12,7 +12,7 @@ export class PlotComponent implements OnInit, OnChanges {
 
     @ViewChild('plot') plotEl: ElementRef;
 
-    @Input() data?: Plotly.Data[];
+    @Input() data?: any[];
     @Input() layout?: Partial<Plotly.Layout>;
     @Input() config?: Partial<Plotly.Config>;
     @Input() style?: { [key: string]: string };
