@@ -5,7 +5,11 @@ import * as Plotly from 'plotly.js';
 export class PlotlyService {
     protected plotly = Plotly;
 
-    constructor() { }
+    constructor() {
+        if (typeof this.plotly === 'undefined') {
+            throw new Error(`Peer dependency plotly.js isn't installed`);
+        }
+    }
 
     public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
         return this.plotly.newPlot(div, data, layout);
