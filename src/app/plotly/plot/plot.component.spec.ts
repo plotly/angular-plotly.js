@@ -55,22 +55,22 @@ describe('PlotComponent', () => {
     });
 
     it('should update when change the revision number', () => {
-        spyOn(component, 'update');
+        spyOn(component, 'redraw');
 
         component.revision = 0;
         component.ngOnChanges({'revision': new SimpleChange(null, component.revision, true)});
         fixture.detectChanges();
-        expect(component.update).not.toHaveBeenCalled();
+        expect(component.redraw).not.toHaveBeenCalled();
 
         component.revision = 1;
         component.ngOnChanges({'revision': new SimpleChange(0, component.revision, false)});
         fixture.detectChanges();
-        expect(component.update).toHaveBeenCalled();
+        expect(component.redraw).toHaveBeenCalled();
 
         component.revision = 2;
         component.ngOnChanges({'revision': new SimpleChange(1, component.revision, false)});
         fixture.detectChanges();
-        expect(component.update).toHaveBeenCalledTimes(2);
+        expect(component.redraw).toHaveBeenCalledTimes(2);
     });
 
     it('should update the graph when the data changes', () => {

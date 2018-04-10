@@ -72,6 +72,12 @@ export interface PlotRelayoutEvent {
 	scene: PlotScene;
 }
 
+interface Figure {
+    data: Data[];
+    layout: Partial<Layout>;
+    frames: Partial<Config>;
+}
+
 export interface PlotlyHTMLElement extends HTMLElement {
 	on(event: 'plotly_click' | 'plotly_hover' | 'plotly_unhover', callback: (event: PlotMouseEvent) => void): void;
 	on(event: 'plotly_selecting' | 'plotly_selected', callback: (event: PlotSelectionEvent) => void): void;
