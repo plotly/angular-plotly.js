@@ -2,6 +2,7 @@
   "name": "angular-plotly.js",
   "version": "0.1.1",
   "license": "MIT",
+  "main": "index.ts",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
