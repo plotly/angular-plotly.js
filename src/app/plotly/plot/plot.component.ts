@@ -32,7 +32,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() divId?: string;
     @Input() revision: number = 0;
-    @Input() className?: string;
+    @Input() className?: string = '';
     @Input() debug: boolean = false;
     @Input() useResizeHandler: boolean = false;
 
@@ -106,7 +106,12 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     redraw() {
-        if (!this.plotlyInstance) { throw new Error(`Plotly component wasn't initialized`); }
+        if (!this.plotlyInstance) {
+            const error = new Error(`Plotly component wasn't initialized`);
+            this.error.emit(error);
+            throw error;
+        }
+
         this.plotly.plot(this.plotlyInstance, this.data, this.layout, this.config).then(plotlyInstance => {
             this.update.emit(this.createFigure());
             (this.window as any).gd = this.debug ? plotlyInstance : undefined;

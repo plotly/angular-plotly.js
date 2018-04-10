@@ -74,14 +74,14 @@ describe('PlotComponent', () => {
     });
 
     it('should update the graph when the data changes', () => {
-        spyOn(component, 'update');
-        expect(component.update).not.toHaveBeenCalled();
+        spyOn(component, 'redraw');
+        expect(component.redraw).not.toHaveBeenCalled();
 
         component.data = [{ y: [10, 15, 13, 17], type: 'box' }];
         component.ngOnChanges({'data': new SimpleChange(null, component.data, false)});
         fixture.detectChanges();
 
-        expect(component.update).toHaveBeenCalled();
+        expect(component.redraw).toHaveBeenCalled();
     });
 
     it('should add the className in #plotEl', () => {
@@ -92,7 +92,7 @@ describe('PlotComponent', () => {
     });
 
     it('should add the gd property to window when passing true to debug', () => {
-        spyOn(component, 'update').and.callFake(() => {
+        spyOn(component, 'redraw').and.callFake(() => {
             (windowSpy as any).gd = component.debug ? {} : undefined;
         });
 
@@ -103,7 +103,7 @@ describe('PlotComponent', () => {
         fixture.detectChanges();
 
         expect((windowSpy as any).gd).toBeDefined();
-        expect(component.update).toHaveBeenCalled();
+        expect(component.redraw).toHaveBeenCalled();
     });
 
     it('should add handler into window.resize when useResizeHandler=true', () => {
