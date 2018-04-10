@@ -27,6 +27,7 @@ jobs:
           - v1-dependencies-
 
       - run: yarn install
+      - run: yarn add plotly.js # peer dependency
 
       - save_cache:
           paths:
