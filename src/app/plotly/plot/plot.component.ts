@@ -15,7 +15,7 @@ import {
 import { PlotlyService } from '../plotly.service';
 import { NgClass } from '@angular/common';
 
-
+// @dynamic
 @Component({
     selector: 'plotly-plot',
     template: `<div #plot [attr.id]="divId" [className]="className" [ngStyle]="style"></div>`,

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import * as Plotly from 'plotly.js';
+import * as Plotlyjs from 'plotly.js';
+import * as Plotly from '../../@types/plotly.js/index';
 
 @Injectable()
 export class PlotlyService {
-    protected plotly = Plotly;
+    protected plotly = Plotlyjs;
 
     constructor() {
         if (typeof this.plotly === 'undefined') {
