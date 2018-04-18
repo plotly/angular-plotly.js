@@ -1,6 +1,6 @@
 {
   "name": "angular-plotly.js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "main": "index.ts",
   "scripts": {
@@ -10,8 +10,7 @@
     "test": "ng test",
     "lint": "ng lint"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@angular/cli": "~1.7.3",
     "@angular/router": "^5.2.0",
