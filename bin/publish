@@ -7,8 +7,8 @@ then
     exit 1;
 fi
 
-npm run build
-npm version
+
+./bin/build
 npm publish dist.tgz
 
 rm dist.tgz
