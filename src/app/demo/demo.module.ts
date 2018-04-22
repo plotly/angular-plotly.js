@@ -14,7 +14,7 @@ import { LineChartsComponent } from './examples/line-charts.component';
 
 const demoRoutes: Routes = [
     { path: 'home', component: HomeComponent, data: { title: 'Home' } },
-    { path: 'box-plots', component: BoxPlotComponent, data: { title: 'Box Plotly' } },
+    { path: 'box-plots', component: BoxPlotComponent, data: { title: 'Box Plots' } },
     { path: 'linear-charts', component: LineChartsComponent, data: { title: 'Line Charts' } },
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },

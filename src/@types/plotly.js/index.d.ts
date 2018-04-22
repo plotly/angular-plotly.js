@@ -169,7 +169,8 @@ export interface Layout {
     sliders: {}; // TODO
     legend: Partial<Legend>;
 	font: Partial<Font>;
-	scene: Partial<Scene>;
+    scene: Partial<Scene>;
+    boxmode: 'group'
 }
 
 export interface Legend extends Label {

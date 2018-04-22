@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import * as Plotly from 'plotly.js';
+import { Component } from '@angular/core';
+import Example from './example.component';
 
 @Component({
     selector: 'plotly-line-charts',
-    template: '<plotly-plot [data]="data" [layout]="layout" [revision]="0" [debug]="true" [useResizeHandler]="true"></plotly-plot>',
+    templateUrl: './template.html',
 })
-export class LineChartsComponent implements OnInit {
+export class LineChartsComponent extends Example {
 
     public data: Plotly.Data[] = [
         { x: [1, 2, 3, 4], y: [10, 15, 13, 17], mode: 'markers', name: 'Scatter' },
@@ -16,11 +16,4 @@ export class LineChartsComponent implements OnInit {
     public layout: Partial<Plotly.Layout> = {
         title: 'Adding Names to Line and Scatter Plot',
     };
-
-
-    constructor() { }
-
-    ngOnInit() {
-    }
-
 }
