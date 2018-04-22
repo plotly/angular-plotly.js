@@ -83,10 +83,18 @@ describe('PlotComponent', () => {
     });
 
     it('should add the className in #plotEl', () => {
-        expect(component.plotEl.nativeElement.className).toBe('');
+        expect(component.getClassName()).toBe('js-plotly-plot');
+        expect(component.plotEl.nativeElement.className).toBe('js-plotly-plot');
+
         component.className = 'some-class';
         fixture.detectChanges();
-        expect(component.plotEl.nativeElement.className).toBe('some-class');
+        expect(component.getClassName()).toBe('js-plotly-plot some-class');
+        expect(component.plotEl.nativeElement.className).toBe('js-plotly-plot some-class');
+
+        component.className = ['test2', 'test3'];
+        fixture.detectChanges();
+        expect(component.getClassName()).toBe('js-plotly-plot test2 test3');
+        expect(component.plotEl.nativeElement.className).toBe('js-plotly-plot test2 test3');
     });
 
     it('should add the gd property to window when passing true to debug', (done) => {

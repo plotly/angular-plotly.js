@@ -7,6 +7,7 @@ export class PlotlyService {
     protected plotly = Plotlyjs;
 
     constructor() {
+        (window as any).Plotly = Plotlyjs;
         if (typeof this.plotly === 'undefined') {
             throw new Error(`Peer dependency plotly.js isn't installed`);
         }

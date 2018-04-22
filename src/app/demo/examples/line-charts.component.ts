@@ -3,7 +3,7 @@ import * as Plotly from 'plotly.js';
 
 @Component({
     selector: 'plotly-line-charts',
-    template: '<plotly-plot [data]="data" [layout]="layout" [revision]="0" [useResizeHandler]="true"></plotly-plot>',
+    template: '<plotly-plot [data]="data" [layout]="layout" [revision]="0" [debug]="true" [useResizeHandler]="true"></plotly-plot>',
 })
 export class LineChartsComponent implements OnInit {
 

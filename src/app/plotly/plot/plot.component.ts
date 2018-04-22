@@ -18,10 +18,11 @@ import { NgClass } from '@angular/common';
 // @dynamic
 @Component({
     selector: 'plotly-plot',
-    template: `<div class="js-plotly-plot"><div #plot [attr.id]="divId" [className]="className" [ngStyle]="style"></div></div>`,
+    template: `<div #plot [attr.id]="divId" [className]="getClassName()" [ngStyle]="style"></div>`,
     providers: [PlotlyService],
 })
 export class PlotComponent implements OnInit, OnChanges, OnDestroy {
+    protected defaultClassName = 'js-plotly-plot';
 
     @ViewChild('plot') plotEl: ElementRef;
 
@@ -32,7 +33,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() divId?: string;
     @Input() revision: number = 0;
-    @Input() className?: string = '';
+    @Input() className?: string | string[];
     @Input() debug: boolean = false;
     @Input() useResizeHandler: boolean = false;
 
@@ -68,6 +69,22 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
         const figure = this.createFigure();
         this.purge.emit(figure);
+    }
+
+    getWindow(): any {
+        return window;
+    }
+
+    getClassName(): string {
+        let classes = [this.defaultClassName];
+
+        if (Array.isArray(this.className)) {
+            classes = classes.concat(this.className);
+        } else if (this.className) {
+            classes.push(this.className);
+        }
+
+        return classes.join(' ');
     }
 
     createFigure(): Plotly.Figure {
@@ -121,7 +138,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
     updateWindowResizeHandler() {
         if (this.useResizeHandler) {
-            if (!this.resizeHandler) {
+            if (this.resizeHandler === undefined) {
                 this.resizeHandler = () => this.plotly.resize(this.plotlyInstance);
                 this.getWindow().addEventListener('resize', this.resizeHandler as any);
             }
@@ -131,10 +148,6 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
                 this.resizeHandler = undefined;
             }
         }
-    }
-
-    getWindow(): any {
-        return window;
     }
 
 }
