@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'plotly-box-plot',
-  template: `<plotly-plot [data]="data" [layout]="layout" [revision]="0"></plotly-plot>`,
+    selector: 'plotly-box-plot',
+    template: `<plotly-plot [data]="data" [layout]="layout" [revision]="0"></plotly-plot>`,
 })
 export class BoxPlotComponent implements OnInit {
 

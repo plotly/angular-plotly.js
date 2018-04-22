@@ -13,18 +13,16 @@ describe('PlotComponent', () => {
 
     beforeEach(async(() => {
         const pSpy = jasmine.createSpyObj('PlotlyService', ['newPlot', 'plot']);
-        const wSpy = jasmine.createSpyObj('Window', ['addEventListener', 'removeEventListener']);
+        windowSpy = jasmine.createSpyObj('Window', ['addEventListener', 'removeEventListener']);
 
         TestBed.configureTestingModule({
             declarations: [PlotComponent],
             providers: [
                 { provide: PlotlyService, useValue: pSpy },
-                { provide: Window, useValue: wSpy },
             ],
         }).compileComponents();
 
         plotlySpy = TestBed.get(PlotlyService);
-        windowSpy = TestBed.get(Window);
     }));
 
     beforeEach(() => {
@@ -91,23 +89,27 @@ describe('PlotComponent', () => {
         expect(component.plotEl.nativeElement.className).toBe('some-class');
     });
 
-    it('should add the gd property to window when passing true to debug', () => {
-        spyOn(component, 'redraw').and.callFake(() => {
-            (windowSpy as any).gd = component.debug ? {} : undefined;
-        });
+    it('should add the gd property to window when passing true to debug', (done) => {
+        spyOn(component, 'getWindow').and.callFake(() => windowSpy);
+        spyOn(component, 'redraw').and.callThrough();
 
-        expect((windowSpy as any).gd).toBeUndefined();
+        expect(component.getWindow().gd).toBeUndefined();
         component.plotlyInstance = document.createElement('div') as any;
         component.debug = true;
-        component.ngOnChanges({'debug': new SimpleChange(false, component.debug, false)});
         fixture.detectChanges();
+        component.ngOnChanges({'debug': new SimpleChange(false, component.debug, false)});
 
-        expect((windowSpy as any).gd).toBeDefined();
         expect(component.redraw).toHaveBeenCalled();
+        setTimeout(() => {
+            expect(component.getWindow().gd).not.toBeUndefined();
+            done();
+        }, 13);
     });
 
     it('should add handler into window.resize when useResizeHandler=true', () => {
-        expect(windowSpy.addEventListener).not.toHaveBeenCalled();
+        spyOn(component, 'getWindow').and.callFake(() => windowSpy);
+
+        expect(component.getWindow().addEventListener).not.toHaveBeenCalled();
         expect(component.resizeHandler).toBeUndefined();
 
         component.useResizeHandler = true;

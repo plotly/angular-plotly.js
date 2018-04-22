@@ -18,8 +18,8 @@ import { NgClass } from '@angular/common';
 // @dynamic
 @Component({
     selector: 'plotly-plot',
-    template: `<div #plot [attr.id]="divId" [className]="className" [ngStyle]="style"></div>`,
-    providers: [PlotlyService, { provide: Window, useFactory: () => window }],
+    template: `<div class="js-plotly-plot"><div #plot [attr.id]="divId" [className]="className" [ngStyle]="style"></div></div>`,
+    providers: [PlotlyService],
 })
 export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -44,13 +44,14 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
     public plotlyInstance: Plotly.PlotlyHTMLElement;
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
 
-    constructor(public plotly: PlotlyService, public window: Window) { }
+    constructor(public plotly: PlotlyService) { }
 
     ngOnInit() {
         this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config).then(plotlyInstance => {
             this.plotlyInstance = plotlyInstance;
-            (this.window as any).gd = this.debug ? plotlyInstance : undefined;
+            this.getWindow().gd = this.debug ? plotlyInstance : undefined;
 
+            this.updateWindowResizeHandler();
             const figure = this.createFigure();
             this.initialized.emit(figure);
         }, err => {
@@ -61,7 +62,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnDestroy() {
         if (typeof this.resizeHandler === 'function') {
-            this.window.removeEventListener('resize', this.resizeHandler as any);
+            this.getWindow().removeEventListener('resize', this.resizeHandler as any);
             this.resizeHandler = undefined;
         }
 
@@ -114,7 +115,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
         this.plotly.plot(this.plotlyInstance, this.data, this.layout, this.config).then(plotlyInstance => {
             this.update.emit(this.createFigure());
-            (this.window as any).gd = this.debug ? plotlyInstance : undefined;
+            this.getWindow().gd = this.debug ? plotlyInstance : undefined;
         });
     }
 
@@ -122,14 +123,18 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
         if (this.useResizeHandler) {
             if (!this.resizeHandler) {
                 this.resizeHandler = () => this.plotly.resize(this.plotlyInstance);
-                this.window.addEventListener('resize', this.resizeHandler as any);
+                this.getWindow().addEventListener('resize', this.resizeHandler as any);
             }
         } else {
             if (typeof this.resizeHandler === 'function') {
-                this.window.removeEventListener('resize', this.resizeHandler as any);
+                this.getWindow().removeEventListener('resize', this.resizeHandler as any);
                 this.resizeHandler = undefined;
             }
         }
+    }
+
+    getWindow(): any {
+        return window;
     }
 
 }
