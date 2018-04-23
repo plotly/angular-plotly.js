@@ -71,37 +71,43 @@ describe('PlotComponent', () => {
         expect(component.redraw).toHaveBeenCalledTimes(2);
     });
 
-    it('should update the graph when the data changes', () => {
+    it('should update the graph when the data changes', (done) => {
         spyOn(component, 'redraw');
-
-        component.ngDoCheck();
-        expect(component.redraw).not.toHaveBeenCalled();
-
         component.data = [{ y: [10, 15, 13, 17], type: 'box' }];
-        component.ngDoCheck();
-        expect(component.redraw).toHaveBeenCalled();
+        component.createPlot().then(() => {
+            component.ngDoCheck();
+            expect(component.redraw).not.toHaveBeenCalled();
 
-        component.ngDoCheck();
-        expect(component.redraw).toHaveBeenCalledTimes(1);
+            component.data = [{ y: [11, 15, 13, 17], type: 'box' }];
+            component.ngDoCheck();
+            expect(component.redraw).toHaveBeenCalled();
 
-        component.data[0].y[0] = 11;
-        component.ngDoCheck();
-        expect(component.redraw).toHaveBeenCalledTimes(2);
+            component.ngDoCheck();
+            expect(component.redraw).toHaveBeenCalledTimes(1);
+
+            component.data[0].y[0] = 12;
+            component.ngDoCheck();
+            expect(component.redraw).toHaveBeenCalledTimes(2);
+            done();
+        });
     });
 
-    it('should update the layout when the object changes', () => {
+    it('should update the layout when the object changes', (done) => {
         spyOn(component, 'redraw');
+        component.layout = {title: 'title one'};
+        component.createPlot().then(() => {
+            component.ngDoCheck();
+            expect(component.redraw).not.toHaveBeenCalled();
 
-        component.ngDoCheck();
-        expect(component.redraw).not.toHaveBeenCalled();
+            component.layout = {title: 'title two'};
+            component.ngDoCheck();
+            expect(component.redraw).toHaveBeenCalled();
 
-        component.layout = {title: 'one title'};
-        component.ngDoCheck();
-        expect(component.redraw).toHaveBeenCalled();
-
-        component.layout.title = 'two title';
-        component.ngDoCheck();
-        expect(component.redraw).toHaveBeenCalledTimes(2);
+            component.layout.title = 'title three ';
+            component.ngDoCheck();
+            expect(component.redraw).toHaveBeenCalledTimes(2);
+            done();
+        });
     });
 
     it('should add the className in #plotEl', () => {

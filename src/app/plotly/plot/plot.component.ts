@@ -107,18 +107,17 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             }
         } else if (this.layout) {
             this.layoutDiffer = this.keyValueDiffers.find(this.layout).create();
-            shouldUpdate = true;
+        } else {
+            this.layoutDiffer = undefined;
         }
 
         if (this.dataDiffer) {
             const dataHasDiff = this.dataDiffer.diff(this.data);
             if (dataHasDiff) {
-                console.log('dataHasDiff');
                 shouldUpdate = true;
             }
         } else if (Array.isArray(this.data)) {
             this.dataDiffer = this.iterableDiffers.find(this.data).create(this.dataDifferTrackBy);
-            shouldUpdate = true;
         } else {
             this.dataDiffer = undefined;
         }
