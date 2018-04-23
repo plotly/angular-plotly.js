@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import * as Plotlyjs from 'plotly.js';
-import * as Plotly from '../../@types/plotly.js/index';
+import * as Plotly from './plotly';
 
 @Injectable()
 export class PlotlyService {
     protected plotly = Plotlyjs;
 
     constructor() {
-        (window as any).Plotly = Plotlyjs;
         if (typeof this.plotly === 'undefined') {
             throw new Error(`Peer dependency plotly.js isn't installed`);
         }

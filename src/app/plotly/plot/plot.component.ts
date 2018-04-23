@@ -15,11 +15,11 @@ import {
     IterableDiffers,
     KeyValueDiffer,
     KeyValueDiffers,
-    ChangeDetectorRef,
 } from '@angular/core';
 
 import { PlotlyService } from '../plotly.service';
 import { NgClass } from '@angular/common';
+import * as Plotly from '../plotly';
 
 // @dynamic
 @Component({
@@ -57,7 +57,6 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         public plotly: PlotlyService,
         public iterableDiffers: IterableDiffers,
         public keyValueDiffers: KeyValueDiffers,
-        public cd: ChangeDetectorRef,
     ) { }
 
     ngOnInit() {
