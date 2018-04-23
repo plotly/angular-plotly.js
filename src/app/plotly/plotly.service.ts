@@ -21,6 +21,10 @@ export class PlotlyService {
         return this.plotly.plot(div, data, layout);
     }
 
+    public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
+        return this.plotly.update(div, data, layout);
+    }
+
     public resize(div: Plotly.PlotlyHTMLElement): void {
         return this.plotly.Plots.resize(div);
     }

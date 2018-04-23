@@ -23,6 +23,7 @@ export class LinearChartsComponent {
 
         line.x = [1, 2, 3, 4].map(i => Math.round(Math.random() * 10));
         line.y = [1, 2, 3, 4].map(i => Math.round(Math.random() * 20));
+        line.mode = ['markers', 'lines', 'lines+markers'][Math.floor(Math.random() * 3)] as any;
 
         this.data.push(line);
     }

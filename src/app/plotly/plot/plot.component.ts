@@ -11,10 +11,11 @@ import {
     SimpleChanges,
     ViewChild,
     DoCheck,
+    IterableDiffer,
     IterableDiffers,
     KeyValueDiffer,
     KeyValueDiffers,
-    IterableDiffer,
+    ChangeDetectorRef,
 } from '@angular/core';
 
 import { PlotlyService } from '../plotly.service';
@@ -50,25 +51,19 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public plotlyInstance: Plotly.PlotlyHTMLElement;
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
     public layoutDiffer: KeyValueDiffer<string, any>;
-    public prevData?: string;
+    public dataDiffer: IterableDiffer<Plotly.Data>;
 
     constructor(
         public plotly: PlotlyService,
-        public differ: IterableDiffers,
+        public iterableDiffers: IterableDiffers,
         public keyValueDiffers: KeyValueDiffers,
-    ) {}
+        public cd: ChangeDetectorRef,
+    ) { }
 
     ngOnInit() {
-        this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config).then(plotlyInstance => {
-            this.plotlyInstance = plotlyInstance;
-            this.getWindow().gd = this.debug ? plotlyInstance : undefined;
-
-            this.updateWindowResizeHandler();
+        this.createPlot().then(() => {
             const figure = this.createFigure();
             this.initialized.emit(figure);
-        }, err => {
-            console.error('Error while plotting:', err);
-            this.error.emit(err);
         });
     }
 
@@ -115,18 +110,20 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             shouldUpdate = true;
         }
 
-        if (this.prevData) {
-            const currentData = JSON.stringify(this.data);
-            if (currentData !== this.prevData) {
+        if (this.dataDiffer) {
+            const dataHasDiff = this.dataDiffer.diff(this.data);
+            if (dataHasDiff) {
+                console.log('dataHasDiff');
                 shouldUpdate = true;
-                this.prevData = currentData;
             }
         } else if (Array.isArray(this.data)) {
-            this.prevData = JSON.stringify(this.data);
+            this.dataDiffer = this.iterableDiffers.find(this.data).create(this.dataDifferTrackBy);
             shouldUpdate = true;
+        } else {
+            this.dataDiffer = undefined;
         }
 
-        if (shouldUpdate) {
+        if (shouldUpdate && this.plotlyInstance) {
             this.redraw();
         }
     }
@@ -147,6 +144,18 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return classes.join(' ');
     }
 
+    createPlot(): Promise<void> {
+        return this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config).then(plotlyInstance => {
+            this.plotlyInstance = plotlyInstance;
+            this.getWindow().gd = this.debug ? plotlyInstance : undefined;
+
+            this.updateWindowResizeHandler();
+        }, err => {
+            console.error('Error while plotting:', err);
+            this.error.emit(err);
+        });
+    }
+
     createFigure(): Plotly.Figure {
         const p: any = this.plotlyInstance;
         const figure: Plotly.Figure = {
@@ -165,9 +174,9 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             throw error;
         }
 
-        this.plotly.plot(this.plotlyInstance, this.data, this.layout, this.config).then(plotlyInstance => {
-            this.update.emit(this.createFigure());
-            this.getWindow().gd = this.debug ? plotlyInstance : undefined;
+        return this.createPlot().then(() => {
+            const figure = this.createFigure();
+            this.update.emit(figure);
         });
     }
 
@@ -186,7 +195,8 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     dataDifferTrackBy(index: number, item: any): any {
-        return JSON.stringify(item);
+        const obj = Object.assign({}, item, {uid: ''});
+        return JSON.stringify(obj);
     }
 
 }
