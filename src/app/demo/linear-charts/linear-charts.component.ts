@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import Example from './example.component';
 
 @Component({
     selector: 'plotly-line-charts',
-    templateUrl: './template.html',
+    templateUrl: './linear-charts.component.html',
 })
-export class LineChartsComponent extends Example {
+export class LinearChartsComponent {
+    public debug = true;
+    public useResizeHandler = true;
 
     public data: Plotly.Data[] = [
         { x: [1, 2, 3, 4], y: [10, 15, 13, 17], mode: 'markers', name: 'Scatter' },
@@ -16,4 +17,13 @@ export class LineChartsComponent extends Example {
     public layout: Partial<Plotly.Layout> = {
         title: 'Adding Names to Line and Scatter Plot',
     };
+
+    public addRandomLine() {
+        const line: Plotly.Data = { x: [], y: [], mode: 'lines', name: 'Line ' + this.data.length };
+
+        line.x = [1, 2, 3, 4].map(i => Math.round(Math.random() * 10));
+        line.y = [1, 2, 3, 4].map(i => Math.round(Math.random() * 20));
+
+        this.data.push(line);
+    }
 }

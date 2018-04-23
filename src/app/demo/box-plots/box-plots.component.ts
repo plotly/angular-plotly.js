@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 
-import Example from './example.component';
-
 @Component({
     selector: 'plotly-box-plot',
-    templateUrl: './box-plot.component.html',
+    templateUrl: './box-plots.component.html',
 })
 export class BoxPlotComponent {
     public debug = true;

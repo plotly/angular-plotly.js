@@ -10,6 +10,11 @@ import {
     SimpleChange,
     SimpleChanges,
     ViewChild,
+    DoCheck,
+    IterableDiffers,
+    KeyValueDiffer,
+    KeyValueDiffers,
+    IterableDiffer,
 } from '@angular/core';
 
 import { PlotlyService } from '../plotly.service';
@@ -21,7 +26,7 @@ import { NgClass } from '@angular/common';
     template: `<div #plot [attr.id]="divId" [className]="getClassName()" [ngStyle]="style"></div>`,
     providers: [PlotlyService],
 })
-export class PlotComponent implements OnInit, OnChanges, OnDestroy {
+export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     protected defaultClassName = 'js-plotly-plot';
 
     @ViewChild('plot') plotEl: ElementRef;
@@ -44,8 +49,14 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
     public plotlyInstance: Plotly.PlotlyHTMLElement;
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
+    public layoutDiffer: KeyValueDiffer<string, any>;
+    public prevData?: string;
 
-    constructor(public plotly: PlotlyService) { }
+    constructor(
+        public plotly: PlotlyService,
+        public differ: IterableDiffers,
+        public keyValueDiffers: KeyValueDiffers,
+    ) {}
 
     ngOnInit() {
         this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config).then(plotlyInstance => {
@@ -69,6 +80,55 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
 
         const figure = this.createFigure();
         this.purge.emit(figure);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let shouldUpdate = false;
+
+        const revision: SimpleChange = changes.revision;
+        if (revision && !revision.isFirstChange()) {
+            shouldUpdate = true;
+        }
+
+        const debug: SimpleChange = changes.debug;
+        if (debug && !debug.isFirstChange()) {
+            shouldUpdate = true;
+        }
+
+        if (shouldUpdate) {
+            this.redraw();
+        }
+
+        this.updateWindowResizeHandler();
+    }
+
+    ngDoCheck() {
+        let shouldUpdate = false;
+
+        if (this.layoutDiffer) {
+            const layoutHasDiff = this.layoutDiffer.diff(this.layout);
+            if (layoutHasDiff) {
+                shouldUpdate = true;
+            }
+        } else if (this.layout) {
+            this.layoutDiffer = this.keyValueDiffers.find(this.layout).create();
+            shouldUpdate = true;
+        }
+
+        if (this.prevData) {
+            const currentData = JSON.stringify(this.data);
+            if (currentData !== this.prevData) {
+                shouldUpdate = true;
+                this.prevData = currentData;
+            }
+        } else if (Array.isArray(this.data)) {
+            this.prevData = JSON.stringify(this.data);
+            shouldUpdate = true;
+        }
+
+        if (shouldUpdate) {
+            this.redraw();
+        }
     }
 
     getWindow(): any {
@@ -98,31 +158,6 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
         return figure;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        let shouldUpdate = false;
-
-        const revision: SimpleChange = changes.revision;
-        if (revision && !revision.isFirstChange()) {
-            shouldUpdate = true;
-        }
-
-        const data: SimpleChange = changes.data;
-        if (data && !data.isFirstChange()) {
-            shouldUpdate = true;
-        }
-
-        const debug: SimpleChange = changes.debug;
-        if (debug && !debug.isFirstChange()) {
-            shouldUpdate = true;
-        }
-
-        if (shouldUpdate) {
-            this.redraw();
-        }
-
-        this.updateWindowResizeHandler();
-    }
-
     redraw() {
         if (!this.plotlyInstance) {
             const error = new Error(`Plotly component wasn't initialized`);
@@ -148,6 +183,10 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy {
                 this.resizeHandler = undefined;
             }
         }
+    }
+
+    dataDifferTrackBy(index: number, item: any): any {
+        return JSON.stringify(item);
     }
 
 }
