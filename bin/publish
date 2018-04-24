@@ -9,6 +9,4 @@ fi
 
 
 ./bin/build
-npm publish dist.tgz
-
-rm dist.tgz
+npm publish dist

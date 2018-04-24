@@ -11,3 +11,5 @@ npm run build
 
 mv ./angular-plotly.js.metadata.json dist
 cp ./README.md dist
+
+rm dist.tgz
