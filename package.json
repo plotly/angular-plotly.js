@@ -10,7 +10,22 @@
     "test": "ng test"
   },
   "homepage": "https://github.com/plotly/angular-plotly.js",
-  "bugs": {"url": "https://github.com/plotly/angular-plotly.js/issues"},
+  "bugs": {
+    "url": "https://github.com/plotly/angular-plotly.js/issues"
+  },
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/plotly/angular-plotly.js"
+  },
+  "author": {
+    "name": "Plotly team",
+    "url": "http://plot.ly",
+    "email": "contact@plot.ly"
+  },
+  "contributors": [
+    "André Farzat <andrefarzat@gmail.com> (http://andrefarzat.com)",
+    "Ben <ben@plot.ly> (http://plot.ly)"
+  ],
   "keywords": [
     "angular",
     "plotly",
