@@ -1,6 +1,6 @@
 {
   "name": "angular-plotly.js",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "license": "MIT",
   "main": "index.ts",
   "scripts": {
