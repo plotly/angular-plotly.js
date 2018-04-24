@@ -7,4 +7,4 @@
 > [Plotly](https://plot.ly/).
 
 [![CircleCI](https://circleci.com/gh/plotly/angular-plotly.js.svg?style=svg)](https://circleci.com/gh/plotly/angular-plotly.js)
-
+[![Coverage Status](https://coveralls.io/repos/github/plotly/angular-plotly.js/badge.svg?branch=master)](https://coveralls.io/github/plotly/angular-plotly.js?branch=master)
