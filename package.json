@@ -9,6 +9,8 @@
     "build": "ng-packagr -p ng-package.json",
     "test": "ng test"
   },
+  "homepage": "https://github.com/plotly/angular-plotly.js",
+  "bugs": {"url": "https://github.com/plotly/angular-plotly.js/issues"},
   "keywords": [
     "angular",
     "plotly",
