@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as Plotly from '../../plotly/plotly';
 
 @Component({
     selector: 'plotly-line-charts',
