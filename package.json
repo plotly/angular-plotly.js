@@ -1,6 +1,6 @@
 {
   "name": "angular-plotly.js",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "main": "index.ts",
   "scripts": {
@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/plotly/angular-plotly.js/issues"
   },
-  "repository":{
+  "repository": {
     "type": "git",
     "url": "https://github.com/plotly/angular-plotly.js"
   },
