@@ -17,9 +17,8 @@ import {
     KeyValueDiffers,
 } from '@angular/core';
 
-import { PlotlyService } from '../plotly.service';
+import { Plotly, PlotlyService } from '../plotly.service';
 import { NgClass } from '@angular/common';
-import * as Plotly from '../plotly';
 
 // @dynamic
 @Component({

@@ -1,6 +1,25 @@
 import { Injectable } from '@angular/core';
 import * as Plotlyjs from 'plotly.js';
-import * as Plotly from './plotly';
+
+
+export namespace Plotly {
+    export type Data = any;
+    export type Layout = any;
+    export type Config = any;
+
+    export interface Figure {
+        data: Data[];
+        layout: Partial<Layout>;
+        frames: Partial<Config>;
+    }
+
+    // tslint:disable-next-line no-empty-interface
+    export interface PlotlyHTMLElement extends HTMLElement {
+
+    }
+}
+
+
 
 @Injectable()
 export class PlotlyService {
