@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as Plotlyjs from 'plotly.js';
+import * as Plotlyjs from 'plotly.js/dist/plotly.js';
 
 
 export namespace Plotly {
