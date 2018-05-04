@@ -7,7 +7,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng-packagr -p ng-package.json",
-    "test": "ng test"
+    "test": "ng test",
+    "version": "./bin/build && git add -A dist",
+    "postversion": "git push && git push --tags"
   },
   "homepage": "https://github.com/plotly/angular-plotly.js",
   "bugs": {
