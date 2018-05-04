@@ -2,15 +2,7 @@
   "name": "angular-plotly.js",
   "version": "0.1.12",
   "license": "MIT",
-  "main": "index.ts",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng-packagr -p ng-package.json",
-    "test": "ng test",
-    "version": "./bin/build && git add -Af dist",
-    "postversion": "git push && git push --tags"
-  },
+  "main": "bundles/angular-plotly.js.umd.js",
   "homepage": "https://github.com/plotly/angular-plotly.js",
   "bugs": {
     "url": "https://github.com/plotly/angular-plotly.js/issues"
@@ -34,7 +26,9 @@
     "plotly.js",
     "graph"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "tslib": "^1.7.1"
+  },
   "devDependencies": {
     "@angular/cli": "~1.7.3",
     "@angular/common": "~5.2.0",
@@ -68,5 +62,9 @@
     "@angular/core": ">5.2.0",
     "@angular/platform-browser": ">5.2.10",
     "plotly.js": ">1.34.0"
-  }
+  },
+  "module": "esm5/angular-plotly.js.js",
+  "es2015": "esm2015/angular-plotly.js.js",
+  "typings": "angular-plotly.js.d.ts",
+  "metadata": "angular-plotly.js.metadata.json"
 }
