@@ -13,9 +13,9 @@ export namespace Plotly {
         frames: Partial<Config>;
     }
 
-    // tslint:disable-next-line no-empty-interface
     export interface PlotlyHTMLElement extends HTMLElement {
-
+        on(event: string, callback: Function): void;
+        removeListener(event: string, callback: Function): void;
     }
 }
 

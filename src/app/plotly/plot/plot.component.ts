@@ -29,6 +29,11 @@ import { NgClass } from '@angular/common';
 export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     protected defaultClassName = 'js-plotly-plot';
 
+    public plotlyInstance: Plotly.PlotlyHTMLElement;
+    public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
+    public layoutDiffer: KeyValueDiffer<string, any>;
+    public dataDiffer: IterableDiffer<Plotly.Data>;
+
     @ViewChild('plot') plotEl: ElementRef;
 
     @Input() data?: Plotly.Data[];
@@ -47,10 +52,38 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() purge = new EventEmitter<Plotly.Figure>();
     @Output() error = new EventEmitter<Error>();
 
-    public plotlyInstance: Plotly.PlotlyHTMLElement;
-    public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
-    public layoutDiffer: KeyValueDiffer<string, any>;
-    public dataDiffer: IterableDiffer<Plotly.Data>;
+    @Output() afterExport = new EventEmitter();
+    @Output() afterPlot = new EventEmitter();
+    @Output() animated = new EventEmitter();
+    @Output() animatingFrame = new EventEmitter();
+    @Output() animationInterrupted = new EventEmitter();
+    @Output() autoSize = new EventEmitter();
+    @Output() beforeExport = new EventEmitter();
+    @Output() buttonClicked = new EventEmitter();
+    @Output() click = new EventEmitter();
+    @Output() clickAnnotation = new EventEmitter();
+    @Output() deselect = new EventEmitter();
+    @Output() doubleClick = new EventEmitter();
+    @Output() framework = new EventEmitter();
+    @Output() hover = new EventEmitter();
+    @Output() legendClick = new EventEmitter();
+    @Output() legendDoubleClick = new EventEmitter();
+    @Output() relayout = new EventEmitter();
+    @Output() restyle = new EventEmitter();
+    @Output() redraw = new EventEmitter();
+    @Output() selected = new EventEmitter();
+    @Output() selecting = new EventEmitter();
+    @Output() sliderChange = new EventEmitter();
+    @Output() sliderEnd = new EventEmitter();
+    @Output() sliderStart = new EventEmitter();
+    @Output() transitioning = new EventEmitter();
+    @Output() transitionInterrupted = new EventEmitter();
+    @Output() unhover = new EventEmitter();
+
+    public eventNames = ['afterExport', 'afterPlot', 'animated', 'animatingFrame', 'animationInterrupted', 'autoSize',
+        'beforeExport', 'buttonClicked', 'click', 'clickAnnotation', 'deselect', 'doubleClick', 'framework', 'hover',
+        'legendClick', 'legendDoubleClick', 'relayout', 'restyle', 'redraw', 'selected', 'selecting', 'sliderChange',
+        'sliderEnd', 'sliderStart', 'transitioning', 'transitionInterrupted', 'unhover'];
 
     constructor(
         public plotly: PlotlyService,
@@ -89,7 +122,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
 
         if (shouldUpdate) {
-            this.redraw();
+            this.updatePlot();
         }
 
         this.updateWindowResizeHandler();
@@ -121,7 +154,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
 
         if (shouldUpdate && this.plotlyInstance) {
-            this.redraw();
+            this.updatePlot();
         }
     }
 
@@ -146,6 +179,11 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             this.plotlyInstance = plotlyInstance;
             this.getWindow().gd = this.debug ? plotlyInstance : undefined;
 
+            this.eventNames.forEach(name => {
+                const eventName = `plotly_${name.toLowerCase()}`;
+                plotlyInstance.on(eventName, (data: any) => (this[name] as EventEmitter<void>).emit(data));
+            });
+
             this.updateWindowResizeHandler();
         }, err => {
             console.error('Error while plotting:', err);
@@ -164,7 +202,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return figure;
     }
 
-    redraw() {
+    updatePlot() {
         if (!this.plotlyInstance) {
             const error = new Error(`Plotly component wasn't initialized`);
             this.error.emit(error);
@@ -192,7 +230,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     dataDifferTrackBy(index: number, item: any): any {
-        const obj = Object.assign({}, item, {uid: ''});
+        const obj = Object.assign({}, item, { uid: '' });
         return JSON.stringify(obj);
     }
 

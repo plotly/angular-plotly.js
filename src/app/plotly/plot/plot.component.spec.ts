@@ -53,59 +53,59 @@ describe('PlotComponent', () => {
     });
 
     it('should update when change the revision number', () => {
-        spyOn(component, 'redraw');
+        spyOn(component, 'updatePlot');
 
         component.revision = 0;
         component.ngOnChanges({'revision': new SimpleChange(null, component.revision, true)});
         fixture.detectChanges();
-        expect(component.redraw).not.toHaveBeenCalled();
+        expect(component.updatePlot).not.toHaveBeenCalled();
 
         component.revision = 1;
         component.ngOnChanges({'revision': new SimpleChange(0, component.revision, false)});
         fixture.detectChanges();
-        expect(component.redraw).toHaveBeenCalled();
+        expect(component.updatePlot).toHaveBeenCalled();
 
         component.revision = 2;
         component.ngOnChanges({'revision': new SimpleChange(1, component.revision, false)});
         fixture.detectChanges();
-        expect(component.redraw).toHaveBeenCalledTimes(2);
+        expect(component.updatePlot).toHaveBeenCalledTimes(2);
     });
 
     it('should update the graph when the data changes', (done) => {
-        spyOn(component, 'redraw');
+        spyOn(component, 'updatePlot');
         component.data = [{ y: [10, 15, 13, 17], type: 'box' }];
         component.createPlot().then(() => {
             component.ngDoCheck();
-            expect(component.redraw).not.toHaveBeenCalled();
+            expect(component.updatePlot).not.toHaveBeenCalled();
 
             component.data = [{ y: [11, 15, 13, 17], type: 'box' }];
             component.ngDoCheck();
-            expect(component.redraw).toHaveBeenCalled();
+            expect(component.updatePlot).toHaveBeenCalled();
 
             component.ngDoCheck();
-            expect(component.redraw).toHaveBeenCalledTimes(1);
+            expect(component.updatePlot).toHaveBeenCalledTimes(1);
 
             component.data[0].y[0] = 12;
             component.ngDoCheck();
-            expect(component.redraw).toHaveBeenCalledTimes(2);
+            expect(component.updatePlot).toHaveBeenCalledTimes(2);
             done();
         });
     });
 
     it('should update the layout when the object changes', (done) => {
-        spyOn(component, 'redraw');
+        spyOn(component, 'updatePlot');
         component.layout = {title: 'title one'};
         component.createPlot().then(() => {
             component.ngDoCheck();
-            expect(component.redraw).not.toHaveBeenCalled();
+            expect(component.updatePlot).not.toHaveBeenCalled();
 
             component.layout = {title: 'title two'};
             component.ngDoCheck();
-            expect(component.redraw).toHaveBeenCalled();
+            expect(component.updatePlot).toHaveBeenCalled();
 
             component.layout.title = 'title three ';
             component.ngDoCheck();
-            expect(component.redraw).toHaveBeenCalledTimes(2);
+            expect(component.updatePlot).toHaveBeenCalledTimes(2);
             done();
         });
     });
@@ -127,7 +127,7 @@ describe('PlotComponent', () => {
 
     it('should add the gd property to window when passing true to debug', (done) => {
         spyOn(component, 'getWindow').and.callFake(() => windowSpy);
-        spyOn(component, 'redraw').and.callThrough();
+        spyOn(component, 'updatePlot').and.callThrough();
 
         expect(component.getWindow().gd).toBeUndefined();
         component.plotlyInstance = document.createElement('div') as any;
@@ -135,7 +135,7 @@ describe('PlotComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({'debug': new SimpleChange(false, component.debug, false)});
 
-        expect(component.redraw).toHaveBeenCalled();
+        expect(component.updatePlot).toHaveBeenCalled();
         setTimeout(() => {
             expect(component.getWindow().gd).not.toBeUndefined();
             done();

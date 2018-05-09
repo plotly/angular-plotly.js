@@ -104,6 +104,40 @@ For a full description of Plotly chart types and attributes see the following re
 
 **Note**: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use `style` or `className` to set the dimensions of the element (i.e. using `width: 100%; height: 100%` or some similar values) and set `useResizeHandler` to `true` while setting `layout.autosize` to `true` and leaving `layout.height` and `layout.width` undefined. This will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
 
+### Event handler props
+
+Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plotlyjs-events/) may be attached through the following props:
+
+| Prop                      | Type       | Plotly Event                   |
+| ------------------------- | ---------- | ------------------------------ |
+| `(afterExport)`           | `Function` | `plotly_afterexport`           |
+| `(afterPlot)`             | `Function` | `plotly_afterplot`             |
+| `(animated)`              | `Function` | `plotly_animated`              |
+| `(animatingFrame)`        | `Function` | `plotly_animatingframe`        |
+| `(animationInterrupted)`  | `Function` | `plotly_animationinterrupted`  |
+| `(autoSize)`              | `Function` | `plotly_autosize`              |
+| `(beforeExport)`          | `Function` | `plotly_beforeexport`          |
+| `(buttonClicked)`         | `Function` | `plotly_buttonclicked`         |
+| `(click)`                 | `Function` | `plotly_click`                 |
+| `(clickAnnotation)`       | `Function` | `plotly_clickannotation`       |
+| `(deselect)`              | `Function` | `plotly_deselect`              |
+| `(doubleClick)`           | `Function` | `plotly_doubleclick`           |
+| `(framework)`             | `Function` | `plotly_framework`             |
+| `(hover)`                 | `Function` | `plotly_hover`                 |
+| `(legendClick)`           | `Function` | `plotly_legendclick`           |
+| `(legendDoubleClick)`     | `Function` | `plotly_legenddoubleclick`     |
+| `(relayout)`              | `Function` | `plotly_relayout`              |
+| `(restyle)`               | `Function` | `plotly_restyle`               |
+| `(redraw)`                | `Function` | `plotly_redraw`                |
+| `(selected)`              | `Function` | `plotly_selected`              |
+| `(selecting)`             | `Function` | `plotly_selecting`             |
+| `(sliderChange)`          | `Function` | `plotly_sliderchange`          |
+| `(sliderEnd)`             | `Function` | `plotly_sliderend`             |
+| `(sliderStart)`           | `Function` | `plotly_sliderstart`           |
+| `(transitioning)`         | `Function` | `plotly_transitioning`         |
+| `(transitionInterrupted)` | `Function` | `plotly_transitioninterrupted` |
+| `(unhover)`               | `Function` | `plotly_unhover`               |
+
 
 ## Development
 
