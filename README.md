@@ -17,6 +17,7 @@
 * [Quick start](#quick-start)
 * [API](#api-reference)
   * [Basic props](#basic-props)
+  * [Event handler props](#event-handler-props)
 * [Development](#development)
 
 ## Installation
