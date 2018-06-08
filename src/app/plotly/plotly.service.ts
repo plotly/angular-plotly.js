@@ -32,15 +32,15 @@ export class PlotlyService {
     }
 
     public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.newPlot(div, data, layout);
+        return this.plotly.newPlot(div, data, layout, config);
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.plot(div, data, layout);
+        return this.plotly.plot(div, data, layout, config);
     }
 
     public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.update(div, data, layout);
+        return this.plotly.update(div, data, layout, config);
     }
 
     public resize(div: Plotly.PlotlyHTMLElement): void {
