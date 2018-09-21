@@ -23,6 +23,7 @@ export namespace Plotly {
 
 @Injectable()
 export class PlotlyService {
+    protected static instances: Plotly.PlotlyHTMLElement[] = [];
     protected plotly = Plotlyjs;
 
     constructor() {
@@ -32,7 +33,7 @@ export class PlotlyService {
     }
 
     public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.newPlot(div, data, layout, config);
+        return this.plotly.newPlot(div, data, layout, config).then(this.insert.bind(this));
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
@@ -45,6 +46,34 @@ export class PlotlyService {
 
     public resize(div: Plotly.PlotlyHTMLElement): void {
         return this.plotly.Plots.resize(div);
+    }
+
+    public getPlotly() {
+        return this.plotly;
+    }
+
+    public getInstanceByDivId(id: string): Plotly.PlotlyHTMLElement | undefined {
+        for (const instance of PlotlyService.instances) {
+            if (instance.id === id) {
+                return instance;
+            }
+        }
+        return undefined;
+    }
+
+    public insert(instance: Plotly.PlotlyHTMLElement) {
+        const index = PlotlyService.instances.indexOf(instance);
+        if (index === -1) {
+            PlotlyService.instances.push(instance);
+        }
+        return instance;
+    }
+
+    public remove(div: Plotly.PlotlyHTMLElement) {
+        const index = PlotlyService.instances.indexOf(div);
+        if (index >= 0) {
+            PlotlyService.instances.splice(index, 1);
+        }
     }
 
 }

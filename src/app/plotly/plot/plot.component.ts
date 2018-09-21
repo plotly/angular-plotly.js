@@ -106,6 +106,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
         const figure = this.createFigure();
         this.purge.emit(figure);
+        this.plotly.remove(this.plotlyInstance);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -229,7 +230,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
     }
 
-    dataDifferTrackBy(index: number, item: any): any {
+    dataDifferTrackBy(_: number, item: any): any {
         const obj = Object.assign({}, item, { uid: '' });
         return JSON.stringify(obj);
     }
