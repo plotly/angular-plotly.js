@@ -32,8 +32,23 @@ export class PlotlyService {
         }
     }
 
+    public static insert(instance: Plotly.PlotlyHTMLElement) {
+        const index = PlotlyService.instances.indexOf(instance);
+        if (index === -1) {
+            PlotlyService.instances.push(instance);
+        }
+        return instance;
+    }
+
+    public static remove(div: Plotly.PlotlyHTMLElement) {
+        const index = PlotlyService.instances.indexOf(div);
+        if (index >= 0) {
+            PlotlyService.instances.splice(index, 1);
+        }
+    }
+
     public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.newPlot(div, data, layout, config).then(this.insert.bind(this));
+        return this.plotly.newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance));
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
@@ -59,21 +74,6 @@ export class PlotlyService {
             }
         }
         return undefined;
-    }
-
-    public insert(instance: Plotly.PlotlyHTMLElement) {
-        const index = PlotlyService.instances.indexOf(instance);
-        if (index === -1) {
-            PlotlyService.instances.push(instance);
-        }
-        return instance;
-    }
-
-    public remove(div: Plotly.PlotlyHTMLElement) {
-        const index = PlotlyService.instances.indexOf(div);
-        if (index >= 0) {
-            PlotlyService.instances.splice(index, 1);
-        }
     }
 
 }

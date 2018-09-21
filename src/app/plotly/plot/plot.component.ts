@@ -106,7 +106,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
         const figure = this.createFigure();
         this.purge.emit(figure);
-        this.plotly.remove(this.plotlyInstance);
+        PlotlyService.remove(this.plotlyInstance);
     }
 
     ngOnChanges(changes: SimpleChanges) {
