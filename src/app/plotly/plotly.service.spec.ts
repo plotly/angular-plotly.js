@@ -33,17 +33,18 @@ describe('PlotlyService', () => {
     }));
 
     it('should call plotly methods', inject([PlotlyService], (service: PlotlyService) => {
+        const plotly = service.getPlotly();
         const methods: (keyof PlotlyService)[] = ['plot', 'update', 'newPlot'];
         methods.forEach(methodName => {
-            spyOn(service, methodName);
+            spyOn(plotly, methodName);
 
             (service as any)[methodName]('one' as any, 'two' as any, 'three' as any, 'four' as any);
-            expect(service[methodName]).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+            expect(plotly[methodName]).toHaveBeenCalledWith('one', 'two', 'three', 'four');
         });
 
-        spyOn(service.getPlotly().Plots, 'resize');
+        spyOn(plotly.Plots, 'resize');
         service.resize('one' as any);
-        expect(service.getPlotly().Plots.resize).toHaveBeenCalledWith('one');
+        expect(plotly.Plots.resize).toHaveBeenCalledWith('one');
     }));
 
 
