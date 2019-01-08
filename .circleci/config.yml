@@ -26,8 +26,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
-      - run: yarn add plotly.js # peer dependency
+      - run: npm install
+      - run: npm install plotly.js # peer dependency
 
       - save_cache:
           paths:
@@ -35,6 +35,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: yarn lint
-      - run: yarn test --watch=false --code-coverage
+      - run: npm run lint
+      - run: npm run test -- --watch=false --code-coverage
       - run: cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
