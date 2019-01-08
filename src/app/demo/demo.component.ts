@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Route, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
+import { filter, map } from 'rxjs/operators';
+
 
 @Component({
     selector: 'plotly-demo',
@@ -14,9 +14,9 @@ export class DemoComponent implements OnInit {
     public title: string;
 
     constructor(private router: Router, protected route: ActivatedRoute) {
-        this.router.events
-            .filter(event => event instanceof NavigationEnd)
-            .map(() => {
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd),
+            map(() => {
                 let child = this.route.firstChild;
                 while (child) {
                     if (child.firstChild) {
@@ -27,11 +27,11 @@ export class DemoComponent implements OnInit {
                         return null;
                     }
                 }
-            }).subscribe((title: string) => {
-                this.title = title;
-            });
+            })
+        ).subscribe((title: string) => {
+            this.title = title;
+        });
     }
 
     ngOnInit() {}
-
 }
