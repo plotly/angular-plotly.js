@@ -32,20 +32,35 @@ describe('PlotlyService', () => {
         expect(service.getPlotly()).toBe(Plotlyjs);
     }));
 
-    it('should call plotly methods', inject([PlotlyService], (service: PlotlyService) => {
+    it('should call plotly.newPlot method', inject([PlotlyService], (service: PlotlyService) => {
         const plotly = service.getPlotly();
-        const methods: (keyof PlotlyService)[] = ['plot', 'update', 'newPlot'];
-        methods.forEach(methodName => {
-            spyOn(plotly, methodName).and.returnValue(new Promise(() => {}));
 
-            (service as any)[methodName]('one' as any, 'two' as any, 'three' as any, 'four' as any);
-            expect(plotly[methodName]).toHaveBeenCalledWith('one', 'two', 'three', 'four');
-        });
+        spyOn(plotly, 'newPlot').and.returnValue(new Promise(() => {}));
+        service.newPlot('one' as any, 'two' as any, 'three' as any, 'four' as any);
+        expect(plotly.newPlot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+    }));
 
-        spyOn(plotly.Plots, 'resize');
+    it('should call plotly.plot method', inject([PlotlyService], (service: PlotlyService) => {
+        const plotly = service.getPlotly();
+
+        spyOn(plotly, 'plot').and.returnValue(new Promise(() => {}));
+        service.plot('one' as any, 'two' as any, 'three' as any, 'four' as any);
+        expect(plotly.plot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+    }));
+
+    it('should call plotly.update method', inject([PlotlyService], (service: PlotlyService) => {
+        const plotly = service.getPlotly();
+
+        spyOn(plotly, 'react').and.returnValue(new Promise(() => {}));
+        service.update('one' as any, 'two' as any, 'three' as any, 'four' as any);
+        expect(plotly.react).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+    }));
+
+    it('should call plotly.Plots.resize method', inject([PlotlyService], (service: PlotlyService) => {
+        const plotly = service.getPlotly();
+
+        spyOn(plotly.Plots, 'resize').and.returnValue(new Promise(() => {}));
         service.resize('one' as any);
         expect(plotly.Plots.resize).toHaveBeenCalledWith('one');
     }));
-
-
 });
