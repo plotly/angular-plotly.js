@@ -24,10 +24,9 @@ export namespace Plotly {
 @Injectable()
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
-    protected plotly = Plotlyjs;
 
     constructor() {
-        if (typeof this.plotly === 'undefined') {
+        if (typeof this.getPlotly() === 'undefined') {
             throw new Error(`Peer dependency plotly.js isn't installed`);
         }
     }
@@ -47,33 +46,23 @@ export class PlotlyService {
         }
     }
 
+    public getPlotly() {
+        return Plotlyjs;
+    }
+
     public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance));
+        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance));
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.plot(div, data, layout, config);
+        return this.getPlotly().plot(div, data, layout, config);
     }
 
     public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.plotly.update(div, data, layout, config);
+        return this.getPlotly().update(div, data, layout, config);
     }
 
     public resize(div: Plotly.PlotlyHTMLElement): void {
-        return this.plotly.Plots.resize(div);
+        return this.getPlotly().Plots.resize(div);
     }
-
-    public getPlotly() {
-        return this.plotly;
-    }
-
-    public getInstanceByDivId(id: string): Plotly.PlotlyHTMLElement | undefined {
-        for (const instance of PlotlyService.instances) {
-            if (instance.id === id) {
-                return instance;
-            }
-        }
-        return undefined;
-    }
-
 }
