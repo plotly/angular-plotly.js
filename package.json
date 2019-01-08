@@ -60,8 +60,9 @@
     "ng-packagr": "4.4.5",
     "plotly.js": "^1.34.0",
     "ts-node": "7.0.1",
-    "tslint": "5.12.0",
+    "tsickle": "0.34.0",
     "tslib": "1.9.0",
+    "tslint": "5.12.0",
     "typescript": "3.2.2",
     "zone.js": "0.8.26"
   },
