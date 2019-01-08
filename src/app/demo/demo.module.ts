@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
@@ -25,7 +26,12 @@ const demoRoutes: Routes = [
 ];
 
 @NgModule({
-    imports: [CommonModule, PlotlyModule, RouterModule.forRoot(demoRoutes, { enableTracing: true })],
+    imports: [
+        CommonModule,
+        PlotlyModule,
+        HttpClientModule,
+        RouterModule.forRoot(demoRoutes, { enableTracing: true }),
+    ],
     declarations: [HomeComponent, DemoComponent, BoxPlotComponent, LinearChartsComponent, AjaxComponent, FancyplotComponent],
     exports: [DemoComponent],
 })

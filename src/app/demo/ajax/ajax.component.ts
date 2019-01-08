@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'plotly-ajax',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AjaxComponent implements OnInit {
     public debug = true;
     public useResizeHandler = true;
+    public i = 1;
 
     public data: any[];
 
@@ -14,38 +16,16 @@ export class AjaxComponent implements OnInit {
         title: 'Loading data from ajax',
     };
 
-    constructor() { }
+    constructor(public http: HttpClient) { }
 
     ngOnInit() {
 
     }
 
-    public generageRandomIntList(length: number, max: number = 10) {
-        const numbers: number[] = [];
-
-        for (let i = 0; i < length; i ++) {
-            numbers.push(Math.floor(Math.random() * max));
-        }
-
-        return numbers;
+    public loadData() {
+        this.http.get(`/assets/ajax-example-data.${this.i}.json`).toPromise().then(data => {
+            this.data = data as any;
+            this.i = this.i === 1 ? 2 : 1;
+        });
     }
-
-    public async loadRandomData() {
-        setTimeout(() => {
-            const trace1 = {
-                x: this.generageRandomIntList(8, 10),
-                y: this.generageRandomIntList(8, 20),
-                type: 'scatter'
-            };
-
-            const trace2 = {
-                x: this.generageRandomIntList(8, 10),
-                y: this.generageRandomIntList(8, 20),
-                type: 'scatter'
-            };
-
-            this.data = [trace1, trace2];
-        }, 600);
-    }
-
 }
