@@ -51,15 +51,15 @@ export class PlotlyService {
     }
 
     public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance));
+        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance))  as Promise<any>;
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.getPlotly().plot(div, data, layout, config);
+        return this.getPlotly().plot(div, data, layout, config) as Promise<any>;
     }
 
     public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.getPlotly().react(div, data, layout, config);
+        return this.getPlotly().react(div, data, layout, config) as Promise<any>;
     }
 
     public resize(div: Plotly.PlotlyHTMLElement): void {
