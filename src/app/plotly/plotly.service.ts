@@ -59,7 +59,7 @@ export class PlotlyService {
     }
 
     public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.getPlotly().update(div, data, layout, config);
+        return this.getPlotly().react(div, data, layout, config);
     }
 
     public resize(div: Plotly.PlotlyHTMLElement): void {

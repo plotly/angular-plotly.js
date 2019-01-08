@@ -210,9 +210,12 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             throw error;
         }
 
-        return this.createPlot().then(() => {
+        return this.plotly.update(this.plotlyInstance, this.data, this.layout, this.config).then(() => {
             const figure = this.createFigure();
             this.update.emit(figure);
+        }, err => {
+            console.error('Error while updating plot:', err);
+            this.error.emit(err);
         });
     }
 
