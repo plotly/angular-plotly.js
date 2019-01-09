@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as Plotlyjs from 'plotly.js/dist/plotly.min.js';
 
 
 export namespace Plotly {
@@ -24,6 +23,7 @@ export namespace Plotly {
 @Injectable()
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
+    protected _plotly?: any;
 
     constructor() {
         if (typeof this.getPlotly() === 'undefined') {
@@ -46,8 +46,14 @@ export class PlotlyService {
         }
     }
 
+    public getWindow(): any {
+        return window;
+    }
+
     public getPlotly() {
-        return Plotlyjs;
+        return this.getWindow().Plotly
+            ? this.getWindow().Plotly
+            : require('plotly.js/dist/plotly.js');
     }
 
     public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {

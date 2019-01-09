@@ -1,6 +1,4 @@
 import { TestBed, inject } from '@angular/core/testing';
-import * as Plotlyjs from 'plotly.js/dist/plotly.min.js';
-
 import { PlotlyService } from './plotly.service';
 
 describe('PlotlyService', () => {
@@ -29,6 +27,7 @@ describe('PlotlyService', () => {
     }));
 
     it('should return the plotly object', inject([PlotlyService], (service: PlotlyService) => {
+        const Plotlyjs = require('plotly.js/dist/plotly.js');
         expect(service.getPlotly()).toBe(Plotlyjs);
     }));
 
@@ -62,5 +61,10 @@ describe('PlotlyService', () => {
         spyOn(plotly.Plots, 'resize').and.returnValue(new Promise(() => {}));
         service.resize('one' as any);
         expect(plotly.Plots.resize).toHaveBeenCalledWith('one');
+    }));
+
+    it('should return the right Plotly object', inject([PlotlyService], (service: PlotlyService) => {
+        spyOn(service, 'getWindow').and.returnValue({'Plotly': 'Test'});
+        expect(service.getPlotly()).toEqual('Test');
     }));
 });
