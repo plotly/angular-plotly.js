@@ -140,6 +140,51 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 | `(unhover)`               | `Function` | `plotly_unhover`               |
 
 
+## Customizing the `plotly.js` bundle
+
+By default, this library bundles `plotly.js` from the peer dependency together within the output. This results on huge outputs, for `plotly.js` itself is ~3MB when bundled. It also makes the build (with `ng serve --prod`) really slow, for it minifies everything together. 
+
+If you wish to optimize loading `plotly.js` in a different way, please check both [`PlotlyViaCDNModule`](#plotly-via-cdn-module) and [`PlotlyViaWindowModule`](#plotly-via-window-module) modules below.
+
+
+### Plotly Via CDN Module
+
+If you want to load `plotly.js` [from a CDN](https://github.com/plotly/plotly.js#use-the-plotlyjs-cdn-hosted-by-fastly), use the `PlotlyViaCDNModule` and call `forRoot` method with the version you want to use:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { PlotlyViaCDNModule } from 'angular-plotly.js';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        PlotlyViaCDNModule.forRoot({version: '1.5.0'}) // can be `latest` or any version number (i.e.: '1.4.3')
+    ],
+    ...
+})
+export class AppModule { }
+```
+
+### Plotly Via Window Module
+
+If you want to use a [different precompiled bundle](https://github.com/plotly/plotly.js/blob/master/dist/README.md#partial-bundles) or if your wish to [assemble you own customized bundle](https://github.com/plotly/plotly.js#modules), you can use `PlotlyViaWindowModule` to force the use of `window.Plotly` object. You can add the script via tag `<script>` direct on your code, or add it as a [global script on angular.json](https://github.com/angular/angular-cli/wiki/stories-global-scripts#global-scripts).
+
+```typescript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { PlotlyViaWindowModule } from 'angular-plotly.js';
+
+@NgModule({
+    imports: [CommonModule, PlotlyViaWindowModule],
+    ...
+})
+export class AppModule { }
+```
+
+
 ## Development
 
 To get started:
