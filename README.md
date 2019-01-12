@@ -18,6 +18,9 @@
 * [API](#api-reference)
   * [Basic props](#basic-props)
   * [Event handler props](#event-handler-props)
+* [Customizing the `plotly.js` bundle](#customizing-the-plotlyjs-bundle)
+  * [Plotly Via CDN Module](#plotly-via-cdn-module)
+  * [Plotly Via Window Module](#plotly-via-window-module)
 * [Development](#development)
 
 ## Installation
