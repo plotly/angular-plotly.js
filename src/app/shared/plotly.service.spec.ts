@@ -26,12 +26,18 @@ describe('PlotlyService', () => {
         expect(service.getPlotly()).toBe(Plotlyjs);
     }));
 
-    it('should call plotly.newPlot method', inject([PlotlyService], (service: PlotlyService) => {
-        const plotly = service.getPlotly();
+    it('should call plotly.newPlot method', inject([PlotlyService], async (service: PlotlyService) => {
+        return new Promise(async (resolve) => {
+            const plotly = service.getPlotly();
+            PlotlyService.setPlotly('waiting');
 
-        spyOn(plotly, 'newPlot').and.returnValue(new Promise(() => {}));
-        service.newPlot('one' as any, 'two' as any, 'three' as any, 'four' as any);
-        expect(plotly.newPlot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+            setTimeout(() => PlotlyService.setPlotly(PlotlyJS), 100);
+
+            spyOn(plotly, 'newPlot').and.returnValue(Promise.resolve());
+            await service.newPlot('one' as any, 'two' as any, 'three' as any, 'four' as any);
+            expect(plotly.newPlot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+            resolve();
+        });
     }));
 
     it('should call plotly.plot method', inject([PlotlyService], (service: PlotlyService) => {

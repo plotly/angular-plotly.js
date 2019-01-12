@@ -6,7 +6,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DemoComponent } from './demo.component';
 
-import { PlotlyModule } from '../plotly/plotly.module';
+// import { PlotlyModule } from '../plotly/plotly.module';
+import { PlotlyViaCDNModule } from '../plotly-via-cdn/plotly-via-cdn.module';
 
 // Examples
 import { BoxPlotComponent } from './box-plots/box-plots.component';
@@ -28,8 +29,9 @@ const demoRoutes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
-        PlotlyModule,
         HttpClientModule,
+        // PlotlyModule,
+        PlotlyViaCDNModule.forRoot({version: 'latest'}),
         RouterModule.forRoot(demoRoutes, { enableTracing: true }),
     ],
     declarations: [HomeComponent, DemoComponent, BoxPlotComponent, LinearChartsComponent, AjaxComponent, FancyplotComponent],

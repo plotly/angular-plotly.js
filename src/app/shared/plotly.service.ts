@@ -10,7 +10,6 @@ export class PlotlyService {
     protected static _plotly?: any;
 
     public static setPlotly(plotly: any) {
-        console.log('setPlotly', plotly);
         PlotlyService._plotly = plotly;
     }
 
@@ -37,8 +36,19 @@ export class PlotlyService {
         return PlotlyService._plotly;
     }
 
-    public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance))  as Promise<any>;
+    protected waitFor(fn: () => boolean): Promise<void> {
+        return new Promise((resolve) => {
+            const localFn = () => {
+                fn() ? resolve() : setTimeout(localFn, 10);
+            };
+
+            localFn();
+        });
+    }
+
+    public async newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
+        await this.waitFor(() => this.getPlotly() !== 'waiting');
+        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance)) as Promise<any>;
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
