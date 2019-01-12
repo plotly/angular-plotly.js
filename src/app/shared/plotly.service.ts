@@ -7,7 +7,7 @@ import { Plotly } from './plotly.interface';
 })
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
-    protected static _plotly?: any;
+    protected static _plotly?: any = undefined;
 
     public static setPlotly(plotly: any) {
         PlotlyService._plotly = plotly;

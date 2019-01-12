@@ -6,7 +6,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng-packagr -p ng-package.json",
+    "build": "ng build",
+    "build:publish": "ng-packagr -p ng-package.json",
     "lint": "ng lint",
     "test": "ng test",
     "postversion": "git push && git push --tags"

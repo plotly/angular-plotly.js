@@ -7,7 +7,7 @@ then
     exit 1;
 fi
 
-npm run build
+npm run build:publish
 
 mv ./angular-plotly.js.metadata.json dist
 cp ./README.md dist

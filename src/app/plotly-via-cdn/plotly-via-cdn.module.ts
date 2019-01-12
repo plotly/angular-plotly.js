@@ -11,7 +11,7 @@ import { SharedModule } from '../shared/shared.module';
     exports: [PlotComponent]
 })
 export class PlotlyViaCDNModule {
-    static plotlyVersion?: string;
+    static plotlyVersion?: string = 'latest';
 
     static setPlotlyVersion(version: string) {
         const isOk = version === 'latest' || /^\d\.\d{1,2}\.\d{1,2}$/.test(version);
