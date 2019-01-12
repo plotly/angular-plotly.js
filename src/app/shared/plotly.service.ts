@@ -1,34 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Plotly } from './plotly.interface';
 
 
-export namespace Plotly {
-    export type Data = any;
-    export type Layout = any;
-    export type Config = any;
-
-    export interface Figure {
-        data: Data[];
-        layout: Partial<Layout>;
-        frames: Partial<Config>;
-    }
-
-    export interface PlotlyHTMLElement extends HTMLElement {
-        on(event: string, callback: Function): void;
-        removeListener(event: string, callback: Function): void;
-    }
-}
-
-
-
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
-    protected _plotly?: any;
+    protected static _plotly?: any;
 
-    constructor() {
-        if (typeof this.getPlotly() === 'undefined') {
-            throw new Error(`Peer dependency plotly.js isn't installed`);
-        }
+    public static setPlotly(plotly: any) {
+        PlotlyService._plotly = plotly;
     }
 
     public static insert(instance: Plotly.PlotlyHTMLElement) {
@@ -46,18 +28,27 @@ export class PlotlyService {
         }
     }
 
-    public getWindow(): any {
-        return window;
-    }
-
     public getPlotly() {
-        return this.getWindow().Plotly
-            ? this.getWindow().Plotly
-            : require('plotly.js/dist/plotly.js');
+        if (typeof PlotlyService._plotly === 'undefined') {
+            throw new Error(`Peer dependency plotly.js isn't installed`);
+        }
+
+        return PlotlyService._plotly;
     }
 
-    public newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
-        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance))  as Promise<any>;
+    protected waitFor(fn: () => boolean): Promise<void> {
+        return new Promise((resolve) => {
+            const localFn = () => {
+                fn() ? resolve() : setTimeout(localFn, 10);
+            };
+
+            localFn();
+        });
+    }
+
+    public async newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
+        await this.waitFor(() => this.getPlotly() !== 'waiting');
+        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance)) as Promise<any>;
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {

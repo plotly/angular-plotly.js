@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 
 import { DemoModule } from './demo/demo.module';
 import { AppComponent } from './app.component';
-import { PlotlyModule } from './plotly/plotly.module';
 
 
 @NgModule({
@@ -13,7 +12,6 @@ import { PlotlyModule } from './plotly/plotly.module';
   ],
   imports: [
     BrowserModule,
-    PlotlyModule,
     DemoModule,
   ],
   providers: [],

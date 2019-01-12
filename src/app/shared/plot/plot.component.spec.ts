@@ -4,6 +4,10 @@ import { PlotComponent } from './plot.component';
 import { PlotlyService } from '../plotly.service';
 import { SimpleChange } from '@angular/core';
 
+import * as PlotlyJS from 'plotly.js/dist/plotly';
+
+PlotlyService.setPlotly(PlotlyJS);
+
 
 describe('PlotComponent', () => {
     let component: PlotComponent;
