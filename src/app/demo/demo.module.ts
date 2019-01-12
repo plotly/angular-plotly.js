@@ -6,8 +6,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DemoComponent } from './demo.component';
 
-// import { PlotlyModule } from '../plotly/plotly.module';
-import { PlotlyViaCDNModule } from '../plotly-via-cdn/plotly-via-cdn.module';
+import { PlotlyModule } from '../plotly/plotly.module';
+// import { PlotlyViaCDNModule } from '../plotly-via-cdn/plotly-via-cdn.module';
+// import { PlotlyViaWindowModule } from '../plotly-via-window/plotly-via-window.module';
 
 // Examples
 import { BoxPlotComponent } from './box-plots/box-plots.component';
@@ -30,8 +31,9 @@ const demoRoutes: Routes = [
     imports: [
         CommonModule,
         HttpClientModule,
-        // PlotlyModule,
-        PlotlyViaCDNModule.forRoot({version: 'latest'}),
+        PlotlyModule,
+        // PlotlyViaCDNModule.forRoot({version: 'latest'}),
+        // PlotlyViaWindowModule,
         RouterModule.forRoot(demoRoutes, { enableTracing: true }),
     ],
     declarations: [HomeComponent, DemoComponent, BoxPlotComponent, LinearChartsComponent, AjaxComponent, FancyplotComponent],
