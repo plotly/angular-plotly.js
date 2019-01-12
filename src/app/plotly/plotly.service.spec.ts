@@ -1,26 +1,21 @@
 import { TestBed, inject } from '@angular/core/testing';
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+
 import { PlotlyService } from './plotly.service';
 
 describe('PlotlyService', () => {
     beforeEach(() => {
+        PlotlyService.setPlotly(PlotlyJS);
         TestBed.configureTestingModule({
             providers: [PlotlyService]
         });
     });
 
-    it('should check the plotly dependency', () => {
-        class LocalPlotlyService extends PlotlyService {
-            protected get plotly() {
-                return undefined;
-            }
-
-            public getPlotly() {
-                return undefined;
-            }
-        }
-
-        expect(() => new LocalPlotlyService()).toThrowError(`Peer dependency plotly.js isn't installed`);
-    });
+    it('should check the plotly dependency', inject([PlotlyService], (service: PlotlyService) => {
+        PlotlyService.setPlotly(undefined);
+        expect(() => service.getPlotly()).toThrowError(`Peer dependency plotly.js isn't installed`);
+        PlotlyService.setPlotly(PlotlyJS);
+    }));
 
     it('should be created', inject([PlotlyService], (service: PlotlyService) => {
         expect(service).toBeTruthy();
@@ -61,10 +56,5 @@ describe('PlotlyService', () => {
         spyOn(plotly.Plots, 'resize').and.returnValue(new Promise(() => {}));
         service.resize('one' as any);
         expect(plotly.Plots.resize).toHaveBeenCalledWith('one');
-    }));
-
-    it('should return the right Plotly object', inject([PlotlyService], (service: PlotlyService) => {
-        spyOn(service, 'getWindow').and.returnValue({'Plotly': 'Test'});
-        expect(service.getPlotly()).toEqual('Test');
     }));
 });

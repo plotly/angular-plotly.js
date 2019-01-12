@@ -9,10 +9,9 @@ export class LinearChartsComponent {
     public useResizeHandler = true;
 
     public data: any[] = [
-        { x: [1, 2, 3, 4], y: [10, 15, 13, 17], type: 'bar',  mode: 'markers', name: 'Scatter' },
-        { x: [2, 3, 4, 5], y: [16, 5, 11, 9], type: 'scattergl', mode: 'lines', name: 'Lines' },
+        { x: [1, 2, 3, 4], y: [10, 15, 13, 17], type: 'bar',  mode: 'markers', name: 'Bar' },
+        { x: [2, 3, 4, 1], y: [16, 5, 11, 9], type: 'scattergl', mode: 'lines', name: 'Lines' },
         { x: [1, 2, 3, 4], y: [12, 9, 15, 12], type: 'markers', mode: 'lines+markers', name: 'Scatter + Lines' },
-        { x: [4, 2, 3, 1], y: [9, 12, 17, 13], type: 'bar', mode: 'lines+markers', name: 'Scatter + Lines' },
     ];
 
     public layout: any = {
