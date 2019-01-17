@@ -28,6 +28,15 @@ export class PlotlyService {
         }
     }
 
+    public getInstanceByDivId(id: string): Plotly.PlotlyHTMLElement | undefined {
+        for (const instance of PlotlyService.instances) {
+            if (instance.id === id) {
+                return instance;
+            }
+        }
+        return undefined;
+    }
+
     public getPlotly() {
         if (typeof PlotlyService._plotly === 'undefined') {
             throw new Error(`Peer dependency plotly.js isn't installed`);

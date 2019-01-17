@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 
 import { PlotlyService } from './plotly.service';
+import { Plotly } from './plotly.interface';
 
 describe('PlotlyService', () => {
     beforeEach(() => {
@@ -62,5 +63,16 @@ describe('PlotlyService', () => {
         spyOn(plotly.Plots, 'resize').and.returnValue(new Promise(() => {}));
         service.resize('one' as any);
         expect(plotly.Plots.resize).toHaveBeenCalledWith('one');
+    }));
+
+
+    it('should get a plotly instance by id', inject([PlotlyService], (service: PlotlyService) => {
+        const instance = { id: 'aidi' } as Plotly.PlotlyHTMLElement;
+
+        PlotlyService.insert(instance);
+        expect(service.getInstanceByDivId('aidi')).toBe(instance);
+
+        PlotlyService.remove(instance);
+        expect(service.getInstanceByDivId('aidi')).toBeUndefined();
     }));
 });
