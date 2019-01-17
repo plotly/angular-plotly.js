@@ -57,7 +57,7 @@ export class PlotlyService {
 
     public async newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
         await this.waitFor(() => this.getPlotly() !== 'waiting');
-        return this.getPlotly().newPlot(div, data, layout, config).then(instance => PlotlyService.insert(instance)) as Promise<any>;
+        return this.getPlotly().newPlot(div, data, layout, config).then(() => PlotlyService.insert(div as any)) as Promise<any>;
     }
 
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>) {
