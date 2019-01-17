@@ -34,9 +34,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: npm run build -- --prod
-
       # run tests!
       - run: npm run lint
-      - run: npm run test -- --watch=false --code-coverage
+      - run: npm run test -- --watch=false --prod --code-coverage
       - run: cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
