@@ -30,7 +30,7 @@ export class PlotlyService {
 
     public getInstanceByDivId(id: string): Plotly.PlotlyHTMLElement | undefined {
         for (const instance of PlotlyService.instances) {
-            if (instance.id === id) {
+            if (instance && instance.id === id) {
                 return instance;
             }
         }

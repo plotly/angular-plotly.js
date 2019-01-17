@@ -12,6 +12,16 @@ describe('PlotlyService', () => {
         });
     });
 
+    it('should get a plotly instance by id', inject([PlotlyService], (service: PlotlyService) => {
+        const instance = { id: 'aidi' } as Plotly.PlotlyHTMLElement;
+
+        PlotlyService.insert(instance);
+        expect(service.getInstanceByDivId('aidi')).toBe(instance);
+
+        PlotlyService.remove(instance);
+        expect(service.getInstanceByDivId('aidi')).toBeUndefined();
+    }));
+
     it('should check the plotly dependency', inject([PlotlyService], (service: PlotlyService) => {
         PlotlyService.setPlotly(undefined);
         expect(() => service.getPlotly()).toThrowError(`Peer dependency plotly.js isn't installed`);
@@ -63,16 +73,5 @@ describe('PlotlyService', () => {
         spyOn(plotly.Plots, 'resize').and.returnValue(new Promise(() => {}));
         service.resize('one' as any);
         expect(plotly.Plots.resize).toHaveBeenCalledWith('one');
-    }));
-
-
-    it('should get a plotly instance by id', inject([PlotlyService], (service: PlotlyService) => {
-        const instance = { id: 'aidi' } as Plotly.PlotlyHTMLElement;
-
-        PlotlyService.insert(instance);
-        expect(service.getInstanceByDivId('aidi')).toBe(instance);
-
-        PlotlyService.remove(instance);
-        expect(service.getInstanceByDivId('aidi')).toBeUndefined();
     }));
 });
