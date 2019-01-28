@@ -15,6 +15,7 @@ import { BoxPlotComponent } from './box-plots/box-plots.component';
 import { LinearChartsComponent } from './linear-charts/linear-charts.component';
 import { AjaxComponent } from './ajax/ajax.component';
 import { FancyplotComponent } from './fancyplot/fancyplot.component';
+import { MemoryLeakComponent } from './memory-leak/memory-leak.component';
 
 
 const demoRoutes: Routes = [
@@ -23,6 +24,7 @@ const demoRoutes: Routes = [
     { path: 'linear-charts', component: LinearChartsComponent, data: { title: 'Linear Charts' } },
     { path: 'ajax', component: AjaxComponent, data: { title: 'Ajax' } },
     { path: 'fancy-plot', component: FancyplotComponent, data: { title: 'Fancy Plot' } },
+    { path: 'memory-leak', component: MemoryLeakComponent, data: { title: 'Memory leak' } },
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
@@ -36,7 +38,7 @@ const demoRoutes: Routes = [
         // PlotlyViaWindowModule,
         RouterModule.forRoot(demoRoutes, { enableTracing: true }),
     ],
-    declarations: [HomeComponent, DemoComponent, BoxPlotComponent, LinearChartsComponent, AjaxComponent, FancyplotComponent],
+    declarations: [HomeComponent, DemoComponent, BoxPlotComponent, LinearChartsComponent, AjaxComponent, FancyplotComponent, MemoryLeakComponent],
     exports: [DemoComponent],
 })
 export class DemoModule { }
