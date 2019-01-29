@@ -38,7 +38,15 @@ const demoRoutes: Routes = [
         // PlotlyViaWindowModule,
         RouterModule.forRoot(demoRoutes, { enableTracing: true }),
     ],
-    declarations: [HomeComponent, DemoComponent, BoxPlotComponent, LinearChartsComponent, AjaxComponent, FancyplotComponent, MemoryLeakComponent],
+    declarations: [
+        HomeComponent,
+        DemoComponent,
+        BoxPlotComponent,
+        LinearChartsComponent,
+        AjaxComponent,
+        FancyplotComponent,
+        MemoryLeakComponent
+    ],
     exports: [DemoComponent],
 })
 export class DemoModule { }
