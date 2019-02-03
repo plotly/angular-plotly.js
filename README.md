@@ -179,10 +179,13 @@ export class AppModule { }
 ```javascript
 // angular.json
 {
+    ...
     "projects": {
-        "project-name": {
+        "project-name": { // This is your project's name
+            ...
             "architect": {
                 "build": {
+                    ...
                     "options": {
                         "scripts": [
                             "node_modules/plotly.js/dist/plotly.min.js" // add this
@@ -190,6 +193,7 @@ export class AppModule { }
                     }
                 }
             }
+            ...
         }
     }
 }
