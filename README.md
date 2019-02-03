@@ -176,7 +176,7 @@ export class AppModule { }
 
 `plotly.js` can be added as a [global script on angular.json](https://github.com/angular/angular-cli/wiki/stories-global-scripts#global-scripts) to avoid it beingb bundled into the final project's code. To make this happen, you must first add `plotly.js` path into `angular.json` file as shown below: 
 
-```json
+```javascript
 // angular.json
 {
     "projects": {
