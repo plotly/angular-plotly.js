@@ -108,6 +108,22 @@ For a full description of Plotly chart types and attributes see the following re
 
 **Note**: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use `style` or `className` to set the dimensions of the element (i.e. using `width: 100%; height: 100%` or some similar values) and set `useResizeHandler` to `true` while setting `layout.autosize` to `true` and leaving `layout.height` and `layout.width` undefined. This will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
 
+```typescript
+@Component({
+    selector: 'plotly-example',
+    template: `
+    <plotly-plot [data]="graph.data" [layout]="graph.layout" 
+       [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%'}">
+    </plotly-plot>`,
+})
+export class PlotlyExampleComponent {
+    public graph = {
+        data: [{ x: [1, 2, 3], y: [2, 5, 3], type: 'bar' }],
+        layout: {autosize: true, title: 'A Fancy Plot'},        
+    };
+}
+```
+
 ### Event handler props
 
 Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plotlyjs-events/) may be attached through the following props:
