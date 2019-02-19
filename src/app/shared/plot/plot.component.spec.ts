@@ -8,25 +8,20 @@ import * as PlotlyJS from 'plotly.js/dist/plotly';
 
 PlotlyService.setPlotly(PlotlyJS);
 
-
 describe('PlotComponent', () => {
     let component: PlotComponent;
     let fixture: ComponentFixture<PlotComponent>;
-    let plotlySpy: jasmine.SpyObj<PlotlyService>;
     let windowSpy: jasmine.SpyObj<Window>;
 
     beforeEach(async(() => {
-        const pSpy = jasmine.createSpyObj('PlotlyService', ['newPlot', 'plot']);
         windowSpy = jasmine.createSpyObj('Window', ['addEventListener', 'removeEventListener']);
 
         TestBed.configureTestingModule({
             declarations: [PlotComponent],
             providers: [
-                { provide: PlotlyService, useValue: pSpy },
+                PlotlyService,
             ],
         }).compileComponents();
-
-        plotlySpy = TestBed.get(PlotlyService);
     }));
 
     beforeEach(() => {
@@ -159,5 +154,62 @@ describe('PlotComponent', () => {
         component.useResizeHandler = false;
         component.updateWindowResizeHandler();
         expect(component.resizeHandler).toBeUndefined();
+    });
+
+    it('should clear all added window events on destroy', async (done) => {
+
+        spyOn(component, 'ngOnDestroy').and.callThrough();
+
+        const windowListenerCount = (<any>window).eventListeners().length;
+
+        // make component responsive via both the lib and the component (at least 2 window events are added)
+        component.layout = { title: 'responsive', autosize: true };
+        component.config = { responsive: true };
+        component.useResizeHandler = true;
+
+        await component.createPlot();
+        await fixture.whenStable();
+
+        expect(component.ngOnDestroy).not.toHaveBeenCalled();
+
+        fixture.destroy();
+        await fixture.whenStable();
+
+        expect(component.ngOnDestroy).toHaveBeenCalled();
+
+        // amount of listeners should be the same as before initializing the component
+        expect((<any>window).eventListeners().length).toEqual(windowListenerCount);
+
+        done();
+    });
+
+    it('should not cause errors if window is resized after a responsive chart is destroyed', async (done) => {
+
+        // make component responsive via both the lib and the component
+        component.layout = { title: 'responsive', autosize: true };
+        component.config = { responsive: true };
+        component.useResizeHandler = true;
+
+        await component.createPlot();
+        await fixture.whenStable();
+
+        spyOn(PlotlyJS.Plots, 'resize').and.callThrough();
+
+        window.dispatchEvent(new Event('resize'));
+        await fixture.whenStable();
+
+        // responsive:true and useResizeHandler:true both cause .resize() to be called
+        expect(PlotlyJS.Plots.resize).toHaveBeenCalledTimes(2);
+        PlotlyJS.Plots.resize.calls.reset();
+
+        fixture.destroy();
+        await fixture.whenStable();
+
+        window.dispatchEvent(new Event('resize'));
+        await fixture.whenStable();
+
+        expect(PlotlyJS.Plots.resize).not.toHaveBeenCalled();
+
+        done();
     });
 });

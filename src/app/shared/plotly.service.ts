@@ -25,6 +25,7 @@ export class PlotlyService {
         const index = PlotlyService.instances.indexOf(div);
         if (index >= 0) {
             PlotlyService.instances.splice(index, 1);
+            PlotlyService._plotly.purge(div);
         }
     }
 
