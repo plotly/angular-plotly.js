@@ -2,6 +2,9 @@
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
+  "linterOptions": {
+      "exclude": ["*.json", "**/*.json"]
+  },
   "rules": {
     "arrow-return-shorthand": true,
     "callable-types": true,
