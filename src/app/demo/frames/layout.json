@@ -1,0 +1,315 @@
+{
+    "xaxis": {
+        "title": "Life Expectancy",
+        "range": [
+            30,
+            85
+        ]
+    },
+    "yaxis": {
+        "title": "GDP per Capita",
+        "type": "log"
+    },
+    "hovermode": "closest",
+    "updatemenus": [
+        {
+            "x": 0,
+            "y": 0,
+            "yanchor": "top",
+            "xanchor": "left",
+            "showactive": false,
+            "direction": "left",
+            "type": "buttons",
+            "pad": {
+                "t": 87,
+                "r": 10
+            },
+            "buttons": [
+                {
+                    "method": "animate",
+                    "args": [
+                        null,
+                        {
+                            "mode": "immediate",
+                            "fromcurrent": true,
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 500,
+                                "redraw": false
+                            }
+                        }
+                    ],
+                    "label": "Play"
+                },
+                {
+                    "method": "animate",
+                    "args": [
+                        [
+                            null
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 0
+                            },
+                            "frame": {
+                                "duration": 0,
+                                "redraw": false
+                            }
+                        }
+                    ],
+                    "label": "Pause"
+                }
+            ]
+        }
+    ],
+    "sliders": [
+        {
+            "pad": {
+                "l": 130,
+                "t": 55
+            },
+            "currentvalue": {
+                "visible": true,
+                "prefix": "Year:",
+                "xanchor": "right",
+                "font": {
+                    "size": 20,
+                    "color": "#666"
+                }
+            },
+            "steps": [
+                {
+                    "method": "animate",
+                    "label": "1952",
+                    "args": [
+                        [
+                            "1952"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1957",
+                    "args": [
+                        [
+                            "1957"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1962",
+                    "args": [
+                        [
+                            "1962"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1967",
+                    "args": [
+                        [
+                            "1967"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1972",
+                    "args": [
+                        [
+                            "1972"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1977",
+                    "args": [
+                        [
+                            "1977"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1982",
+                    "args": [
+                        [
+                            "1982"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1987",
+                    "args": [
+                        [
+                            "1987"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1992",
+                    "args": [
+                        [
+                            "1992"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "1997",
+                    "args": [
+                        [
+                            "1997"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "2002",
+                    "args": [
+                        [
+                            "2002"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "animate",
+                    "label": "2007",
+                    "args": [
+                        [
+                            "2007"
+                        ],
+                        {
+                            "mode": "immediate",
+                            "transition": {
+                                "duration": 300
+                            },
+                            "frame": {
+                                "duration": 300,
+                                "redraw": false
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

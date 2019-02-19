@@ -1,6 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
