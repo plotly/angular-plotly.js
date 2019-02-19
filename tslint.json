@@ -80,10 +80,7 @@
       "check-whitespace"
     ],
     "prefer-const": true,
-    "quotemark": [
-      true,
-      "single"
-    ],
+    "quotemark": false,
     "radix": true,
     "semicolon": [
       true,
