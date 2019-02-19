@@ -32,9 +32,8 @@ describe('PlotlyService', () => {
         expect(service).toBeTruthy();
     }));
 
-    it('should return the plotly object', inject([PlotlyService], (service: PlotlyService) => {
-        const Plotlyjs = require('plotly.js/dist/plotly.js');
-        expect(service.getPlotly()).toBe(Plotlyjs);
+    fit('should return the plotly object', inject([PlotlyService], (service: PlotlyService) => {
+        expect(service.getPlotly()).toBe(PlotlyJS);
     }));
 
     it('should call plotly.newPlot method', inject([PlotlyService], async (service: PlotlyService) => {
