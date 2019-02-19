@@ -32,7 +32,7 @@ describe('PlotlyService', () => {
         expect(service).toBeTruthy();
     }));
 
-    fit('should return the plotly object', inject([PlotlyService], (service: PlotlyService) => {
+    it('should return the plotly object', inject([PlotlyService], (service: PlotlyService) => {
         expect(service.getPlotly()).toBe(PlotlyJS);
     }));
 
