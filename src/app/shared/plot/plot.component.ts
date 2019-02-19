@@ -39,6 +39,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Input() data?: Plotly.Data[];
     @Input() layout?: Partial<Plotly.Layout>;
     @Input() config?: Partial<Plotly.Config>;
+    @Input() frames?: Partial<Plotly.Config>[];
     @Input() style?: { [key: string]: string };
 
     @Input() divId?: string;
@@ -176,7 +177,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     createPlot(): Promise<void> {
-        return this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config).then(plotlyInstance => {
+        return this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config, this.frames).then(plotlyInstance => {
             this.plotlyInstance = plotlyInstance;
             this.getWindow().gd = this.debug ? plotlyInstance : undefined;
 
@@ -210,7 +211,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             throw error;
         }
 
-        return this.plotly.update(this.plotlyInstance, this.data, this.layout, this.config).then(() => {
+        return this.plotly.update(this.plotlyInstance, this.data, this.layout, this.config, this.frames).then(() => {
             const figure = this.createFigure();
             this.update.emit(figure);
         }, err => {

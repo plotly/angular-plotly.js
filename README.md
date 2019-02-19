@@ -178,10 +178,13 @@ import { CommonModule } from '@angular/common';
 
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
 
+
+PlotlyViaCDNModule.plotlyVersion = '1.5.0'; // can be `latest` or any version number (i.e.: '1.4.3')
+
 @NgModule({
     imports: [
         CommonModule,
-        PlotlyViaCDNModule.forRoot({version: '1.5.0'}) // can be `latest` or any version number (i.e.: '1.4.3')
+        PlotlyViaCDNModule, 
     ],
     ...
 })

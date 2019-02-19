@@ -2,6 +2,9 @@
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
+  "linterOptions": {
+      "exclude": ["*.json", "**/*.json"]
+  },
   "rules": {
     "arrow-return-shorthand": true,
     "callable-types": true,
@@ -80,10 +83,7 @@
       "check-whitespace"
     ],
     "prefer-const": true,
-    "quotemark": [
-      true,
-      "single"
-    ],
+    "quotemark": false,
     "radix": true,
     "semicolon": [
       true,

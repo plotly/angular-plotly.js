@@ -16,6 +16,7 @@ import { LinearChartsComponent } from './linear-charts/linear-charts.component';
 import { AjaxComponent } from './ajax/ajax.component';
 import { FancyplotComponent } from './fancyplot/fancyplot.component';
 import { MemoryLeakComponent } from './memory-leak/memory-leak.component';
+import { FramesComponent } from './frames/frames.component';
 
 
 const demoRoutes: Routes = [
@@ -25,6 +26,7 @@ const demoRoutes: Routes = [
     { path: 'ajax', component: AjaxComponent, data: { title: 'Ajax' } },
     { path: 'fancy-plot', component: FancyplotComponent, data: { title: 'Fancy Plot' } },
     { path: 'memory-leak', component: MemoryLeakComponent, data: { title: 'Memory leak' } },
+    { path: 'frames', component: FramesComponent, data: { title: 'Frames' } },
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
@@ -45,7 +47,8 @@ const demoRoutes: Routes = [
         LinearChartsComponent,
         AjaxComponent,
         FancyplotComponent,
-        MemoryLeakComponent
+        MemoryLeakComponent,
+        FramesComponent
     ],
     exports: [DemoComponent],
 })
