@@ -46,6 +46,9 @@ describe('PlotlyService', () => {
             spyOn(plotly, 'newPlot').and.returnValue(Promise.resolve());
             await service.newPlot('one' as any, 'two' as any, 'three' as any, 'four' as any);
             expect(plotly.newPlot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+
+            await service.newPlot('one' as any, 'two' as any, 'three' as any, 'four' as any, 'five' as any);
+            expect(plotly.newPlot).toHaveBeenCalledWith('one', {data: 'two', layout: 'three', config: 'four', frames: 'five'});
             resolve();
         });
     }));
@@ -56,6 +59,9 @@ describe('PlotlyService', () => {
         spyOn(plotly, 'plot').and.returnValue(new Promise(() => {}));
         service.plot('one' as any, 'two' as any, 'three' as any, 'four' as any);
         expect(plotly.plot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+
+        service.plot('one' as any, 'two' as any, 'three' as any, 'four' as any, 'five' as any);
+        expect(plotly.plot).toHaveBeenCalledWith('one', {data: 'two', layout: 'three', config: 'four', frames: 'five'});
     }));
 
     it('should call plotly.update method', inject([PlotlyService], (service: PlotlyService) => {
@@ -64,6 +70,9 @@ describe('PlotlyService', () => {
         spyOn(plotly, 'react').and.returnValue(new Promise(() => {}));
         service.update('one' as any, 'two' as any, 'three' as any, 'four' as any);
         expect(plotly.react).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+
+        service.update('one' as any, 'two' as any, 'three' as any, 'four' as any, 'five' as any);
+        expect(plotly.react).toHaveBeenCalledWith('one', {data: 'two', layout: 'three', config: 'four', frames: 'five'});
     }));
 
     it('should call plotly.Plots.resize method', inject([PlotlyService], (service: PlotlyService) => {
