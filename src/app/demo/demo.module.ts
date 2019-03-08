@@ -11,6 +11,7 @@ import { PlotlyModule } from '../plotly/plotly.module';
 // import { PlotlyViaWindowModule } from '../plotly-via-window/plotly-via-window.module';
 
 // Examples
+import { BarPlotComponent } from './bar-plots/bar-plots.component';
 import { BoxPlotComponent } from './box-plots/box-plots.component';
 import { LinearChartsComponent } from './linear-charts/linear-charts.component';
 import { AjaxComponent } from './ajax/ajax.component';
@@ -21,6 +22,7 @@ import { FramesComponent } from './frames/frames.component';
 
 const demoRoutes: Routes = [
     { path: 'home', component: HomeComponent, data: { title: 'Home' } },
+    { path: 'bar-plots', component: BarPlotComponent, data: { title: 'Bar Plots' } },
     { path: 'box-plots', component: BoxPlotComponent, data: { title: 'Box Plots' } },
     { path: 'linear-charts', component: LinearChartsComponent, data: { title: 'Linear Charts' } },
     { path: 'ajax', component: AjaxComponent, data: { title: 'Ajax' } },
@@ -43,6 +45,7 @@ const demoRoutes: Routes = [
     declarations: [
         HomeComponent,
         DemoComponent,
+        BarPlotComponent,
         BoxPlotComponent,
         LinearChartsComponent,
         AjaxComponent,
