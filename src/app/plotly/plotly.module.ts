@@ -12,7 +12,7 @@ import { SharedModule } from '../shared/shared.module';
     exports: [PlotComponent]
 })
 export class PlotlyModule {
-    public static plotlyjs: any;
+    public static plotlyjs: any = {};
 
     constructor() {
         if (!this.isValid()) {
