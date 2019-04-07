@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+
 import { HomeComponent } from './home/home.component';
 import { DemoComponent } from './demo.component';
 
@@ -33,12 +35,16 @@ const demoRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
+
+PlotlyModule.plotlyjs = PlotlyJS;
+// PlotlyViaCDNModule.plotlyVersion = 'latest';
+
 @NgModule({
     imports: [
         CommonModule,
         HttpClientModule,
         PlotlyModule,
-        // PlotlyViaCDNModule.forRoot({version: 'latest'}),
+        // PlotlyViaCDNModule,
         // PlotlyViaWindowModule,
         RouterModule.forRoot(demoRoutes, { enableTracing: true }),
     ],

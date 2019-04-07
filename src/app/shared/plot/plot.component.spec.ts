@@ -141,6 +141,17 @@ describe('PlotComponent', () => {
         }, 13);
     });
 
+    it('should fail when plotlyInstance is undefined', () => {
+        component.plotlyInstance = undefined;
+
+        const error = new Error(`Plotly component wasn't initialized`);
+        const fn = () => {
+            component.updatePlot();
+        };
+
+        expect(fn).toThrow(error);
+    });
+
     it('should add handler into window.resize when useResizeHandler=true', () => {
         spyOn(component, 'getWindow').and.callFake(() => windowSpy);
 

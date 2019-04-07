@@ -51,7 +51,7 @@ export class PlotlyViaCDNModule {
         fn();
     }
 
-    static forRoot(config: Partial<{version: string}>): ModuleWithProviders {
+    static forRoot(config: Partial<{version: string}>): ModuleWithProviders<PlotlyViaCDNModule> {
         if (config.version === undefined) {
             console.warn(`It's strongly recommended that you set a plotly version when using via CDN.`);
             config.version = 'latest';
