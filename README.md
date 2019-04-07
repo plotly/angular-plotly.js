@@ -256,6 +256,10 @@ To run the tests:
 $ npm run test
 ```
 
+## FAQ
+
+Please, check the [FAQ](FAQ.md)
+
 ## License
 
 &copy; 2019 Plotly, Inc. MIT License.
