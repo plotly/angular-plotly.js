@@ -11,7 +11,17 @@ import { SharedModule } from '../shared/shared.module';
     exports: [PlotComponent]
 })
 export class PlotlyViaCDNModule {
+    static plotlyBundle?: string;
     static plotlyVersion?: string = 'latest';
+
+    static setPlotlyBundle(bundle: string) {
+        const isOk = bundle == null || bundle === 'basic' || bundle == 'cartesian' || bundle == 'geo' || bundle == 'gl3d' || bundle == 'gl2d' || bundle == 'mapbox' || bundle == 'finance';
+        if (!isOk) {
+            throw new Error(`Invalid plotly bundle. Please set null for full or 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance' for a partial bundle.`);
+        }
+
+        PlotlyViaCDNModule.plotlyBundle = bundle;
+    }
 
     static setPlotlyVersion(version: string) {
         const isOk = version === 'latest' || /^\d\.\d{1,2}\.\d{1,2}$/.test(version);
@@ -24,7 +34,7 @@ export class PlotlyViaCDNModule {
 
     static loadViaCDN() {
         PlotlyService.setPlotly('waiting');
-        const src = `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyVersion}.min.js`;
+        const src = PlotlyViaCDNModule.plotlyBundle == null ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyVersion}.min.js` : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyBundle}-${PlotlyViaCDNModule.plotlyVersion}.min.js`;
 
         const script: HTMLScriptElement = document.createElement('script');
         script.type = 'text/javascript';
@@ -51,12 +61,13 @@ export class PlotlyViaCDNModule {
         fn();
     }
 
-    static forRoot(config: Partial<{version: string}>): ModuleWithProviders<PlotlyViaCDNModule> {
+    static forRoot(config: Partial<{version: string, bundle: string}>): ModuleWithProviders<PlotlyViaCDNModule> {
         if (config.version === undefined) {
             console.warn(`It's strongly recommended that you set a plotly version when using via CDN.`);
             config.version = 'latest';
         }
 
+        PlotlyViaCDNModule.setPlotlyBundle(config.bundle);
         PlotlyViaCDNModule.setPlotlyVersion(config.version);
         PlotlyViaCDNModule.loadViaCDN();
 
