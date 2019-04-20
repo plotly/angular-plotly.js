@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PlotComponent } from '../shared/plot/plot.component';
@@ -51,18 +51,8 @@ export class PlotlyViaCDNModule {
         fn();
     }
 
-    static forRoot(config: Partial<{version: string}>): ModuleWithProviders<PlotlyViaCDNModule> {
-        if (config.version === undefined) {
-            console.warn(`It's strongly recommended that you set a plotly version when using via CDN.`);
-            config.version = 'latest';
-        }
-
-        PlotlyViaCDNModule.setPlotlyVersion(config.version);
-        PlotlyViaCDNModule.loadViaCDN();
-
-        return {
-            ngModule: PlotlyViaCDNModule,
-            providers: [PlotlyService]
-        };
+    static forRoot(config: Partial<{version: string}>): never {
+        const url = "https://github.com/plotly/angular-plotly.js#customizing-the-plotlyjs-bundle";
+        throw new Error(`[PlotlyViaCDNModule] forRoot method is deprecated. Please see: ${url}`);
     }
 }

@@ -173,7 +173,7 @@ If you wish to optimize loading `plotly.js` in a different way, please check bot
 
 ### Plotly Via CDN Module
 
-If you want to load `plotly.js` [from a CDN](https://github.com/plotly/plotly.js#use-the-plotlyjs-cdn-hosted-by-fastly), use the `PlotlyViaCDNModule` and call `forRoot` method with the version you want to use:
+If you want to load `plotly.js` [from a CDN](https://github.com/plotly/plotly.js#use-the-plotlyjs-cdn-hosted-by-fastly), use the `PlotlyViaCDNModule` and set on the `PlotlyViaCDNModule.plotlyVersion` property the plotly.js's version you want to use:
 
 ```typescript
 import { NgModule } from '@angular/core';

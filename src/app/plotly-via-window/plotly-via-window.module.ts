@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PlotComponent } from '../shared/plot/plot.component';
@@ -22,10 +22,8 @@ export class PlotlyViaWindowModule {
         PlotlyService.setPlotly(plotly);
     }
 
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: PlotlyViaWindowModule,
-            providers: [PlotlyService]
-        };
+    static forRoot(): never {
+        const url = "https://github.com/plotly/angular-plotly.js#plotly-via-window-module";
+        throw new Error(`[PlotlyViaWindowModule] forRoot method is deprecated. Please see: ${url}`);
     }
 }
