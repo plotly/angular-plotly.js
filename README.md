@@ -173,7 +173,7 @@ If you wish to optimize loading `plotly.js` in a different way, please check bot
 
 ### Plotly Via CDN Module
 
-If you want to load `plotly.js` [from a CDN](https://github.com/plotly/plotly.js#use-the-plotlyjs-cdn-hosted-by-fastly), use the `PlotlyViaCDNModule` and set on the `PlotlyViaCDNModule.plotlyVersion` property the plotly.js's version you want to use:
+If you want to load `plotly.js` [from a CDN](https://github.com/plotly/plotly.js#use-the-plotlyjs-cdn-hosted-by-fastly), use the `PlotlyViaCDNModule` and set on the `PlotlyViaCDNModule.plotlyVersion` property the plotly.js's version you want to use and, optionally, you can also set on the `PlotlyViaCDNModule.plotlyBundle` property the plotly.js's build you want to use:
 
 ```typescript
 import { NgModule } from '@angular/core';
@@ -183,6 +183,7 @@ import { PlotlyViaCDNModule } from 'angular-plotly.js';
 
 
 PlotlyViaCDNModule.plotlyVersion = '1.5.0'; // can be `latest` or any version number (i.e.: '1.4.3')
+PlotlyViaCDNModule.plotlyBundle = 'basic'; // optional: can be null (for full) or 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox' or 'finance'
 
 @NgModule({
     imports: [

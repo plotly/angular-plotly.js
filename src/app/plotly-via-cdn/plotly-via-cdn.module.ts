@@ -5,26 +5,43 @@ import { PlotComponent } from '../shared/plot/plot.component';
 import { PlotlyService } from '../shared/plotly.service';
 import { SharedModule } from '../shared/shared.module';
 
+export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' | 'mapbox' | 'finance';
+
+
 @NgModule({
     imports: [CommonModule, SharedModule],
     declarations: [],
     exports: [PlotComponent]
 })
 export class PlotlyViaCDNModule {
-    static plotlyVersion?: string = 'latest';
+    private static _plotlyBundle?: string = null;
+    private static _plotlyVersion: string = 'latest';
+    static plotlyBundleNames: PlotlyBundleName[] = ['basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance'];
 
-    static setPlotlyVersion(version: string) {
+    static set plotlyVersion(version: string) {
         const isOk = version === 'latest' || /^\d\.\d{1,2}\.\d{1,2}$/.test(version);
         if (!isOk) {
             throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3)`);
         }
 
-        PlotlyViaCDNModule.plotlyVersion = version;
+        PlotlyViaCDNModule._plotlyVersion = version;
+    }
+
+    static set plotlyBundle(bundle: PlotlyBundleName) {
+        const isOk = bundle === null || PlotlyViaCDNModule.plotlyBundleNames.indexOf(bundle) >= 0;
+        if (!isOk) {
+            const names = PlotlyViaCDNModule.plotlyBundleNames.map(n => `"${n}"`).join(', ');
+            throw new Error(`Invalid plotly bundle. Please set to null for full or ${names} for a partial bundle.`);
+        }
+
+        PlotlyViaCDNModule._plotlyBundle = bundle;
     }
 
     static loadViaCDN() {
         PlotlyService.setPlotly('waiting');
-        const src = `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyVersion}.min.js`;
+        const src = PlotlyViaCDNModule._plotlyBundle == null
+            ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyVersion}.min.js`
+            : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyBundle}-${PlotlyViaCDNModule._plotlyBundle}.min.js`;
 
         const script: HTMLScriptElement = document.createElement('script');
         script.type = 'text/javascript';
