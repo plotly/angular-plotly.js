@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 
 export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' | 'mapbox' | 'finance';
 
-
+// @dynamic
 @NgModule({
     imports: [CommonModule, SharedModule],
     declarations: [],
