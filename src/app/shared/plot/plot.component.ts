@@ -148,7 +148,6 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         if (this.dataDiffer) {
             const dataHasDiff = this.dataDiffer.diff(this.data);
             if (dataHasDiff) {
-                this.datarevision += 1;
                 shouldUpdate = true;
             }
         } else if (Array.isArray(this.data)) {
@@ -158,6 +157,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
 
         if (shouldUpdate && this.plotlyInstance) {
+            this.datarevision += 1;
             this.updatePlot();
         }
     }
