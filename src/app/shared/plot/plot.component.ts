@@ -33,6 +33,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
     public layoutDiffer: KeyValueDiffer<string, any>;
     public dataDiffer: IterableDiffer<Plotly.Data>;
+    public datarevision: number = 0;
 
     @ViewChild('plot') plotEl: ElementRef;
 
@@ -147,6 +148,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         if (this.dataDiffer) {
             const dataHasDiff = this.dataDiffer.diff(this.data);
             if (dataHasDiff) {
+                this.datarevision += 1;
                 shouldUpdate = true;
             }
         } else if (Array.isArray(this.data)) {
@@ -211,7 +213,12 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             throw error;
         }
 
-        return this.plotly.update(this.plotlyInstance, this.data, this.layout, this.config, this.frames).then(() => {
+        const layout = {
+            ...{datarevision: this.datarevision},
+            ...this.layout,
+        };
+
+        return this.plotly.update(this.plotlyInstance, this.data, layout, this.config, this.frames).then(() => {
             const figure = this.createFigure();
             this.update.emit(figure);
         }, err => {

@@ -20,6 +20,7 @@ import { AjaxComponent } from './ajax/ajax.component';
 import { FancyplotComponent } from './fancyplot/fancyplot.component';
 import { MemoryLeakComponent } from './memory-leak/memory-leak.component';
 import { FramesComponent } from './frames/frames.component';
+import { TimeoutUpdateComponent } from './timeout-update/timeout-update.component';
 
 
 const demoRoutes: Routes = [
@@ -31,6 +32,7 @@ const demoRoutes: Routes = [
     { path: 'fancy-plot', component: FancyplotComponent, data: { title: 'Fancy Plot' } },
     { path: 'memory-leak', component: MemoryLeakComponent, data: { title: 'Memory leak' } },
     { path: 'frames', component: FramesComponent, data: { title: 'Frames' } },
+    { path: 'timeout-update', component: TimeoutUpdateComponent, data: { title: 'Timeout Update' } },
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
@@ -57,7 +59,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
         AjaxComponent,
         FancyplotComponent,
         MemoryLeakComponent,
-        FramesComponent
+        FramesComponent,
+        TimeoutUpdateComponent
     ],
     exports: [DemoComponent],
 })
