@@ -10,7 +10,7 @@ type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow';
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
     protected static _plotly?: any = undefined;
-    protected static _moduleName?: PlotlyName;
+    protected static _moduleName?: PlotlyName = undefined;
 
     public static setModuleName(moduleName: PlotlyName) {
         PlotlyService._moduleName = moduleName;
