@@ -18,12 +18,17 @@ export class PlotlyViaCDNModule {
     private static _plotlyVersion: string = 'latest';
     static plotlyBundleNames: PlotlyBundleName[] = ['basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance'];
 
+    constructor(public plotlyService: PlotlyService) {
+        PlotlyService.setModuleName('ViaCDN');
+    }
+
     static set plotlyVersion(version: string) {
         const isOk = version === 'latest' || /^\d\.\d{1,2}\.\d{1,2}$/.test(version);
         if (!isOk) {
             throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3)`);
         }
 
+        PlotlyViaCDNModule.loadViaCDN();
         PlotlyViaCDNModule._plotlyVersion = version;
     }
 
@@ -39,33 +44,38 @@ export class PlotlyViaCDNModule {
 
     static loadViaCDN() {
         PlotlyService.setPlotly('waiting');
-        const src = PlotlyViaCDNModule._plotlyBundle == null
-            ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyVersion}.min.js`
-            : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyBundle}-${PlotlyViaCDNModule._plotlyBundle}.min.js`;
 
-        const script: HTMLScriptElement = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = src;
-        script.onerror = () => console.error(`Error loading plotly.js library from ${src}`);
+        const init = () => {
+            const src = PlotlyViaCDNModule._plotlyBundle == null
+                ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyVersion}.min.js`
+                : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyBundle}-${PlotlyViaCDNModule._plotlyVersion}.min.js`;
 
-        const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
-        head.appendChild(script);
+            const script: HTMLScriptElement = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = src;
+            script.onerror = () => console.error(`Error loading plotly.js library from ${src}`);
 
-        let counter = 200; // equivalent of 10 seconds...
+            const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
+            head.appendChild(script);
 
-        const fn = () => {
-            const plotly = (window as any).Plotly;
-            if (plotly) {
-                PlotlyService.setPlotly(plotly);
-            } else if (counter > 0) {
-                counter --;
-                setTimeout(fn, 50);
-            } else {
-                throw new Error(`Error loading plotly.js library from ${src}. Timeout.`);
-            }
+            let counter = 200; // equivalent of 10 seconds...
+
+            const fn = () => {
+                const plotly = (window as any).Plotly;
+                if (plotly) {
+                    PlotlyService.setPlotly(plotly);
+                } else if (counter > 0) {
+                    counter --;
+                    setTimeout(fn, 50);
+                } else {
+                    throw new Error(`Error loading plotly.js library from ${src}. Timeout.`);
+                }
+            };
+
+            fn();
         };
 
-        fn();
+        setTimeout(init);
     }
 
     static forRoot(config: Partial<{version: string}>): never {
