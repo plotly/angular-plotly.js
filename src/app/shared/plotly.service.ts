@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Plotly } from './plotly.interface';
 
+type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow';
+
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +10,11 @@ import { Plotly } from './plotly.interface';
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
     protected static _plotly?: any = undefined;
+    protected static _moduleName?: PlotlyName;
+
+    public static setModuleName(moduleName: PlotlyName) {
+        PlotlyService._moduleName = moduleName;
+    }
 
     public static setPlotly(plotly: any) {
         PlotlyService._plotly = plotly;
@@ -40,7 +47,11 @@ export class PlotlyService {
 
     public getPlotly() {
         if (typeof PlotlyService._plotly === 'undefined') {
-            throw new Error(`Peer dependency plotly.js isn't installed`);
+            const msg = PlotlyService._moduleName === 'ViaCDN'
+                ? `Error loading Peer dependency plotly.js from CDN url`
+                : `Peer dependency plotly.js isn't installed`;
+
+            throw new Error(msg);
         }
 
         return PlotlyService._plotly;

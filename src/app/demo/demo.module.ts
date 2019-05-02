@@ -8,8 +8,8 @@ import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { HomeComponent } from './home/home.component';
 import { DemoComponent } from './demo.component';
 
-import { PlotlyModule } from '../plotly/plotly.module';
-// import { PlotlyViaCDNModule } from '../plotly-via-cdn/plotly-via-cdn.module';
+// import { PlotlyModule } from '../plotly/plotly.module';
+import { PlotlyViaCDNModule } from '../plotly-via-cdn/plotly-via-cdn.module';
 // import { PlotlyViaWindowModule } from '../plotly-via-window/plotly-via-window.module';
 
 // Examples
@@ -38,15 +38,16 @@ const demoRoutes: Routes = [
 ];
 
 
-PlotlyModule.plotlyjs = PlotlyJS;
-// PlotlyViaCDNModule.plotlyVersion = 'latest';
+// PlotlyModule.plotlyjs = PlotlyJS;
+PlotlyViaCDNModule.plotlyVersion = '1.5.0';
+// PlotlyViaCDNModule.plotlyBundle = 'cartesian';
 
 @NgModule({
     imports: [
         CommonModule,
         HttpClientModule,
-        PlotlyModule,
-        // PlotlyViaCDNModule,
+        // PlotlyModule,
+        PlotlyViaCDNModule,
         // PlotlyViaWindowModule,
         RouterModule.forRoot(demoRoutes, { enableTracing: true }),
     ],
