@@ -7,13 +7,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class TimeoutUpdateComponent implements OnInit, OnDestroy {
 
-    private timestamps: Date[];
-    private y1: number[];
-    private y2: number[];
-    private y3: number[];
-    private graph: any;
+    public timestamps: Date[];
+    public y1: number[];
+    public y2: number[];
+    public y3: number[];
+    public graph: any;
 
-    private timeoutID: any;
+    public timeoutID: any;
 
     constructor() { }
 

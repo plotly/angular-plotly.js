@@ -35,7 +35,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public dataDiffer: IterableDiffer<Plotly.Data>;
     public datarevision: number = 0;
 
-    @ViewChild('plot') plotEl: ElementRef;
+    @ViewChild('plot', {static: true}) plotEl: ElementRef;
 
     @Input() data?: Plotly.Data[];
     @Input() layout?: Partial<Plotly.Layout>;
