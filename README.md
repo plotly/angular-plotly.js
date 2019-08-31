@@ -162,6 +162,7 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 | `(transitioning)`         | `Function` | `plotly_transitioning`         |
 | `(transitionInterrupted)` | `Function` | `plotly_transitioninterrupted` |
 | `(unhover)`               | `Function` | `plotly_unhover`               |
+| `(relayouting)`           | `Function` | `plotly_relayouting`           |
 
 
 ## Customizing the `plotly.js` bundle

@@ -81,11 +81,12 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() transitioning = new EventEmitter();
     @Output() transitionInterrupted = new EventEmitter();
     @Output() unhover = new EventEmitter();
+    @Output() relayouting = new EventEmitter();
 
     public eventNames = ['afterExport', 'afterPlot', 'animated', 'animatingFrame', 'animationInterrupted', 'autoSize',
         'beforeExport', 'buttonClicked', 'click', 'clickAnnotation', 'deselect', 'doubleClick', 'framework', 'hover',
         'legendClick', 'legendDoubleClick', 'relayout', 'restyle', 'redraw', 'selected', 'selecting', 'sliderChange',
-        'sliderEnd', 'sliderStart', 'transitioning', 'transitionInterrupted', 'unhover'];
+        'sliderEnd', 'sliderStart', 'transitioning', 'transitionInterrupted', 'unhover', 'relayouting'];
 
     constructor(
         public plotly: PlotlyService,
