@@ -23,7 +23,7 @@ describe('PlotlyService', () => {
     }));
 
     it('should check the plotly dependency', inject([PlotlyService], (service: PlotlyService) => {
-        PlotlyService.setPlotly(undefined);
+        (PlotlyService as any)._plotly = undefined;
         expect(() => service.getPlotly()).toThrowError(`Peer dependency plotly.js isn't installed`);
         PlotlyService.setPlotly(PlotlyJS);
     }));
@@ -81,5 +81,10 @@ describe('PlotlyService', () => {
         spyOn(plotly.Plots, 'resize').and.returnValue(new Promise(() => {}));
         service.resize('one' as any);
         expect(plotly.Plots.resize).toHaveBeenCalledWith('one');
+    }));
+
+
+    it('should fail if is using an unsupported version of plotly.js', inject([PlotlyService], () => {
+        expect(() => PlotlyService.setPlotly({})).toThrowError(`Invalid plotly.js version. Please, use any version above 1.40.0`);
     }));
 });

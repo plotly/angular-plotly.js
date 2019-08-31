@@ -17,6 +17,10 @@ export class PlotlyService {
     }
 
     public static setPlotly(plotly: any) {
+        if (typeof plotly === 'object' && typeof plotly.react !== 'function') {
+            throw new Error('Invalid plotly.js version. Please, use any version above 1.40.0');
+        }
+
         PlotlyService._plotly = plotly;
     }
 

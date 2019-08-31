@@ -182,7 +182,7 @@ import { CommonModule } from '@angular/common';
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
 
 
-PlotlyViaCDNModule.plotlyVersion = '1.5.0'; // can be `latest` or any version number (i.e.: '1.4.3')
+PlotlyViaCDNModule.plotlyVersion = '1.49.4'; // can be `latest` or any version number (i.e.: '1.40.0')
 PlotlyViaCDNModule.plotlyBundle = 'basic'; // optional: can be null (for full) or 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox' or 'finance'
 
 @NgModule({
