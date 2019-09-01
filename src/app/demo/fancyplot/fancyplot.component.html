@@ -1,3 +1,3 @@
 <div>
-    <plotly-plot [data]="graph.data" [layout]="graph.layout" [revision]="0" [debug]="true" [useResizeHandler]="true"></plotly-plot>
+    <plotly-plot (plotly_click)="onClick($event)" [data]="graph.data" [layout]="graph.layout" [revision]="0" [debug]="true" [useResizeHandler]="true"></plotly-plot>
 </div>

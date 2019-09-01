@@ -20,4 +20,8 @@ export class FancyplotComponent implements OnInit {
     ngOnInit() {
     }
 
+    onClick(event: any) {
+        console.log('click!');
+    }
+
 }
