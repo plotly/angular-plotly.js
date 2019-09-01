@@ -1,0 +1,13 @@
+<div>
+    <p>&nbsp;</p>
+    <button *ngIf="status === 'init'" (click)="loadData()" class="button">Load a 15MiB data</button>
+    <span *ngIf="status === 'loading'" style="font-style: italic">Loading...</span>
+    <span *ngIf="status === 'loaded'">
+        Lodaded! <br />
+        <button (click)="changeRandomData()" class="button">Change Random Data</button>
+    </span>
+    <span *ngIf="status === 'fail'">Something went wrong!</span>
+    <p>&nbsp;</p>
+
+    <plotly-plot [data]="data" [layout]="layout" [revision]="revision" [debug]="debug" [useResizeHandler]="useResizeHandler"></plotly-plot>
+</div>
