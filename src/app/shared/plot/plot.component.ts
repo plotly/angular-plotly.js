@@ -63,6 +63,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() beforeExport = new EventEmitter();
     @Output() buttonClicked = new EventEmitter();
     @Output() click = new EventEmitter();
+    @Output() plotly_click = new EventEmitter();
     @Output() clickAnnotation = new EventEmitter();
     @Output() deselect = new EventEmitter();
     @Output() doubleClick = new EventEmitter();
@@ -83,7 +84,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() unhover = new EventEmitter();
 
     public eventNames = ['afterExport', 'afterPlot', 'animated', 'animatingFrame', 'animationInterrupted', 'autoSize',
-        'beforeExport', 'buttonClicked', 'click', 'clickAnnotation', 'deselect', 'doubleClick', 'framework', 'hover',
+        'beforeExport', 'buttonClicked', 'clickAnnotation', 'deselect', 'doubleClick', 'framework', 'hover',
         'legendClick', 'legendDoubleClick', 'relayout', 'restyle', 'redraw', 'selected', 'selecting', 'sliderChange',
         'sliderEnd', 'sliderStart', 'transitioning', 'transitionInterrupted', 'unhover'];
 
@@ -98,6 +99,13 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             const figure = this.createFigure();
             this.initialized.emit(figure);
         });
+
+
+        if (this.plotly.debug && this.click.observers.length > 0) {
+            const msg = 'DEPRECATED: Reconsider using `(plotly_click)` instead of `(click)` to avoid event conflict. '
+                + 'Please check https://github.com/plotly/angular-plotly.js#FAQ';
+            console.error(msg);
+        }
     }
 
     ngOnDestroy() {
@@ -186,6 +194,11 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             this.eventNames.forEach(name => {
                 const eventName = `plotly_${name.toLowerCase()}`;
                 plotlyInstance.on(eventName, (data: any) => (this[name] as EventEmitter<void>).emit(data));
+            });
+
+            plotlyInstance.on('plotly_click', (data: any) => {
+                this.click.emit(data);
+                this.plotly_click.emit(data);
             });
 
             this.updateWindowResizeHandler();

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Plotly } from './plotly.interface';
+import { environment } from '../../environments/environment';
 
 type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow';
 
@@ -38,6 +39,10 @@ export class PlotlyService {
             PlotlyService.instances.splice(index, 1);
             PlotlyService._plotly.purge(div);
         }
+    }
+
+    public get debug(): boolean {
+        return environment.production === false;
     }
 
     public getInstanceByDivId(id: string): Plotly.PlotlyHTMLElement | undefined {
