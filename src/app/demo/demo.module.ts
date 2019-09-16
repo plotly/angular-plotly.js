@@ -41,7 +41,7 @@ const demoRoutes: Routes = [
 
 
 // PlotlyModule.plotlyjs = PlotlyJS;
-PlotlyViaCDNModule.plotlyVersion = '1.5.0';
+PlotlyViaCDNModule.plotlyVersion = '1.49.4';
 // PlotlyViaCDNModule.plotlyBundle = 'cartesian';
 
 @NgModule({
