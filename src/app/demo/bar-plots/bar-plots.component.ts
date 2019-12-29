@@ -63,4 +63,8 @@ export class BarPlotComponent {
         }
     };
 
+    public onPlotlyClick(event: Event) {
+        console.log('Sim sim sim', event);
+    }
+
 }

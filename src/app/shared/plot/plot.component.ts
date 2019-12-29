@@ -49,6 +49,9 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Input() debug: boolean = false;
     @Input() useResizeHandler: boolean = false;
 
+    @Input() updateOnLayoutChange = true;
+    @Input() updateOnDataChange = true;
+
     @Output() initialized = new EventEmitter<Plotly.Figure>();
     @Output() update = new EventEmitter<Plotly.Figure>();
     @Output() purge = new EventEmitter<Plotly.Figure>();
@@ -143,26 +146,30 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     ngDoCheck() {
         let shouldUpdate = false;
 
-        if (this.layoutDiffer) {
-            const layoutHasDiff = this.layoutDiffer.diff(this.layout);
-            if (layoutHasDiff) {
-                shouldUpdate = true;
+        if (this.updateOnLayoutChange) {
+            if (this.layoutDiffer) {
+                const layoutHasDiff = this.layoutDiffer.diff(this.layout);
+                if (layoutHasDiff) {
+                    shouldUpdate = true;
+                }
+            } else if (this.layout) {
+                this.layoutDiffer = this.keyValueDiffers.find(this.layout).create();
+            } else {
+                this.layoutDiffer = undefined;
             }
-        } else if (this.layout) {
-            this.layoutDiffer = this.keyValueDiffers.find(this.layout).create();
-        } else {
-            this.layoutDiffer = undefined;
         }
 
-        if (this.dataDiffer) {
-            const dataHasDiff = this.dataDiffer.diff(this.data);
-            if (dataHasDiff) {
-                shouldUpdate = true;
+        if (this.updateOnDataChange) {
+            if (this.dataDiffer) {
+                const dataHasDiff = this.dataDiffer.diff(this.data);
+                if (dataHasDiff) {
+                    shouldUpdate = true;
+                }
+            } else if (Array.isArray(this.data)) {
+                this.dataDiffer = this.iterableDiffers.find(this.data).create(this.dataDifferTrackBy);
+            } else {
+                this.dataDiffer = undefined;
             }
-        } else if (Array.isArray(this.data)) {
-            this.dataDiffer = this.iterableDiffers.find(this.data).create(this.dataDifferTrackBy);
-        } else {
-            this.dataDiffer = undefined;
         }
 
         if (shouldUpdate && this.plotlyInstance) {
@@ -187,7 +194,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return classes.join(' ');
     }
 
-    createPlot(): Promise<void> {
+    async createPlot(): Promise<void> {
         return this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config, this.frames).then(plotlyInstance => {
             this.plotlyInstance = plotlyInstance;
             this.getWindow().gd = this.debug ? plotlyInstance : undefined;
@@ -220,7 +227,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return figure;
     }
 
-    updatePlot() {
+    async updatePlot() {
         if (!this.plotlyInstance) {
             const error = new Error(`Plotly component wasn't initialized`);
             this.error.emit(error);
