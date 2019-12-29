@@ -194,7 +194,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return classes.join(' ');
     }
 
-    async createPlot(): Promise<void> {
+    createPlot(): Promise<void> {
         return this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config, this.frames).then(plotlyInstance => {
             this.plotlyInstance = plotlyInstance;
             this.getWindow().gd = this.debug ? plotlyInstance : undefined;
@@ -227,7 +227,8 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return figure;
     }
 
-    async updatePlot() {
+    updatePlot() {
+        console.log('updatePlot', this.plotlyInstance);
         if (!this.plotlyInstance) {
             const error = new Error(`Plotly component wasn't initialized`);
             this.error.emit(error);
