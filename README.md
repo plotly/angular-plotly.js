@@ -11,7 +11,7 @@
 
 ---
 
-Supports Angular 8.x and up. If you want to use with Angular 7.x, please read the FAQ.
+Supports Angular 8.x and up. If you want to use with Angular 7.x, [please read the FAQ](https://github.com/plotly/angular-plotly.js/blob/master/FAQ.md#how-to-support-angular-7x-).
 
 
 ## Content
