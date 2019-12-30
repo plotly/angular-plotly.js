@@ -11,6 +11,9 @@
 
 ---
 
+Supports Angular 8.x and up. If you want to use with Angular 7.x, please read the FAQ.
+
+
 ## Content
 
 * [Installation](#installation)

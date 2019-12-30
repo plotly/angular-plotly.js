@@ -35,3 +35,8 @@ export class AppPlotlyComponent {
 ## The graph is too slow when interacting, what could I do ?
 
 Angular checks all the data everytime to see if there is a change to be applied, sometimes this brings unexpected slowness when treating a large data to be displayed. To avoid this check, set the property `updateOnlyWithRevision` to `true`. When you need the component to update, you can use the `revision` property (a number) to force it to update. Simply incrementing it (e.g.: `this.revision += 1`) will force the component to be updated.
+
+
+## How to support Angular 7.x ?
+
+There was a breaking change from `Angular 7.x` to `8.x`. Please see this thread: https://github.com/plotly/angular-plotly.js/issues/79
