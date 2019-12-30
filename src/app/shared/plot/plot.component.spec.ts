@@ -73,25 +73,21 @@ describe('PlotComponent', () => {
     it('should update the graph when the data changes', (done) => {
         spyOn(component, 'updatePlot');
         component.data = [{ y: [10, 15, 13, 17], type: 'box' }];
-        expect(component.datarevision).toEqual(0);
+
         component.createPlot().then(() => {
             component.ngDoCheck();
             expect(component.updatePlot).not.toHaveBeenCalled();
-            expect(component.datarevision).toEqual(0);
 
             component.data = [{ y: [11, 15, 13, 17], type: 'box' }];
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalled();
-            expect(component.datarevision).toEqual(1);
 
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(1);
-            expect(component.datarevision).toEqual(1);
 
             component.data[0].y[0] = 12;
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(2);
-            expect(component.datarevision).toEqual(2);
             done();
         });
     });
@@ -106,6 +102,9 @@ describe('PlotComponent', () => {
             component.layout = {title: 'title two'};
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalled();
+
+            component.ngDoCheck();
+            expect(component.updatePlot).toHaveBeenCalledTimes(1);
 
             component.layout.title = 'title three ';
             component.ngDoCheck();

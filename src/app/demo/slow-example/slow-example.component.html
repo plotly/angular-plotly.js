@@ -1,0 +1,29 @@
+<div>
+    <plotly-plot [data]="data" [layout]="layout" [updateOnLayoutChange]="false" [updateOnDataChange]="false" [updateOnlyWithRevision]="false"></plotly-plot>
+
+    <div class="row">
+        <div class="col">
+            <code>[updateOnLayoutChange]="false"</code>
+        </div>
+        <div class="col">
+            <code>[updateOnDataChange]="false"</code>
+        </div>
+        <div class="col">
+            <code>[updateOnlyWithRevision]="false"</code>
+        </div>
+    </div>
+
+    <plotly-plot [data]="data" [layout]="layout" [updateOnLayoutChange]="true" [updateOnDataChange]="true" [updateOnlyWithRevision]="true"> </plotly-plot>
+
+    <div class="row">
+        <div class="col">
+            <code>[updateOnLayoutChange]="true"</code>
+        </div>
+        <div class="col">
+            <code>[updateOnDataChange]="true"</code>
+        </div>
+        <div class="col">
+            <code>[updateOnlyWithRevision]="true"</code>
+        </div>
+    </div>
+</div>

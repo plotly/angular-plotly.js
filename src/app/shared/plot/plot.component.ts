@@ -33,7 +33,6 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
     public layoutDiffer: KeyValueDiffer<string, any>;
     public dataDiffer: IterableDiffer<Plotly.Data>;
-    public datarevision: number = 0;
 
     @ViewChild('plot', {static: true}) plotEl: ElementRef;
 
@@ -51,6 +50,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     @Input() updateOnLayoutChange = true;
     @Input() updateOnDataChange = true;
+    @Input() updateOnlyWithRevision = false;
 
     @Output() initialized = new EventEmitter<Plotly.Figure>();
     @Output() update = new EventEmitter<Plotly.Figure>();
@@ -144,6 +144,10 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     ngDoCheck() {
+        if (this.updateOnlyWithRevision) {
+            return false;
+        }
+
         let shouldUpdate = false;
 
         if (this.updateOnLayoutChange) {
@@ -173,7 +177,6 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
 
         if (shouldUpdate && this.plotlyInstance) {
-            this.datarevision += 1;
             this.updatePlot();
         }
     }
@@ -228,17 +231,13 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     updatePlot() {
-        console.log('updatePlot', this.plotlyInstance);
         if (!this.plotlyInstance) {
             const error = new Error(`Plotly component wasn't initialized`);
             this.error.emit(error);
             throw error;
         }
 
-        const layout = {
-            ...{datarevision: this.datarevision},
-            ...this.layout,
-        };
+        const layout = {...this.layout};
 
         return this.plotly.update(this.plotlyInstance, this.data, layout, this.config, this.frames).then(() => {
             const figure = this.createFigure();

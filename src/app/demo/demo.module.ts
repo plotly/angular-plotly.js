@@ -22,6 +22,7 @@ import { MemoryLeakComponent } from './memory-leak/memory-leak.component';
 import { FramesComponent } from './frames/frames.component';
 import { TimeoutUpdateComponent } from './timeout-update/timeout-update.component';
 import { HugeMemoryUsageComponent } from './huge-memory-usage/huge-memory-usage.component';
+import { SlowExampleComponent } from './slow-example/slow-example.component';
 
 
 const demoRoutes: Routes = [
@@ -35,6 +36,7 @@ const demoRoutes: Routes = [
     { path: 'frames', component: FramesComponent, data: { title: 'Frames' } },
     { path: 'timeout-update', component: TimeoutUpdateComponent, data: { title: 'Timeout Update' } },
     { path: 'huge-memory-usage', component: HugeMemoryUsageComponent, data: { title: 'Huge Memory Usage' } },
+    { path: 'slow-example', component: SlowExampleComponent, data: { title: 'Slow example' } },
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
@@ -65,6 +67,7 @@ PlotlyViaCDNModule.plotlyVersion = '1.49.4';
         FramesComponent,
         TimeoutUpdateComponent,
         HugeMemoryUsageComponent,
+        SlowExampleComponent,
     ],
     exports: [DemoComponent],
 })
