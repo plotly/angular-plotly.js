@@ -1,0 +1,12 @@
+
+<h4>Total time: {{ getTotalTime() }}ms</h4>
+
+<div class="grid">
+
+    <div class="item" *ngFor="let data of chartData; let i = index; trackBy: trackByIndex">
+        <div>Time: {{ getTime(i) }}ms</div>
+        <plotly-plot [data]="data" [layout]="layout" [style]="style" [config]="config" (ngInited)="onNgInited(i)" (initialized)="onInitialized(i)"></plotly-plot>
+    </div>
+
+	
+</div>

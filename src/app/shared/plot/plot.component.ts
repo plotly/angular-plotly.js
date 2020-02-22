@@ -15,6 +15,7 @@ import {
     IterableDiffers,
     KeyValueDiffer,
     KeyValueDiffers,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { PlotlyService } from '../plotly.service';
@@ -25,6 +26,7 @@ import { Plotly } from '../plotly.interface';
     selector: 'plotly-plot',
     template: `<div #plot [attr.id]="divId" [className]="getClassName()" [ngStyle]="style"></div>`,
     providers: [PlotlyService],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     protected defaultClassName = 'js-plotly-plot';
@@ -52,6 +54,7 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Input() updateOnDataChange = true;
     @Input() updateOnlyWithRevision = false;
 
+    @Output() ngInited = new EventEmitter();
     @Output() initialized = new EventEmitter<Plotly.Figure>();
     @Output() update = new EventEmitter<Plotly.Figure>();
     @Output() purge = new EventEmitter<Plotly.Figure>();
@@ -99,7 +102,9 @@ export class PlotComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     ) { }
 
     ngOnInit() {
-        this.createPlot().then(() => {
+        this.ngInited.emit();
+        setTimeout(async () => {
+            await this.createPlot();
             const figure = this.createFigure();
             this.initialized.emit(figure);
         });
