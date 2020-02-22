@@ -172,9 +172,6 @@ describe('PlotComponent', () => {
     });
 
     it('should clear all added window events on destroy', async (done) => {
-
-        spyOn(component, 'ngOnDestroy').and.callThrough();
-
         const windowListenerCount = (<any>window).eventListeners().length;
 
         // make component responsive via both the lib and the component (at least 2 window events are added)
@@ -185,12 +182,8 @@ describe('PlotComponent', () => {
         await component.createPlot();
         await fixture.whenStable();
 
-        expect(component.ngOnDestroy).not.toHaveBeenCalled();
-
         fixture.destroy();
         await fixture.whenStable();
-
-        expect(component.ngOnDestroy).toHaveBeenCalled();
 
         // amount of listeners should be the same as before initializing the component
         expect((<any>window).eventListeners().length).toEqual(windowListenerCount);
