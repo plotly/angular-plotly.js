@@ -25,7 +25,7 @@
               "src/styles.css"
             ],
             "scripts": [
-                "node_modules/plotly.js/dist/plotly.min.js"
+              "node_modules/plotly.js/dist/plotly.min.js"
             ]
           },
           "configurations": {
@@ -137,5 +137,8 @@
     "@schematics/angular:directive": {
       "prefix": "plotly"
     }
+  },
+  "cli": {
+    "analytics": "54eda63f-d875-4cef-9211-d2e2dd14ac9f"
   }
 }
