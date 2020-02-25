@@ -1,6 +1,6 @@
 {
   "name": "angular-plotly.js",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "license": "MIT",
   "main": "index.ts",
   "scripts": {
@@ -35,9 +35,7 @@
     "plotly.js",
     "graph"
   ],
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.3",
     "@angular/cli": "9.0.3",
