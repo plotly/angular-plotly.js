@@ -36,6 +36,16 @@ describe('PlotlyService', () => {
         expect(service.getPlotly()).toBe(PlotlyJS);
     }));
 
+    it('should set the module name', () => {  
+        expect((PlotlyService as any)._moduleName).toBeUndefined();
+        PlotlyService.setModuleName('ViaCDN');
+        expect((PlotlyService as any)._moduleName).toBe('ViaCDN');
+        PlotlyService.setModuleName('ViaCDN');
+
+        // cleaning up
+        (PlotlyService as any)._moduleName = undefined;
+    });
+
     it('should call plotly.newPlot method', inject([PlotlyService], async (service: PlotlyService) => {
         return new Promise(async (resolve) => {
             const plotly = service.getPlotly();
