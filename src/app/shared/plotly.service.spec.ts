@@ -36,7 +36,7 @@ describe('PlotlyService', () => {
         expect(service.getPlotly()).toBe(PlotlyJS);
     }));
 
-    it('should set the module name', () => {  
+    it('should set the module name', () => {
         expect((PlotlyService as any)._moduleName).toBeUndefined();
         PlotlyService.setModuleName('ViaCDN');
         expect((PlotlyService as any)._moduleName).toBe('ViaCDN');
