@@ -11,7 +11,7 @@
 
 ---
 
-Supports Angular 8.x and up. If you want to use with Angular 7.x, [please read the FAQ](https://github.com/plotly/angular-plotly.js/blob/master/FAQ.md#how-to-support-angular-7x-).
+Supports Angular 8.x. To use with angular 9.x, please check the 2.x version. If you want to use with Angular 7.x, [please read the FAQ](https://github.com/plotly/angular-plotly.js/blob/master/FAQ.md#how-to-support-angular-7x-).
 
 
 ## Content
@@ -123,14 +123,14 @@ The `plotly.js` is bundled within the angular code. To avoid this, please read [
 @Component({
     selector: 'plotly-example',
     template: `
-    <plotly-plot [data]="graph.data" [layout]="graph.layout" 
+    <plotly-plot [data]="graph.data" [layout]="graph.layout"
        [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%'}">
     </plotly-plot>`,
 })
 export class PlotlyExampleComponent {
     public graph = {
         data: [{ x: [1, 2, 3], y: [2, 5, 3], type: 'bar' }],
-        layout: {autosize: true, title: 'A Fancy Plot'},        
+        layout: {autosize: true, title: 'A Fancy Plot'},
     };
 }
 ```
@@ -169,11 +169,13 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 | `(transitionInterrupted)` | `Function` | `plotly_transitioninterrupted` |
 | `(unhover)`               | `Function` | `plotly_unhover`               |
 | `(relayouting)`           | `Function` | `plotly_relayouting`           |
+| `(treemapclick)`          | `Function` | `plotly_treemapclick`          |
+| `(sunburstclick)`         | `Function` | `plotly_sunburstclick`         |
 
 
 ## Customizing the `plotly.js` bundle
 
-By default, this library bundles `plotly.js` from the peer dependency together within the output. This results on huge outputs, for `plotly.js` itself is ~3MB when bundled. It also makes the build (with `ng serve --prod`) really slow, for it minifies everything together. 
+By default, this library bundles `plotly.js` from the peer dependency together within the output. This results on huge outputs, for `plotly.js` itself is ~3MB when bundled. It also makes the build (with `ng serve --prod`) really slow, for it minifies everything together.
 
 If you wish to optimize loading `plotly.js` in a different way, please check both [`PlotlyViaCDNModule`](#plotly-via-cdn-module) and [`PlotlyViaWindowModule`](#plotly-via-window-module) modules below.
 
@@ -195,7 +197,7 @@ PlotlyViaCDNModule.plotlyBundle = 'basic'; // optional: can be null (for full) o
 @NgModule({
     imports: [
         CommonModule,
-        PlotlyViaCDNModule, 
+        PlotlyViaCDNModule,
     ],
     ...
 })
@@ -204,7 +206,7 @@ export class AppModule { }
 
 ### Plotly Via Window Module
 
-`plotly.js` can be added as a [global script on angular.json](https://github.com/angular/angular-cli/wiki/stories-global-scripts#global-scripts) to avoid it being bundled into the final project's code. To make this happen, you must first add `plotly.js` path into `angular.json` file as shown below: 
+`plotly.js` can be added as a [global script on angular.json](https://github.com/angular/angular-cli/wiki/stories-global-scripts#global-scripts) to avoid it being bundled into the final project's code. To make this happen, you must first add `plotly.js` path into `angular.json` file as shown below:
 
 ```javascript
 // angular.json

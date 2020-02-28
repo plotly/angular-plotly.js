@@ -42,7 +42,7 @@ export class PlotlyViaCDNModule {
         PlotlyViaCDNModule._plotlyBundle = bundle;
     }
 
-    static loadViaCDN() {
+    static loadViaCDN(): void {
         PlotlyService.setPlotly('waiting');
 
         const init = () => {
