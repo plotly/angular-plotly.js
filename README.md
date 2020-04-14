@@ -149,7 +149,7 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 | `(autoSize)`              | `Function` | `plotly_autosize`              |
 | `(beforeExport)`          | `Function` | `plotly_beforeexport`          |
 | `(buttonClicked)`         | `Function` | `plotly_buttonclicked`         |
-| `(plotly_click)`          | `Function` | `plotly_click`                 |
+| `(plotly_click)` [why not (click)?](FAQ.md#why-using-plotly_click-instead-of-click) | `Function` | `plotly_click`                 |
 | `(clickAnnotation)`       | `Function` | `plotly_clickannotation`       |
 | `(deselect)`              | `Function` | `plotly_deselect`              |
 | `(doubleClick)`           | `Function` | `plotly_doubleclick`           |
