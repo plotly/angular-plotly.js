@@ -139,38 +139,38 @@ export class PlotlyExampleComponent {
 
 Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plotlyjs-events/) may be attached through the following props:
 
-| Prop                      | Type       | Plotly Event                   |
-| ------------------------- | ---------- | ------------------------------ |
-| `(afterExport)`           | `Function` | `plotly_afterexport`           |
-| `(afterPlot)`             | `Function` | `plotly_afterplot`             |
-| `(animated)`              | `Function` | `plotly_animated`              |
-| `(animatingFrame)`        | `Function` | `plotly_animatingframe`        |
-| `(animationInterrupted)`  | `Function` | `plotly_animationinterrupted`  |
-| `(autoSize)`              | `Function` | `plotly_autosize`              |
-| `(beforeExport)`          | `Function` | `plotly_beforeexport`          |
-| `(buttonClicked)`         | `Function` | `plotly_buttonclicked`         |
-| `(plotly_click)` [why not (click)?](FAQ.md#why-using-plotly_click-instead-of-click) | `Function` | `plotly_click`                 |
-| `(clickAnnotation)`       | `Function` | `plotly_clickannotation`       |
-| `(deselect)`              | `Function` | `plotly_deselect`              |
-| `(doubleClick)`           | `Function` | `plotly_doubleclick`           |
-| `(framework)`             | `Function` | `plotly_framework`             |
-| `(hover)`                 | `Function` | `plotly_hover`                 |
-| `(legendClick)`           | `Function` | `plotly_legendclick`           |
-| `(legendDoubleClick)`     | `Function` | `plotly_legenddoubleclick`     |
-| `(relayout)`              | `Function` | `plotly_relayout`              |
-| `(restyle)`               | `Function` | `plotly_restyle`               |
-| `(redraw)`                | `Function` | `plotly_redraw`                |
-| `(selected)`              | `Function` | `plotly_selected`              |
-| `(selecting)`             | `Function` | `plotly_selecting`             |
-| `(sliderChange)`          | `Function` | `plotly_sliderchange`          |
-| `(sliderEnd)`             | `Function` | `plotly_sliderend`             |
-| `(sliderStart)`           | `Function` | `plotly_sliderstart`           |
-| `(transitioning)`         | `Function` | `plotly_transitioning`         |
-| `(transitionInterrupted)` | `Function` | `plotly_transitioninterrupted` |
-| `(unhover)`               | `Function` | `plotly_unhover`               |
-| `(relayouting)`           | `Function` | `plotly_relayouting`           |
-| `(treemapclick)`          | `Function` | `plotly_treemapclick`          |
-| `(sunburstclick)`         | `Function` | `plotly_sunburstclick`         |
+| Prop                      | Type       | Plotly Event                   | Obs |
+| ------------------------- | ---------- | ------------------------------ | --- |
+| `(afterExport)`           | `Function` | `plotly_afterexport`           |     |
+| `(afterPlot)`             | `Function` | `plotly_afterplot`             |     |
+| `(animated)`              | `Function` | `plotly_animated`              |     |
+| `(animatingFrame)`        | `Function` | `plotly_animatingframe`        |     |
+| `(animationInterrupted)`  | `Function` | `plotly_animationinterrupted`  |     |
+| `(autoSize)`              | `Function` | `plotly_autosize`              |     |
+| `(beforeExport)`          | `Function` | `plotly_beforeexport`          |     |
+| `(buttonClicked)`         | `Function` | `plotly_buttonclicked`         |     |
+| `(plotly_click)`          | `Function` | `plotly_click`                 | [why not (click)?](FAQ.md#why-using-plotly_click-instead-of-click) |
+| `(clickAnnotation)`       | `Function` | `plotly_clickannotation`       |     |
+| `(deselect)`              | `Function` | `plotly_deselect`              |     |
+| `(doubleClick)`           | `Function` | `plotly_doubleclick`           |     |
+| `(framework)`             | `Function` | `plotly_framework`             |     |
+| `(hover)`                 | `Function` | `plotly_hover`                 |     |
+| `(legendClick)`           | `Function` | `plotly_legendclick`           |     |
+| `(legendDoubleClick)`     | `Function` | `plotly_legenddoubleclick`     |     |
+| `(relayout)`              | `Function` | `plotly_relayout`              |     |
+| `(restyle)`               | `Function` | `plotly_restyle`               |     |
+| `(redraw)`                | `Function` | `plotly_redraw`                |     |
+| `(selected)`              | `Function` | `plotly_selected`              |     |
+| `(selecting)`             | `Function` | `plotly_selecting`             |     |
+| `(sliderChange)`          | `Function` | `plotly_sliderchange`          |     |
+| `(sliderEnd)`             | `Function` | `plotly_sliderend`             |     |
+| `(sliderStart)`           | `Function` | `plotly_sliderstart`           |     |
+| `(transitioning)`         | `Function` | `plotly_transitioning`         |     |
+| `(transitionInterrupted)` | `Function` | `plotly_transitioninterrupted` |     |
+| `(unhover)`               | `Function` | `plotly_unhover`               |     |
+| `(relayouting)`           | `Function` | `plotly_relayouting`           |     |
+| `(treemapclick)`          | `Function` | `plotly_treemapclick`          |     |
+| `(sunburstclick)`         | `Function` | `plotly_sunburstclick`         |     |
 
 
 ## Customizing the `plotly.js` bundle
