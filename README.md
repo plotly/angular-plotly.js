@@ -95,8 +95,6 @@ The `plotly.js` is bundled within the angular code. To avoid this, please read [
 
 ### Basic Props
 
-**Warning**: for the time being, this component may _mutate_ its `layout` and `data` props in response to user input, going against React rules. This behaviour will change in the near future once https://github.com/plotly/plotly.js/issues/2389 is completed.
-
 | Prop                       | Type                         | Default                                           | Description                                                                                                                                                           |
 | -------------------------- | ---------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[data]`                   | `Array`                      | `[]`                                              | list of trace objects (see https://plot.ly/javascript/reference/)                                                                                                     |
