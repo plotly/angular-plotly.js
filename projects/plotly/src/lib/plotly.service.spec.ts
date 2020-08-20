@@ -23,7 +23,7 @@ describe('PlotlyService', () => {
     }));
 
     it('should check the plotly dependency', inject([PlotlyService], (service: PlotlyService) => {
-        (PlotlyService as any)._plotly = undefined;
+        (PlotlyService as any).plotly = undefined;
         expect(() => service.getPlotly()).toThrowError(`Peer dependency plotly.js isn't installed`);
         PlotlyService.setPlotly(PlotlyJS);
     }));
@@ -37,13 +37,12 @@ describe('PlotlyService', () => {
     }));
 
     it('should set the module name', () => {
-        expect((PlotlyService as any)._moduleName).toBeUndefined();
+        expect(PlotlyService.getModuleName()).toBeUndefined();
         PlotlyService.setModuleName('ViaCDN');
-        expect((PlotlyService as any)._moduleName).toBe('ViaCDN');
-        PlotlyService.setModuleName('ViaCDN');
+        expect(PlotlyService.getModuleName()).toBe('ViaCDN');
 
         // cleaning up
-        (PlotlyService as any)._moduleName = undefined;
+        PlotlyService.setModuleName(undefined);
     });
 
     it('should call plotly.newPlot method', inject([PlotlyService], async (service: PlotlyService) => {
