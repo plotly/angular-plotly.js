@@ -1,7 +1,0 @@
-.circleci/
-.ng_pkg_build/
-bin/
-coverage/
-.coveralls.yml
-.editorconfig
-yarn.lock

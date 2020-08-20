@@ -5,13 +5,13 @@
   To learn more about this file see: https://angular.io/config/solution-tsconfig.
 */
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./src/tsconfig.app.json"
-    },
-    {
-      "path": "./src/tsconfig.spec.json"
-    }
+    "files": [],
+    "references": [
+      {
+        "path": "./projects/plotly/tsconfig.lib.json"
+      },
+      {
+        "path": "./projects/plotly/tsconfig.spec.json"
+      }
   ]
-}
+  }

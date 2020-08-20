@@ -1,56 +1,38 @@
 {
-  "name": "angular-plotly.js",
-  "version": "2.0.0",
-  "license": "MIT",
-  "main": "index.ts",
+  "name": "angular-plotly-js",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:publish": "ng-packagr -p ng-package.json",
-    "lint": "ng lint",
     "test": "ng test",
-    "postversion": "git push && git push --tags"
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
-  "homepage": "https://github.com/plotly/angular-plotly.js",
-  "bugs": {
-    "url": "https://github.com/plotly/angular-plotly.js/issues"
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~10.0.9",
+    "@angular/common": "~10.0.9",
+    "@angular/compiler": "~10.0.9",
+    "@angular/core": "~10.0.9",
+    "@angular/forms": "~10.0.9",
+    "@angular/platform-browser": "~10.0.9",
+    "@angular/platform-browser-dynamic": "~10.0.9",
+    "@angular/router": "~10.0.9",
+    "plotly.js-dist": "^1.54.7",
+    "rxjs": "~6.5.5",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.10.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/plotly/angular-plotly.js"
-  },
-  "author": {
-    "name": "Plotly team",
-    "url": "http://plot.ly",
-    "email": "contact@plot.ly"
-  },
-  "contributors": [
-    "André Farzat <andrefarzat@gmail.com> (http://andrefarzat.com)",
-    "Ben <ben@plot.ly> (http://plot.ly)"
-  ],
-  "keywords": [
-    "angular",
-    "plotly",
-    "plotly.js",
-    "graph"
-  ],
-  "dependencies": {},
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1000.1",
-    "@angular/cli": "10.0.1",
-    "@angular/common": "10.0.2",
-    "@angular/compiler": "10.0.2",
-    "@angular/compiler-cli": "10.0.2",
-    "@angular/core": "10.0.2",
-    "@angular/platform-browser": "10.0.2",
-    "@angular/platform-browser-dynamic": "10.0.2",
-    "@angular/router": "10.0.2",
-    "@types/jasmine": "3.4.0",
-    "@types/jasminewd2": "2.0.6",
+    "@angular-devkit/build-angular": "~0.1000.6",
+    "@angular-devkit/build-ng-packagr": "~0.1000.6",
+    "@angular/cli": "~10.0.6",
+    "@angular/compiler-cli": "~10.0.9",
     "@types/node": "^12.11.1",
-    "codelyzer": "^5.1.2",
-    "coveralls": "3.0.6",
+    "@types/jasmine": "~3.5.0",
+    "@types/jasminewd2": "~2.0.3",
+    "codelyzer": "^6.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -59,13 +41,9 @@
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "ng-packagr": "^10.0.0",
-    "plotly.js": "1.52.2",
-    "rxjs": "6.5.4",
-    "ts-node": "8.3.0",
-    "tslib": "^2.0.0",
+    "protractor": "~7.0.0",
+    "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "3.9.6",
-    "zone.js": "~0.10.2"
-  },
-  "peerDependencies": {}
+    "typescript": "~3.9.5"
+  }
 }

@@ -1,9 +1,0 @@
-<div>
-    <p>&nbsp;</p>
-    <button (click)="loadData()" class="button">Load data from server</button>
-    <p>&nbsp;</p>
-
-    <div *ngIf="data">
-        <plotly-plot [data]="data" [layout]="layout" [revision]="0" [debug]="debug" [useResizeHandler]="useResizeHandler"></plotly-plot>
-    </div>
-</div>
