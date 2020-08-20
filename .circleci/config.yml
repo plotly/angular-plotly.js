@@ -37,5 +37,5 @@ jobs:
       # run tests!
       - run: npm run lint
       - run: npm run test -- --codeCoverage=true --progress=true --watch=false
-      - run: cat coverage/plotly/lcov.inf | ./node_modules/coveralls/bin/coveralls.js
+      - run: cat coverage/plotly/lcov.info | ./node_modules/coveralls/bin/coveralls.js
       - run: npm run build -- plotly --prod
