@@ -5,6 +5,7 @@
 ### Changed
 - Upgraded to angular 10.0
 - Moving to angular library format
+- Changing `plotly_click` event to `plotlyClick` for consistence among other event names
 
 
 ## [2.0.0] - 2020-02-28

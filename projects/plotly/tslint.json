@@ -12,6 +12,11 @@
       "element",
       "lib",
       "kebab-case"
+    ],
+    "only-arrow-functions": [
+        true,
+        "allow-declarations",
+        "allow-named-functions"
     ]
   }
 }

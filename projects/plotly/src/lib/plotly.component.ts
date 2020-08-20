@@ -1,3 +1,5 @@
+/* tslint:disable component-selector no-output-native no-conflicting-lifecycle */
+
 import {
   Component,
   ElementRef,
@@ -43,10 +45,10 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
   @Input() style?: { [key: string]: string };
 
   @Input() divId?: string;
-  @Input() revision: number = 0;
+  @Input() revision = 0;
   @Input() className?: string | string[];
-  @Input() debug: boolean = false;
-  @Input() useResizeHandler: boolean = false;
+  @Input() debug = false;
+  @Input() useResizeHandler = false;
 
   @Input() updateOnLayoutChange = true;
   @Input() updateOnDataChange = true;
@@ -66,7 +68,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
   @Output() beforeExport = new EventEmitter();
   @Output() buttonClicked = new EventEmitter();
   @Output() click = new EventEmitter();
-  @Output() plotly_click = new EventEmitter();
+  @Output() plotlyClick = new EventEmitter();
   @Output() clickAnnotation = new EventEmitter();
   @Output() deselect = new EventEmitter();
   @Output() doubleClick = new EventEmitter();
@@ -101,20 +103,20 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
       public keyValueDiffers: KeyValueDiffers,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
       this.createPlot().then(() => {
           const figure = this.createFigure();
           this.initialized.emit(figure);
       });
 
       if (this.click.observers.length > 0) {
-          const msg = 'DEPRECATED: Reconsider using `(plotly_click)` instead of `(click)` to avoid event conflict. '
+          const msg = 'DEPRECATED: Reconsider using `(plotlyClick)` instead of `(click)` to avoid event conflict. '
               + 'Please check https://github.com/plotly/angular-plotly.js#FAQ';
           console.error(msg);
       }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
       if (typeof this.resizeHandler === 'function') {
           this.getWindow().removeEventListener('resize', this.resizeHandler as any);
           this.resizeHandler = undefined;
@@ -125,7 +127,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
       PlotlyService.remove(this.plotlyInstance);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
       let shouldUpdate = false;
 
       const revision: SimpleChange = changes.revision;
@@ -145,7 +147,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
       this.updateWindowResizeHandler();
   }
 
-  ngDoCheck() {
+  ngDoCheck(): boolean | void {
       if (this.updateOnlyWithRevision) {
           return false;
       }
@@ -211,7 +213,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
           plotlyInstance.on('plotly_click', (data: any) => {
               this.click.emit(data);
-              this.plotly_click.emit(data);
+              this.plotlyClick.emit(data);
           });
 
           this.updateWindowResizeHandler();
@@ -232,7 +234,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
       return figure;
   }
 
-  updatePlot() {
+  updatePlot(): Promise<any> {
       if (!this.plotlyInstance) {
           const error = new Error(`Plotly component wasn't initialized`);
           this.error.emit(error);
@@ -250,7 +252,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
       });
   }
 
-  updateWindowResizeHandler() {
+  updateWindowResizeHandler(): void {
       if (this.useResizeHandler) {
           if (this.resizeHandler === undefined) {
               this.resizeHandler = () => this.plotly.resize(this.plotlyInstance);
@@ -264,7 +266,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
       }
   }
 
-  dataDifferTrackBy(_: number, item: any): any {
+  dataDifferTrackBy(_: number, item: any): unknown {
       const obj = Object.assign({}, item, { uid: '' });
       return JSON.stringify(obj);
   }

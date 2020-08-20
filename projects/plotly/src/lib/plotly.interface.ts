@@ -1,4 +1,5 @@
 
+/* tslint:disable no-namespace ban-types */
 export namespace Plotly {
     export type Data = any;
     export type Layout = any;

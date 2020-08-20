@@ -17,8 +17,8 @@ export class PlotlyModule {
 
     constructor() {
         if (!this.isValid()) {
-            const msg = "Invalid PlotlyJS object. Please check https://github.com/plotly/angular-plotly.js#quick-start"
-                      + " to see how to add PlotlyJS to your project.";
+            const msg = 'Invalid PlotlyJS object. Please check https://github.com/plotly/angular-plotly.js#quick-start'
+                      + ' to see how to add PlotlyJS to your project.';
             throw new Error(msg);
         }
 

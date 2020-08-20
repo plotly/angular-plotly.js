@@ -56,17 +56,17 @@ describe('PlotlyComponent', () => {
         spyOn(component, 'updatePlot');
 
         component.revision = 0;
-        component.ngOnChanges({'revision': new SimpleChange(null, component.revision, true)});
+        component.ngOnChanges({revision: new SimpleChange(null, component.revision, true)});
         fixture.detectChanges();
         expect(component.updatePlot).not.toHaveBeenCalled();
 
         component.revision = 1;
-        component.ngOnChanges({'revision': new SimpleChange(0, component.revision, false)});
+        component.ngOnChanges({revision: new SimpleChange(0, component.revision, false)});
         fixture.detectChanges();
         expect(component.updatePlot).toHaveBeenCalled();
 
         component.revision = 2;
-        component.ngOnChanges({'revision': new SimpleChange(1, component.revision, false)});
+        component.ngOnChanges({revision: new SimpleChange(1, component.revision, false)});
         fixture.detectChanges();
         expect(component.updatePlot).toHaveBeenCalledTimes(2);
     });
@@ -137,7 +137,7 @@ describe('PlotlyComponent', () => {
         component.plotlyInstance = document.createElement('div') as any;
         component.debug = true;
         fixture.detectChanges();
-        component.ngOnChanges({'debug': new SimpleChange(false, component.debug, false)});
+        component.ngOnChanges({debug: new SimpleChange(false, component.debug, false)});
 
         expect(component.updatePlot).toHaveBeenCalled();
         setTimeout(() => {
@@ -173,7 +173,7 @@ describe('PlotlyComponent', () => {
     });
 
     it('should clear all added window events on destroy', async (done) => {
-        const windowListenerCount = (<any>window).eventListeners().length;
+        const windowListenerCount = (window as any).eventListeners().length;
 
         // make component responsive via both the lib and the component (at least 2 window events are added)
         component.layout = { title: 'responsive', autosize: true };
@@ -187,7 +187,7 @@ describe('PlotlyComponent', () => {
         await fixture.whenStable();
 
         // amount of listeners should be the same as before initializing the component
-        expect((<any>window).eventListeners().length).toEqual(windowListenerCount);
+        expect((window as any).eventListeners().length).toEqual(windowListenerCount);
 
         done();
     });

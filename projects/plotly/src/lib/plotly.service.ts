@@ -9,22 +9,22 @@ type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow';
 })
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
-    protected static _plotly?: any = undefined;
-    protected static _moduleName?: PlotlyName = undefined;
+    protected static plotly?: any = undefined;
+    protected static moduleName?: PlotlyName = undefined;
 
-    public static setModuleName(moduleName: PlotlyName) {
-        PlotlyService._moduleName = moduleName;
+    public static setModuleName(moduleName: PlotlyName): void {
+        PlotlyService.moduleName = moduleName;
     }
 
-    public static setPlotly(plotly: any) {
+    public static setPlotly(plotly: any): void {
         if (typeof plotly === 'object' && typeof plotly.react !== 'function') {
             throw new Error('Invalid plotly.js version. Please, use any version above 1.40.0');
         }
 
-        PlotlyService._plotly = plotly;
+        PlotlyService.plotly = plotly;
     }
 
-    public static insert(instance: Plotly.PlotlyHTMLElement) {
+    public static insert(instance: Plotly.PlotlyHTMLElement): Plotly.PlotlyHTMLElement {
         const index = PlotlyService.instances.indexOf(instance);
         if (index === -1) {
             PlotlyService.instances.push(instance);
@@ -32,11 +32,11 @@ export class PlotlyService {
         return instance;
     }
 
-    public static remove(div: Plotly.PlotlyHTMLElement) {
+    public static remove(div: Plotly.PlotlyHTMLElement): void {
         const index = PlotlyService.instances.indexOf(div);
         if (index >= 0) {
             PlotlyService.instances.splice(index, 1);
-            PlotlyService._plotly.purge(div);
+            PlotlyService.plotly.purge(div);
         }
     }
 
@@ -49,16 +49,16 @@ export class PlotlyService {
         return undefined;
     }
 
-    public getPlotly() {
-        if (typeof PlotlyService._plotly === 'undefined') {
-            const msg = PlotlyService._moduleName === 'ViaCDN'
+    public getPlotly(): any {
+        if (typeof PlotlyService.plotly === 'undefined') {
+            const msg = PlotlyService.moduleName === 'ViaCDN'
                 ? `Error loading Peer dependency plotly.js from CDN url`
                 : `Peer dependency plotly.js isn't installed`;
 
             throw new Error(msg);
         }
 
-        return PlotlyService._plotly;
+        return PlotlyService.plotly;
     }
 
     protected waitFor(fn: () => boolean): Promise<void> {
@@ -72,7 +72,7 @@ export class PlotlyService {
     }
 
     // tslint:disable max-line-length
-    public async newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]) {
+    public async newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
         await this.waitFor(() => this.getPlotly() !== 'waiting');
 
         if (frames) {
@@ -83,7 +83,7 @@ export class PlotlyService {
         return this.getPlotly().newPlot(div, data, layout, config).then(() => PlotlyService.insert(div as any)) as Promise<any>;
     }
 
-    public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]) {
+    public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any>  {
         if (frames) {
             const obj = {data, layout, config, frames};
             return this.getPlotly().plot(div, obj) as Promise<any>;
@@ -92,7 +92,7 @@ export class PlotlyService {
         return this.getPlotly().plot(div, data, layout, config) as Promise<any>;
     }
 
-    public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]) {
+    public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any>  {
         if (frames) {
             const obj = {data, layout, config, frames};
             return this.getPlotly().react(div, obj) as Promise<any>;

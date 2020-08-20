@@ -15,41 +15,41 @@ export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' |
     exports: [PlotlyComponent],
 })
 export class PlotlyViaCDNModule {
-    private static _plotlyBundle?: string = null;
-    private static _plotlyVersion?: string = 'latest';
+    private static plotlyBundle?: string = null;
+    private static plotlyVersion = 'latest';
     public static plotlyBundleNames: PlotlyBundleName[] = ['basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance'];
 
     constructor(public plotlyService: PlotlyService) {
         PlotlyService.setModuleName('ViaCDN');
     }
 
-    static setPlotlyVersion(version: string) {
+    static setPlotlyVersion(version: string): void {
         const isOk = version === 'latest' || /^\d\.\d{1,2}\.\d{1,2}$/.test(version);
         if (!isOk) {
             throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3)`);
         }
 
         PlotlyViaCDNModule.loadViaCDN();
-        PlotlyViaCDNModule._plotlyVersion = version;
+        PlotlyViaCDNModule.plotlyVersion = version;
     }
 
-    static setPlotlyBundle(bundle: PlotlyBundleName) {
+    static setPlotlyBundle(bundle: PlotlyBundleName): void {
         const isOk = bundle === null || PlotlyViaCDNModule.plotlyBundleNames.indexOf(bundle) >= 0;
         if (!isOk) {
             const names = PlotlyViaCDNModule.plotlyBundleNames.map(n => `"${n}"`).join(', ');
             throw new Error(`Invalid plotly bundle. Please set to null for full or ${names} for a partial bundle.`);
         }
 
-        PlotlyViaCDNModule._plotlyBundle = bundle;
+        PlotlyViaCDNModule.plotlyBundle = bundle;
     }
 
     static loadViaCDN(): void {
         PlotlyService.setPlotly('waiting');
 
         const init = () => {
-            const src = PlotlyViaCDNModule._plotlyBundle == null
-                ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyVersion}.min.js`
-                : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule._plotlyBundle}-${PlotlyViaCDNModule._plotlyVersion}.min.js`;
+            const src = PlotlyViaCDNModule.plotlyBundle == null
+                ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyVersion}.min.js`
+                : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyBundle}-${PlotlyViaCDNModule.plotlyVersion}.min.js`;
 
             const script: HTMLScriptElement = document.createElement('script');
             script.type = 'text/javascript';

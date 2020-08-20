@@ -7,9 +7,9 @@ It's possible disable some plotly events returning `false` in its event. Please 
 
 
 
-## Why using `(plotly_click)` instead of `(click)`?
+## Why using `(plotlyClick)` instead of `(click)`?
 
-Angular uses the `(click)` directive to itself. If we use the `click` name as event alias to `plotly_click` we might get unexpected behaviour from both angular and plotly.js. We believe it is simpler to just avoid using the same name is better.
+Angular uses the `(click)` directive to itself. If we use the `click` name as event alias to `plotlyClick` we might get unexpected behaviour from both angular and plotly.js. We believe it is simpler to just avoid using the same name is better.
 Please see issue: https://github.com/plotly/angular-plotly.js/issues/63
 
 
