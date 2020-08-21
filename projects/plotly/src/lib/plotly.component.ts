@@ -76,6 +76,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
   @Output() hover = new EventEmitter();
   @Output() legendClick = new EventEmitter();
   @Output() legendDoubleClick = new EventEmitter();
+  @Output() react = new EventEmitter();
   @Output() relayout = new EventEmitter();
   @Output() restyle = new EventEmitter();
   @Output() redraw = new EventEmitter();
@@ -93,7 +94,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
   public eventNames = ['afterExport', 'afterPlot', 'animated', 'animatingFrame', 'animationInterrupted', 'autoSize',
       'beforeExport', 'buttonClicked', 'clickAnnotation', 'deselect', 'doubleClick', 'framework', 'hover',
-      'legendClick', 'legendDoubleClick', 'relayout', 'restyle', 'redraw', 'selected', 'selecting', 'sliderChange',
+      'legendClick', 'legendDoubleClick', 'react', 'relayout', 'restyle', 'redraw', 'selected', 'selecting', 'sliderChange',
       'sliderEnd', 'sliderStart', 'transitioning', 'transitionInterrupted', 'unhover', 'relayouting', 'treemapclick',
       'sunburstclick'];
 
