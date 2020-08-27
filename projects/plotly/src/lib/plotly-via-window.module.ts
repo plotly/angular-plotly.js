@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
-import { PlotlyModule } from './plotly.module';
+import { PlotlySharedModule } from './plotly-shared.module';
 
 
 @NgModule({
     declarations: [],
-    imports: [CommonModule, PlotlyModule],
+    imports: [CommonModule, PlotlySharedModule],
     providers: [PlotlyService],
-    exports: [PlotlyModule],
+    exports: [PlotlySharedModule],
 })
 export class PlotlyViaWindowModule {
     constructor() {

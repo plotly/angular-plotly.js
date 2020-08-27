@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
-import { PlotlyModule } from './plotly.module';
+import { PlotlySharedModule } from './plotly-shared.module';
 
 
 export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' | 'mapbox' | 'finance';
@@ -10,9 +10,9 @@ export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' |
 
 @NgModule({
     declarations: [],
-    imports: [CommonModule, PlotlyModule],
+    imports: [CommonModule, PlotlySharedModule],
     providers: [PlotlyService],
-    exports: [PlotlyModule],
+    exports: [PlotlySharedModule],
 })
 export class PlotlyViaCDNModule {
     private static plotlyBundle?: string = null;
