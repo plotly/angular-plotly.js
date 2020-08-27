@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [3.0.0] - 2020-08-20
+## [3.0.0] - 2020-08-27
 ### Changed
 - Upgraded to angular 10.0
 - Moving to angular library format

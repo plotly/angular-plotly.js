@@ -1,6 +1,6 @@
 {
   "name": "angular-plotly.js",
-  "version": "3.0.0-rc2",
+  "version": "3.0.0",
   "peerDependencies": {
     "@angular/common": "^10.0.9",
     "@angular/core": "^10.0.9"
