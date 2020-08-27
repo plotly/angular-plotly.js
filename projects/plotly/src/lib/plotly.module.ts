@@ -14,6 +14,7 @@ import { PlotlyService } from './plotly.service';
 })
 export class PlotlyModule {
     public static plotlyjs: any = {};
+    private plotlyModuleName = 'PlotlyModule';
 
     constructor() {
         if (!this.isValid()) {
