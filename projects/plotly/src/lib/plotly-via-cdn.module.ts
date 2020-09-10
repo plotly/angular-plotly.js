@@ -23,7 +23,7 @@ export class PlotlyViaCDNModule {
         PlotlyService.setModuleName('ViaCDN');
     }
 
-    static setPlotlyVersion(version: string): void {
+    public static setPlotlyVersion(version: string): void {
         const isOk = version === 'latest' || /^\d\.\d{1,2}\.\d{1,2}$/.test(version);
         if (!isOk) {
             throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3)`);
@@ -33,7 +33,7 @@ export class PlotlyViaCDNModule {
         PlotlyViaCDNModule.plotlyVersion = version;
     }
 
-    static setPlotlyBundle(bundle: PlotlyBundleName): void {
+    public static setPlotlyBundle(bundle: PlotlyBundleName): void {
         const isOk = bundle === null || PlotlyViaCDNModule.plotlyBundleNames.indexOf(bundle) >= 0;
         if (!isOk) {
             const names = PlotlyViaCDNModule.plotlyBundleNames.map(n => `"${n}"`).join(', ');
@@ -43,7 +43,7 @@ export class PlotlyViaCDNModule {
         PlotlyViaCDNModule.plotlyBundle = bundle;
     }
 
-    static loadViaCDN(): void {
+    public static loadViaCDN(): void {
         PlotlyService.setPlotly('waiting');
 
         const init = () => {

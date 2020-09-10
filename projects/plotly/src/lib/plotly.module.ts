@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
-import { PlotlySharedModule } from './plotly-shared.module'
+import { PlotlySharedModule } from './plotly-shared.module';
 
 
 
