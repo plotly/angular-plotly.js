@@ -12,6 +12,9 @@
       },
       {
         "path": "./projects/plotly/tsconfig.spec.json"
-      }
+      },
+    {
+      "path": "./projects/demo/tsconfig.app.json"
+    }
   ]
   }
