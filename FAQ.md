@@ -15,7 +15,7 @@ Please see issue: https://github.com/plotly/angular-plotly.js/issues/63
 
 ## How to access global Plotly object code
 
-If you're using `PlotlyModule`, which includes `plotly.js` via commonjs modules, you can access the `Plotly` object via `PlotlyService`. See the example:
+You can access the `Plotly` object from `plotly.js` via `PlotlyService`. See the example:
 
 ```typescript
 import { PlotlyService } from 'angular-plotly.js';
