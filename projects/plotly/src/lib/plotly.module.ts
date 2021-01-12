@@ -7,10 +7,10 @@ import { PlotlySharedModule } from './plotly-shared.module';
 
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, PlotlySharedModule],
-  providers: [PlotlyService],
-  exports: [PlotlySharedModule],
+    declarations: [],
+    imports: [CommonModule, PlotlySharedModule],
+    providers: [PlotlyService],
+    exports: [PlotlySharedModule],
 })
 export class PlotlyModule {
     public static plotlyjs: any = {};
@@ -18,7 +18,7 @@ export class PlotlyModule {
     constructor() {
         if (!this.isValid()) {
             const msg = 'Invalid PlotlyJS object. Please check https://github.com/plotly/angular-plotly.js#quick-start'
-                      + ' to see how to add PlotlyJS to your project.';
+                + ' to see how to add PlotlyJS to your project.';
             throw new Error(msg);
         }
 
