@@ -25,7 +25,7 @@ import { Plotly } from './plotly.interface';
 // @dynamic
 @Component({
     selector: 'plotly-plot',
-    template: `<div #plot [attr.id]="divId" [className]="getClassName()" [ngStyle]="style"></div>`,
+    template: `<div #plot [attr.id]="divId" [ngClass]="getClassName()" [ngStyle]="style"></div>`,
     providers: [PlotlyService],
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
