@@ -171,6 +171,16 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 | `(treemapclick)`          | `Function` | `plotly_treemapclick`          |     |
 | `(sunburstclick)`         | `Function` | `plotly_sunburstclick`         |     |
 
+### Customizing \<plotly-plot\> component
+
+*\<plotly-plot\>* component supports injection of user-defined contents:
+```html
+<plotly-plot>
+    user-defined Angular template
+</plotly-plot>
+```
+will put the user template into the root *\<div\>* of the resulting *plotly.js* plot,
+in front of any plotly-generated elements. This could be useful for implementing plot overlays.
 
 ## Customizing the `plotly.js` bundle
 
