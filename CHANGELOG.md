@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased] - YYYY-MM-DD
+### Changed
+- Enhanced integration with Angular CSS classes handling (See https://github.com/plotly/angular-plotly.js/pull/147)
+- Allow user content inside plotly plot *div* element (See https://github.com/plotly/angular-plotly.js/pull/147)
 
 ## [3.0.0] - 2020-08-27
 ### Changed
