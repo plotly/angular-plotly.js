@@ -1,7 +1,8 @@
 # Changelog
 
-## [unreleased] - YYYY-MM-DD
+## [3.1.0] - 2021-03-17
 ### Changed
+- Updated peerDependency to angular >10.0 (see https://github.com/plotly/angular-plotly.js/issues/154)
 - Enhanced integration with Angular CSS classes handling (See https://github.com/plotly/angular-plotly.js/pull/147)
 - Allow user content inside plotly plot *div* element (See https://github.com/plotly/angular-plotly.js/pull/147)
 
