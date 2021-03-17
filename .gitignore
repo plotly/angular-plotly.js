@@ -36,6 +36,7 @@ speed-measure-plugin*.json
 /connect.lock
 /coverage
 /projects/plotly/coverage
+/projects/plotly/README.md
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
