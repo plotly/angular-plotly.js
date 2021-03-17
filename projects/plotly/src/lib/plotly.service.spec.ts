@@ -46,7 +46,7 @@ describe('PlotlyService', () => {
     });
 
     it('should call plotly.newPlot method', inject([PlotlyService], async (service: PlotlyService) => {
-        return new Promise(async (resolve) => {
+        return new Promise<void>(async (resolve) => {
             const plotly = service.getPlotly();
             PlotlyService.setPlotly('waiting');
 
