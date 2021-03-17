@@ -1,8 +1,9 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "experimentalDecorators": true,
+    "declarationMap": true,
     "outDir": "../../out-tsc/lib",
     "target": "es2015",
     "declaration": true,
