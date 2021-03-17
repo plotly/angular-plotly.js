@@ -7,3 +7,4 @@
 * `ng build plotly --prod`
 * `npm publish dist/plotly`
 * `git tag -a <version> -m <version>`
+* `git push --tags`
