@@ -28,16 +28,15 @@ Supports Angular 9.x and up. If you want to use with Angular 8.x, please use ver
 
 ## Installation
 
-```bash
-$ npm install angular-plotly.js plotly.js
-```
-
 Using the [angular CLI](https://cli.angular.io/) to start a new project
 ```bash
 $ ng new my-project
 $ cd my-project
-$ npm install angular-plotly.js plotly.js --save
+$ npm install angular-plotly.js plotly.js-dist --save
+$ npm install  @types/plotly.js --save-dev
 ```
+
+Finally you need to rename the `node_modules/@types/plotly.js` folder to `plotly.js-dist`
 
 ## Quick start
 
@@ -46,7 +45,7 @@ Add the `PlotlyModule` into the main app module of your project
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import * as PlotlyJS from 'plotly.js-dist';
 import { PlotlyModule } from 'angular-plotly.js';
 
 PlotlyModule.plotlyjs = PlotlyJS;
