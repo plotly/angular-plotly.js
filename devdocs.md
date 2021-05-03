@@ -5,6 +5,7 @@
 * `ng test --codeCoverage=true --progress=true --watch=false`
 * `cp README.md angular-plotly.png projects/plotly`
 * `ng build plotly --prod`
-* `npm publish dist/plotly`
+* `cd dist/plotly`
+* `npm publish`
 * `git tag -a <version> -m <version>`
 * `git push --tags`
