@@ -24,16 +24,19 @@ describe('PlotlyService', () => {
 
     it('should check the plotly dependency', inject([PlotlyService], (service: PlotlyService) => {
         (PlotlyService as any).plotly = undefined;
-        expect(() => service.getPlotly()).toThrowError(`Peer dependency plotly.js isn't installed`);
-        PlotlyService.setPlotly(PlotlyJS);
+
+        return service.getPlotly().catch(err => {
+            expect(err.message).toBe(`Peer dependency plotly.js isn't installed`);
+            PlotlyService.setPlotly(PlotlyJS);
+        });
     }));
 
     it('should be created', inject([PlotlyService], (service: PlotlyService) => {
         expect(service).toBeTruthy();
     }));
 
-    it('should return the plotly object', inject([PlotlyService], (service: PlotlyService) => {
-        expect(service.getPlotly()).toBe(PlotlyJS);
+    it('should return the plotly object', inject([PlotlyService], async (service: PlotlyService) => {
+        expect(await service.getPlotly()).toBe(PlotlyJS);
     }));
 
     it('should set the module name', () => {
@@ -47,7 +50,7 @@ describe('PlotlyService', () => {
 
     it('should call plotly.newPlot method', inject([PlotlyService], async (service: PlotlyService) => {
         return new Promise<void>(async (resolve) => {
-            const plotly = service.getPlotly();
+            const plotly = await (service as any).getPlotly();
             PlotlyService.setPlotly('waiting');
 
             setTimeout(() => PlotlyService.setPlotly(PlotlyJS), 100);
@@ -62,8 +65,8 @@ describe('PlotlyService', () => {
         });
     }));
 
-    it('should call plotly.plot method', inject([PlotlyService], (service: PlotlyService) => {
-        const plotly = service.getPlotly();
+    it('should call plotly.plot method', inject([PlotlyService], async (service: PlotlyService) => {
+        const plotly = await service.getPlotly();
 
         spyOn(plotly, 'plot').and.returnValue(new Promise(() => {}));
         service.plot('one' as any, 'two' as any, 'three' as any, 'four' as any);
@@ -73,8 +76,8 @@ describe('PlotlyService', () => {
         expect(plotly.plot).toHaveBeenCalledWith('one', {data: 'two', layout: 'three', config: 'four', frames: 'five'});
     }));
 
-    it('should call plotly.update method', inject([PlotlyService], (service: PlotlyService) => {
-        const plotly = service.getPlotly();
+    it('should call plotly.update method', inject([PlotlyService], async (service: PlotlyService) => {
+        const plotly = await service.getPlotly();
 
         spyOn(plotly, 'react').and.returnValue(new Promise(() => {}));
         service.update('one' as any, 'two' as any, 'three' as any, 'four' as any);
@@ -84,8 +87,8 @@ describe('PlotlyService', () => {
         expect(plotly.react).toHaveBeenCalledWith('one', {data: 'two', layout: 'three', config: 'four', frames: 'five'});
     }));
 
-    it('should call plotly.Plots.resize method', inject([PlotlyService], (service: PlotlyService) => {
-        const plotly = service.getPlotly();
+    it('should call plotly.Plots.resize method', inject([PlotlyService], async (service: PlotlyService) => {
+        const plotly = await service.getPlotly();
 
         spyOn(plotly.Plots, 'resize').and.returnValue(new Promise(() => {}));
         service.resize('one' as any);

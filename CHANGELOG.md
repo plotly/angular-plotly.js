@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.2.0] - 2021-05-03
+### Changed
+- PlotlyService.getPlotly now returns a Promise
+
 ## [3.1.0] - 2021-03-17
 ### Changed
 - Updated peerDependency to angular >10.0 (see https://github.com/plotly/angular-plotly.js/issues/154)
