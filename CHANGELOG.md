@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.2.0] - 2021-05-03
+## [4.0.0] - 2021-05-03
 ### Changed
 - PlotlyService.getPlotly now returns a Promise
 
