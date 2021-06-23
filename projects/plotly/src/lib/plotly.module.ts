@@ -27,6 +27,7 @@ export class PlotlyModule {
 
     private isValid(): boolean {
         return PlotlyModule.plotlyjs !== undefined
-            && typeof PlotlyModule.plotlyjs.plot === 'function';
+            && (typeof PlotlyModule.plotlyjs.plot === 'function'
+                || typeof PlotlyModule.plotlyjs.newPlot === 'function');
     }
 }
