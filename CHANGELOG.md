@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.0.2] - 2021-08-12
+### Fixed
+- declaration for `plotly.js-dist-min`
+
 ## [4.0.1] - 2021-08-12
 ### Fixed
 - PlotlyModule.isValid now checks the plotly 2.x interface
