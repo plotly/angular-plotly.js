@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.0.1] - 2021-08-12
+### Fixed
+- PlotlyModule.isValid now checks the plotly 2.x interface
+
 ## [4.0.0] - 2021-05-03
 ### Changed
 - PlotlyService.getPlotly now returns a Promise
