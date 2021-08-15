@@ -32,11 +32,9 @@ Using the [angular CLI](https://cli.angular.io/) to start a new project
 ```bash
 $ ng new my-project
 $ cd my-project
-$ npm install angular-plotly.js plotly.js-dist --save
-$ npm install  @types/plotly.js --save-dev
+$ npm install angular-plotly.js plotly.js-dist-min --save
+$ npm install @types/plotly.js-dist-min --save-dev
 ```
-
-Finally you need to rename the `node_modules/@types/plotly.js` folder to `plotly.js-dist`
 
 ## Quick start
 
@@ -45,7 +43,7 @@ Add the `PlotlyModule` into the main app module of your project
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import * as PlotlyJS from 'plotly.js-dist';
+import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 
 PlotlyModule.plotlyjs = PlotlyJS;

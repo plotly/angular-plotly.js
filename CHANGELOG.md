@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.3] - 2021-08-15
+### Fixed
+- Removing declaration for `plotly.js-dist-min`. We can use the `@types/plotly.js-dist-min` npm package now
+- Updating README.md about the installation using `plotly.js-dist-min` and `@types/plotly.js-dist-min`
+
 ## [4.0.2] - 2021-08-12
 ### Fixed
 - declaration for `plotly.js-dist-min`
