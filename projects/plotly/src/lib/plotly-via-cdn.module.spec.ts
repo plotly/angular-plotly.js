@@ -4,7 +4,7 @@ import { PlotlyViaCDNModule } from './plotly-via-cdn.module';
 import { PlotlyService } from './plotly.service';
 
 describe('PlotlyViaCDNModule', () => {
-    let plotlyServiceCache: any = {};
+    const plotlyServiceCache: any = {};
 
     beforeEach(() => {
         plotlyServiceCache.moduleName = (PlotlyService as any).moduleName;
