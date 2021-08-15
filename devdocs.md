@@ -4,7 +4,7 @@
 * Update the CHANGELOG.md
 * `ng test --codeCoverage=true --progress=true --watch=false`
 * `cp README.md angular-plotly.png projects/plotly`
-* `ng build plotly --prod`
+* `ng build plotly --configuration production`
 * `git tag -a <version> -m <version>`
 * `git push --tags`
 * `cd dist/plotly`
