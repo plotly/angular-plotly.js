@@ -11,3 +11,4 @@
 * `git push --tags`
 * `cd dist/plotly`
 * `npm publish`
+* `git push`
