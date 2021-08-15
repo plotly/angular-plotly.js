@@ -27,7 +27,7 @@ jobs:
           - v1-dependencies-
 
       - run: npm install
-      - run: npm install plotly.js-dist # peer dependency
+      - run: npm install plotly.js-dist-min # peer dependency
 
       - save_cache:
           paths:
