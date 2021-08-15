@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.4] - 2021-08-15
+### Fixed
+- Several tests which were named as specs instead of spec
+- Fixing `PlotlyViaCDNModule.setPlotlyBundle` method to accept `null`
+
 ## [4.0.3] - 2021-08-15
 ### Fixed
 - Removing declaration for `plotly.js-dist-min`. We can use the `@types/plotly.js-dist-min` npm package now
