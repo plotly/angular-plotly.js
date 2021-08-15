@@ -33,7 +33,7 @@ export class PlotlyViaCDNModule {
         PlotlyViaCDNModule.plotlyVersion = version;
     }
 
-    public static setPlotlyBundle(bundle: PlotlyBundleName): void {
+    public static setPlotlyBundle(bundle: PlotlyBundleName | null): void {
         const isOk = bundle === null || PlotlyViaCDNModule.plotlyBundleNames.indexOf(bundle) >= 0;
         if (!isOk) {
             const names = PlotlyViaCDNModule.plotlyBundleNames.map(n => `"${n}"`).join(', ');
