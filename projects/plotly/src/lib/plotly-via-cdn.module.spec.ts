@@ -1,4 +1,4 @@
-import { PlotlyBundleName } from 'dist/plotly/public-api';
+import { PlotlyBundleName } from './plotly-via-cdn.module';
 
 import { PlotlyViaCDNModule } from './plotly-via-cdn.module';
 import { PlotlyService } from './plotly.service';
