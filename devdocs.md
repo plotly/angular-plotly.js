@@ -9,6 +9,6 @@
 * `git commit -am "<version>"`
 * `git tag -a <version> -m <version>`
 * `git push --tags`
+* `git push`
 * `cd dist/plotly`
 * `npm publish`
-* `git push`
