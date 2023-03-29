@@ -1,5 +1,15 @@
 # Changelog
 
+
+## [5.0.0] - 2023-03-29
+### Changed
+- Updated to Angular 13
+- The library now uses the Ivy engine
+- Migrated to use ESLint from the deprecated TSLint
+- Removed protractor and codelyzer
+### Fixed
+- Fixed vulnerabilities reported by NPM
+
 ## [4.0.4] - 2021-08-15
 ### Fixed
 - Several tests which were named as specs instead of spec
