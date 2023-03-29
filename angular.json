@@ -28,18 +28,6 @@
               "tsConfig": "projects/plotly/tsconfig.spec.json",
               "karmaConfig": "projects/plotly/karma.conf.js"
             }
-          },
-          "lint": {
-            "builder": "@angular-devkit/build-angular:tslint",
-            "options": {
-              "tsConfig": [
-                "projects/plotly/tsconfig.lib.json",
-                "projects/plotly/tsconfig.spec.json"
-              ],
-              "exclude": [
-                "**/node_modules/**"
-              ]
-            }
           }
         }
       }},

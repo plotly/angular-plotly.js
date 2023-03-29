@@ -1,10 +1,10 @@
 {
   "name": "angular-plotly.js",
-  "version": "4.0.4",
+  "version": "5.0.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">10.0.9",
-    "@angular/core": ">10.0.9"
+    "@angular/common": ">=13.0.0",
+    "@angular/core": ">=13.0.0"
   },
   "devDependencies": {
     "@types/plotly.js-dist-min": ">1.54.7",
