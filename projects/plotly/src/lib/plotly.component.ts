@@ -1,4 +1,4 @@
-/* tslint:disable component-selector no-output-native no-conflicting-lifecycle */
+/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 
 import {
     Component,
@@ -59,6 +59,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() initialized = new EventEmitter<Plotly.Figure>();
     @Output() update = new EventEmitter<Plotly.Figure>();
     @Output() purge = new EventEmitter<Plotly.Figure>();
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() error = new EventEmitter<Error>();
 
     @Output() afterExport = new EventEmitter();
@@ -69,6 +70,10 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() autoSize = new EventEmitter();
     @Output() beforeExport = new EventEmitter();
     @Output() buttonClicked = new EventEmitter();
+    /**
+     * @deprecated DEPRECATED: Reconsider using `(plotlyClick)` instead of `(click)` to avoid event conflict. Please check https://github.com/plotly/angular-plotly.js#FAQ
+     */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() click = new EventEmitter();
     @Output() plotlyClick = new EventEmitter();
     @Output() clickAnnotation = new EventEmitter();
@@ -215,7 +220,6 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             });
 
             plotlyInstance.on('plotly_click', (data: any) => {
-                this.click.emit(data);
                 this.plotlyClick.emit(data);
             });
 

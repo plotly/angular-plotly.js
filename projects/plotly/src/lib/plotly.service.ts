@@ -80,7 +80,6 @@ export class PlotlyService {
         });
     }
 
-    // tslint:disable max-line-length
     public async newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
         await this.waitFor(() => this._getPlotly() !== 'waiting');
 
@@ -119,7 +118,6 @@ export class PlotlyService {
 
         return this._getPlotly().react(div, data, layout, config) as Promise<any>;
     }
-    // tslint:enable max-line-length
 
     public resize(div: Plotly.PlotlyHTMLElement): void {
         return this._getPlotly().Plots.resize(div);

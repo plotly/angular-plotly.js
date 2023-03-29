@@ -1,5 +1,4 @@
 
-/* tslint:disable no-namespace ban-types */
 export namespace Plotly {
     export type Data = any;
     export type Layout = any;
@@ -17,11 +16,9 @@ export namespace Plotly {
     }
 
     export interface PlotlyInstance {
-        // tslint:disable max-line-length
         Plots: { resize(div: Plotly.PlotlyHTMLElement): void };
         newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>): Promise<PlotlyHTMLElement>;
         plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>): Promise<PlotlyHTMLElement>;
         react(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>): Promise<PlotlyHTMLElement>;
-        // tslint:enable
     }
 }
