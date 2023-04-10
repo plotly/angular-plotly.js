@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [5.1.0] - 2023-04-10
+### Changed
+- Updated to Angular 15
+
 ## [5.0.0] - 2023-03-29
 ### Changed
 - Updated to Angular 13
