@@ -19,6 +19,14 @@ jobs:
     working_directory: ~/repo
 
     steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          command: |
+            google-chrome --version
+            chromedriver --version
+          name: Check install
+
       - checkout
 
       # Download and cache dependencies
