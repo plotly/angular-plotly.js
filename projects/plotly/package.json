@@ -1,16 +1,16 @@
 {
   "name": "angular-plotly.js",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=13.0.0",
-    "@angular/core": ">=13.0.0"
+    "@angular/common": ">=15.0.0",
+    "@angular/core": ">=15.0.0"
   },
   "devDependencies": {
-    "@types/plotly.js-dist-min": ">1.54.7",
-    "plotly.js-dist-min": ">1.54.7"
+    "@types/plotly.js-dist-min": ">2.20.0",
+    "plotly.js-dist-min": ">2.20.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.1"
   }
 }
