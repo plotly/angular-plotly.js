@@ -45,7 +45,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: ng lint
-      - run: ng test -- --code-coverage=true --progress=true --watch=false
+      - run: npm run lint
+      - run: npm run test -- --code-coverage=true --progress=true --watch=false
       - run: cat coverage/plotly/report-lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-      - run: ng build plotly --configuration production
+      - run: npm run build -- plotly --configuration production
