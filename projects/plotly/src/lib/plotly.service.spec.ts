@@ -68,12 +68,12 @@ describe('PlotlyService', () => {
     it('should call plotly.plot method', inject([PlotlyService], async (service: PlotlyService) => {
         const plotly = await service.getPlotly();
 
-        spyOn(plotly, 'plot').and.returnValue(new Promise(() => {}));
+        spyOn(plotly, 'newPlot').and.returnValue(new Promise(() => {}));
         service.plot('one' as any, 'two' as any, 'three' as any, 'four' as any);
-        expect(plotly.plot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
+        expect(plotly.newPlot).toHaveBeenCalledWith('one', 'two', 'three', 'four');
 
         service.plot('one' as any, 'two' as any, 'three' as any, 'four' as any, 'five' as any);
-        expect(plotly.plot).toHaveBeenCalledWith('one', {data: 'two', layout: 'three', config: 'four', frames: 'five'});
+        expect(plotly.newPlot).toHaveBeenCalledWith('one', {data: 'two', layout: 'three', config: 'four', frames: 'five'});
     }));
 
     it('should call plotly.update method', inject([PlotlyService], async (service: PlotlyService) => {

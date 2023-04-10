@@ -15,7 +15,7 @@ export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' |
     exports: [PlotlySharedModule],
 })
 export class PlotlyViaCDNModule {
-    private static plotlyBundle?: string = null;
+    private static plotlyBundle?: PlotlyBundleName = undefined;
     private static plotlyVersion = 'latest';
     public static plotlyBundleNames: PlotlyBundleName[] = ['basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance'];
 
@@ -33,7 +33,7 @@ export class PlotlyViaCDNModule {
         PlotlyViaCDNModule.plotlyVersion = version;
     }
 
-    public static setPlotlyBundle(bundle: PlotlyBundleName | null): void {
+    public static setPlotlyBundle(bundle: PlotlyBundleName): void {
         const isOk = bundle === null || PlotlyViaCDNModule.plotlyBundleNames.indexOf(bundle) >= 0;
         if (!isOk) {
             const names = PlotlyViaCDNModule.plotlyBundleNames.map(n => `"${n}"`).join(', ');

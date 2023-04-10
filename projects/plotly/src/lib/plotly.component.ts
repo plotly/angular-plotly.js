@@ -33,12 +33,12 @@ import { Plotly } from './plotly.interface';
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     protected defaultClassName = 'js-plotly-plot';
 
-    public plotlyInstance: Plotly.PlotlyHTMLElement;
+    public plotlyInstance?: Plotly.PlotlyHTMLElement;
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
-    public layoutDiffer: KeyValueDiffer<string, any>;
-    public dataDiffer: IterableDiffer<Plotly.Data>;
+    public layoutDiffer?: KeyValueDiffer<string, any>;
+    public dataDiffer?: IterableDiffer<Plotly.Data>;
 
-    @ViewChild('plot', { static: true }) plotEl: ElementRef;
+    @ViewChild('plot', { static: true }) plotEl!: ElementRef;
 
     @Input() data?: Plotly.Data[];
     @Input() layout?: Partial<Plotly.Layout>;
@@ -132,18 +132,18 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
         const figure = this.createFigure();
         this.purge.emit(figure);
-        PlotlyService.remove(this.plotlyInstance);
+        PlotlyService.remove(this.plotlyInstance!);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         let shouldUpdate = false;
 
-        const revision: SimpleChange = changes.revision;
+        const revision: SimpleChange = changes['revision'];
         if (revision && !revision.isFirstChange()) {
             shouldUpdate = true;
         }
 
-        const debug: SimpleChange = changes.debug;
+        const debug: SimpleChange = changes['debug'];
         if (debug && !debug.isFirstChange()) {
             shouldUpdate = true;
         }
@@ -164,7 +164,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
         if (this.updateOnLayoutChange) {
             if (this.layoutDiffer) {
-                const layoutHasDiff = this.layoutDiffer.diff(this.layout);
+                const layoutHasDiff = this.layoutDiffer.diff(this.layout!);
                 if (layoutHasDiff) {
                     shouldUpdate = true;
                 }
@@ -193,6 +193,10 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
     }
 
+    getData(): Plotly.Data[] {
+        return this.data ?? [];
+    }
+
     getWindow(): any {
         return window;
     }
@@ -210,13 +214,15 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     createPlot(): Promise<void> {
-        return this.plotly.newPlot(this.plotEl.nativeElement, this.data, this.layout, this.config, this.frames).then(plotlyInstance => {
+        return this.plotly.newPlot(this.plotEl.nativeElement, this.getData(), this.layout, this.config, this.frames).then(plotlyInstance => {
             this.plotlyInstance = plotlyInstance;
             this.getWindow().gd = this.debug ? plotlyInstance : undefined;
 
             this.eventNames.forEach(name => {
                 const eventName = `plotly_${name.toLowerCase()}`;
-                plotlyInstance.on(eventName, (data: any) => (this[name] as EventEmitter<void>).emit(data));
+                const event = (this as any)[name] as EventEmitter<void>;
+
+                plotlyInstance.on(eventName, (data: any) => event.emit(data));
             });
 
             plotlyInstance.on('plotly_click', (data: any) => {
@@ -250,7 +256,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
         const layout = { ...this.layout };
 
-        return this.plotly.update(this.plotlyInstance, this.data, layout, this.config, this.frames).then(() => {
+        return this.plotly.update(this.plotlyInstance, this.getData(), layout, this.config, this.frames).then(() => {
             const figure = this.createFigure();
             this.update.emit(figure);
         }, err => {
@@ -262,7 +268,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     updateWindowResizeHandler(): void {
         if (this.useResizeHandler) {
             if (this.resizeHandler === undefined) {
-                this.resizeHandler = () => this.plotly.resize(this.plotlyInstance);
+                this.resizeHandler = () => this.plotly.resize(this.plotlyInstance!);
                 this.getWindow().addEventListener('resize', this.resizeHandler as any);
             }
         } else {

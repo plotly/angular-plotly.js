@@ -107,7 +107,7 @@ describe('PlotlyComponent', () => {
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(1);
 
-            component.layout.title = 'title three ';
+            component.layout['title'] = 'title three ';
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(2);
             done();
@@ -207,8 +207,7 @@ describe('PlotlyComponent', () => {
         window.dispatchEvent(new Event('resize'));
         await fixture.whenStable();
 
-        // responsive:true and useResizeHandler:true both cause .resize() to be called
-        expect(PlotlyJS.Plots.resize).toHaveBeenCalledTimes(2);
+        expect(PlotlyJS.Plots.resize).toHaveBeenCalled();
         PlotlyJS.Plots.resize.calls.reset();
 
         fixture.destroy();

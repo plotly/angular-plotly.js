@@ -43,7 +43,8 @@
   },
   "cli": {
     "analytics": false,
-    "defaultCollection": "@angular-eslint/schematics"
-  },
-  "defaultProject": "angular-plotlyjs"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
+  }
 }
