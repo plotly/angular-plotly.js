@@ -69,6 +69,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() animationInterrupted = new EventEmitter();
     @Output() autoSize = new EventEmitter();
     @Output() beforeExport = new EventEmitter();
+    @Output() beforeHover = new EventEmitter();
     @Output() buttonClicked = new EventEmitter();
     /**
      * @deprecated DEPRECATED: Reconsider using `(plotlyClick)` instead of `(click)` to avoid event conflict. Please check https://github.com/plotly/angular-plotly.js#FAQ
@@ -83,8 +84,12 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() hover = new EventEmitter();
     @Output() legendClick = new EventEmitter();
     @Output() legendDoubleClick = new EventEmitter();
+    /**
+     * @deprecated DEPRECATED: Event react is not list as an plotly.js event
+     */
     @Output() react = new EventEmitter();
     @Output() relayout = new EventEmitter();
+    @Output() relayouting = new EventEmitter();
     @Output() restyle = new EventEmitter();
     @Output() redraw = new EventEmitter();
     @Output() selected = new EventEmitter();
@@ -92,18 +97,21 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() sliderChange = new EventEmitter();
     @Output() sliderEnd = new EventEmitter();
     @Output() sliderStart = new EventEmitter();
+    @Output() sunburstclick = new EventEmitter();
     @Output() transitioning = new EventEmitter();
     @Output() transitionInterrupted = new EventEmitter();
     @Output() unhover = new EventEmitter();
-    @Output() relayouting = new EventEmitter();
+    /**
+     * @deprecated DEPRECATED: Event treemapclick is not list as an plotly.js event
+     */
     @Output() treemapclick = new EventEmitter();
-    @Output() sunburstclick = new EventEmitter();
+    @Output() webglcontextlost = new EventEmitter();
+
 
     public eventNames = ['afterExport', 'afterPlot', 'animated', 'animatingFrame', 'animationInterrupted', 'autoSize',
-        'beforeExport', 'buttonClicked', 'clickAnnotation', 'deselect', 'doubleClick', 'framework', 'hover',
-        'legendClick', 'legendDoubleClick', 'react', 'relayout', 'restyle', 'redraw', 'selected', 'selecting', 'sliderChange',
-        'sliderEnd', 'sliderStart', 'transitioning', 'transitionInterrupted', 'unhover', 'relayouting', 'treemapclick',
-        'sunburstclick'];
+        'beforeExport', 'beforeHover', 'buttonClicked', 'clickAnnotation', 'deselect', 'doubleClick', 'framework', 'hover',
+        'legendClick', 'legendDoubleClick', 'react', 'relayout', 'relayouting',  'restyle', 'redraw', 'selected', 'selecting', 'sliderChange',
+        'sliderEnd', 'sliderStart', 'sunburstclick', 'transitioning', 'transitionInterrupted', 'unhover', 'treemapclick', 'webglcontextlost'];
 
     constructor(
         public plotly: PlotlyService,
