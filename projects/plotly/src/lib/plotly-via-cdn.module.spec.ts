@@ -33,4 +33,24 @@ describe('PlotlyViaCDNModule', () => {
         expect(fn).toThrowError(msg);
     });
 
+    describe(".setPlotlyVersion", () => {
+        it('should set Plotly version', () => {
+            const version = "latest";
+            spyOn(PlotlyViaCDNModule, "loadViaCDN");
+
+            PlotlyViaCDNModule.setPlotlyVersion(version);
+
+            expect(PlotlyViaCDNModule.loadViaCDN).toHaveBeenCalled();
+            expect((PlotlyViaCDNModule as any).plotlyVersion).toBe(version);
+        });
+
+        it('should NOT set Plotly version', () => {
+            const version = "invalid";
+            spyOn(PlotlyViaCDNModule, "loadViaCDN").and.callThrough();
+
+            expect(() => {
+                PlotlyViaCDNModule.setPlotlyVersion(version);
+            }).toThrowError("Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3)");
+        });
+    });
 });
