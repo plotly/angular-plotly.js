@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plotly } from './plotly.interface';
 
-type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow';
+type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow' | undefined;
 
 
 @Injectable({
@@ -94,20 +94,10 @@ export class PlotlyService {
     public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any>  {
         if (frames) {
             const obj = {data, layout, config, frames};
-            if (typeof(this._getPlotly().plot) === 'function') {
-                return this._getPlotly().plot(div, obj) as Promise<any>;
-            } else {
-                // Adds support for Plotly 2.0.0 release candidates
-                return this._getPlotly().newPlot(div, obj) as Promise<any>;
-            }
+            return this._getPlotly().newPlot(div, obj) as Promise<any>;
         }
 
-        if (typeof(this._getPlotly().plot) === 'function') {
-            return this._getPlotly().plot(div, data, layout, config) as Promise<any>;
-        } else {
-            // Adds support for Plotly 2.0.0 release candidates
-            return this._getPlotly().newPlot(div, data, layout, config) as Promise<any>;
-        }
+        return this._getPlotly().newPlot(div, data, layout, config) as Promise<any>;
     }
 
     public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any>  {
