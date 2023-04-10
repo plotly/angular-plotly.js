@@ -1,5 +1,5 @@
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlotlyComponent } from './plotly.component';
 import { PlotlyService } from './plotly.service';
@@ -14,7 +14,7 @@ describe('PlotlyComponent', () => {
     let fixture: ComponentFixture<PlotlyComponent>;
     let windowSpy: jasmine.SpyObj<Window>;
 
-    beforeEach(async(() => {
+    beforeEach(async () => {
         windowSpy = jasmine.createSpyObj('Window', ['addEventListener', 'removeEventListener']);
 
         TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('PlotlyComponent', () => {
                 PlotlyService,
             ],
         }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PlotlyComponent);
@@ -172,7 +172,7 @@ describe('PlotlyComponent', () => {
         expect(component.resizeHandler).toBeUndefined();
     });
 
-    it('should clear all added window events on destroy', async (done) => {
+    it('should clear all added window events on destroy', async () => {
         const windowListenerCount = (window as any).eventListeners().length;
 
         // make component responsive via both the lib and the component (at least 2 window events are added)
@@ -188,11 +188,9 @@ describe('PlotlyComponent', () => {
 
         // amount of listeners should be the same as before initializing the component
         expect((window as any).eventListeners().length).toEqual(windowListenerCount);
-
-        done();
     });
 
-    it('should not cause errors if window is resized after a responsive chart is destroyed', async (done) => {
+    it('should not cause errors if window is resized after a responsive chart is destroyed', async () => {
 
         // make component responsive via both the lib and the component
         component.layout = { title: 'responsive', autosize: true };
@@ -217,7 +215,5 @@ describe('PlotlyComponent', () => {
         await fixture.whenStable();
 
         expect(PlotlyJS.Plots.resize).not.toHaveBeenCalled();
-
-        done();
     });
 });
