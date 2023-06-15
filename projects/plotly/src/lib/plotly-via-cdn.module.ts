@@ -24,9 +24,9 @@ export class PlotlyViaCDNModule {
     }
 
     public static setPlotlyVersion(version: string): void {
-        const isOk = version === 'latest' || /^\d\.\d{1,2}\.\d{1,2}$/.test(version);
+        const isOk = version === 'latest' || /^(strict-)?\d\.\d{1,2}\.\d{1,2}$/.test(version);
         if (!isOk) {
-            throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3)`);
+            throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3) or strict version number (i.e.: strict-1.4.3)`);
         }
 
         PlotlyViaCDNModule.loadViaCDN();

@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [5.1.1] - 2023-06-15
+### Changed
+- Adding support to strict version of bundle plotly (see https://github.com/plotly/angular-plotly.js/issues/237)
+
 ## [5.1.0] - 2023-04-10
 ### Changed
 - Updated to Angular 15

@@ -45,12 +45,31 @@ describe('PlotlyViaCDNModule', () => {
         });
 
         it('should NOT set Plotly version', () => {
-            const version = "invalid";
+            const errorMsg= "Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3) or strict version number (i.e.: strict-1.4.3)";
             spyOn(PlotlyViaCDNModule, "loadViaCDN").and.callThrough();
 
-            expect(() => {
-                PlotlyViaCDNModule.setPlotlyVersion(version);
-            }).toThrowError("Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3)");
+            let version = "invalid";
+            expect(() => { PlotlyViaCDNModule.setPlotlyVersion(version); }).toThrowError(errorMsg);
+
+            version = "strict-1";
+            expect(() => { PlotlyViaCDNModule.setPlotlyVersion(version); }).toThrowError(errorMsg);
+
+            version = "1";
+            expect(() => { PlotlyViaCDNModule.setPlotlyVersion(version); }).toThrowError(errorMsg);
+
+            version = "strict-1.1.a";
+            expect(() => { PlotlyViaCDNModule.setPlotlyVersion(version); }).toThrowError(errorMsg);
+
+            version = "strit-1.1.1";
+            expect(() => { PlotlyViaCDNModule.setPlotlyVersion(version); }).toThrowError(errorMsg);
+        });
+
+        it('should allow Plotly version with strict- at the beginning', () => {
+            const version = "strict-2.24.1";
+            spyOn(PlotlyViaCDNModule, "loadViaCDN");
+
+            PlotlyViaCDNModule.setPlotlyVersion(version);
+            expect((PlotlyViaCDNModule as any).plotlyVersion).toBe(version);
         });
     });
 });
