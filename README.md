@@ -96,6 +96,7 @@ The `plotly.js` is bundled within the angular code. To avoid this, please read [
 | -------------------------- | ---------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[data]`                   | `Array`                      | `[]`                                              | list of trace objects (see https://plot.ly/javascript/reference/)                                                                                                     |
 | `[layout]`                 | `Object`                     | `undefined`                                       | layout object (see https://plot.ly/javascript/reference/#layout)                                                                                                      |
+| `[theme]`                  | `string`                     | `'none'`                                          | name of pre-defined theme (see [Using themes](#Using%20themes))
 | `[frames]`                 | `Array`                      | `undefined`                                       | list of frame objects (see https://plot.ly/javascript/reference/)                                                                                                     |
 | `[config]`                 | `Object`                     | `undefined`                                       | config object (see https://plot.ly/javascript/configuration-options/)                                                                                                 |
 | `[revision]`               | `Number`                     | `undefined`                                       | When provided, causes the plot to update when the revision is incremented.                                                                                     |
@@ -178,6 +179,24 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 ```
 will put the user template into the root *\<div\>* of the resulting *plotly.js* plot,
 in front of any plotly-generated elements. This could be useful for implementing plot overlays.
+
+
+## Using themes
+
+There are few pre-defined themes you can use:
+* ggplot2
+* seaborn
+* simple_white
+* plotly
+* plotly_white
+* plotly_dark
+* presentation
+* xgridoff
+* ygridoff
+* gridon
+
+These themes were based on [plotly.py](https://github.com/plotly/plotly.py/tree/6f519c8fc459651e1b03704fa83bd66c804f8a67/packages/python/plotly/plotly/package_data/templates)
+
 
 ## Customizing the `plotly.js` bundle
 
