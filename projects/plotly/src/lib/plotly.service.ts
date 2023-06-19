@@ -84,25 +84,25 @@ export class PlotlyService {
         await this.waitFor(() => this._getPlotly() !== 'waiting');
 
         if (frames) {
-            const obj = {data, layout, config, frames};
+            const obj = { data, layout, config, frames };
             return this._getPlotly().newPlot(div, obj).then(() => PlotlyService.insert(div as any)) as Promise<any>;
         }
 
         return this._getPlotly().newPlot(div, data, layout, config).then(() => PlotlyService.insert(div as any)) as Promise<any>;
     }
 
-    public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any>  {
+    public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
         if (frames) {
-            const obj = {data, layout, config, frames};
+            const obj = { data, layout, config, frames };
             return this._getPlotly().newPlot(div, obj) as Promise<any>;
         }
 
         return this._getPlotly().newPlot(div, data, layout, config) as Promise<any>;
     }
 
-    public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any>  {
+    public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
         if (frames) {
-            const obj = {data, layout, config, frames};
+            const obj = { data, layout, config, frames };
             return this._getPlotly().react(div, obj) as Promise<any>;
         }
 

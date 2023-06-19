@@ -20,6 +20,7 @@ import {
 } from '@angular/core';
 
 import { PlotlyService } from './plotly.service';
+import { PlotlyThemeLoaderService, PlotlyTheme } from './plotly.theme-loader.service';
 import { Plotly } from './plotly.interface';
 
 // @dynamic
@@ -45,6 +46,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Input() config?: Partial<Plotly.Config>;
     @Input() frames?: Partial<Plotly.Config>[];
     @Input() style?: { [key: string]: string };
+    @Input() theme: PlotlyTheme = "none";
 
     @Input() divId?: string;
     @Input() revision = 0;
@@ -115,6 +117,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     constructor(
         public plotly: PlotlyService,
+        public themeLoader: PlotlyThemeLoaderService,
         public iterableDiffers: IterableDiffers,
         public keyValueDiffers: KeyValueDiffers,
     ) { }
@@ -130,6 +133,8 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
                 + 'Please check https://github.com/plotly/angular-plotly.js#FAQ';
             console.error(msg);
         }
+
+        if (this.theme != 'none') this.loadTheme();
     }
 
     ngOnDestroy(): void {
@@ -290,5 +295,14 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     dataDifferTrackBy(_: number, item: any): unknown {
         const obj = Object.assign({}, item, { uid: '' });
         return JSON.stringify(obj);
+    }
+
+    loadTheme() {
+        if (this.layout !== undefined) {
+            const msg = 'You fulfill both `theme` and `layout` properties. This will overwrite the `layout` data with the `theme` data.';
+            console.warn(msg);
+        }
+
+        this.themeLoader.load(this.theme).then(theme => this.layout = theme);
     }
 }
