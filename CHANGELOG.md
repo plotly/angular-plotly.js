@@ -1,5 +1,8 @@
 # Changelog
 
+## [5.2.1] - 2023-06-19
+### Fixing
+- Returning version for themes didn't work when publishing
 
 ## [5.1.1] - 2023-06-15
 ### Changed
