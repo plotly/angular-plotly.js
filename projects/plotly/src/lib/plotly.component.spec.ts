@@ -216,4 +216,30 @@ describe('PlotlyComponent', () => {
 
         expect(PlotlyJS.Plots.resize).not.toHaveBeenCalled();
     });
+
+    it('should load a theme', async () => {
+        spyOn(component, 'loadTheme').and.callThrough();
+        spyOn(component.themeLoader, 'load').and.callThrough();
+
+        component.theme = 'plotly_dark';
+
+        component.ngOnInit();
+        await fixture.whenStable();
+
+        expect(component.loadTheme).toHaveBeenCalled();
+        expect(component.themeLoader.load).toHaveBeenCalledOnceWith('plotly_dark');
+    });
+
+    it('should load NOT a theme', async () => {
+        spyOn(component, 'loadTheme').and.callThrough();
+        spyOn(component.themeLoader, 'load').and.callThrough();
+
+        component.theme = 'none';
+
+        component.ngOnInit();
+        await fixture.whenStable();
+
+        expect(component.loadTheme).not.toHaveBeenCalled();
+        expect(component.themeLoader.load).not.toHaveBeenCalledOnceWith('plotly_dark');
+    });
 });
