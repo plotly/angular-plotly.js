@@ -6,7 +6,7 @@ import { PlotlySharedModule } from './plotly-shared.module';
 
 
 export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' | 'mapbox' | 'finance';
-
+export type PlotlyCDNProvider = 'plotly' | 'cloudflare' | 'custom';
 
 @NgModule({
     declarations: [],
@@ -23,13 +23,13 @@ export class PlotlyViaCDNModule {
         PlotlyService.setModuleName('ViaCDN');
     }
 
-    public static setPlotlyVersion(version: string): void {
+    public static setPlotlyVersion(version: string, cdnProvider: PlotlyCDNProvider = 'plotly', cdnURL: string = ''): void {
         const isOk = version === 'latest' || /^(strict-)?\d\.\d{1,2}\.\d{1,2}$/.test(version);
         if (!isOk) {
             throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3) or strict version number (i.e.: strict-1.4.3)`);
         }
 
-        PlotlyViaCDNModule.loadViaCDN();
+        PlotlyViaCDNModule.loadViaCDN(cdnProvider, cdnURL);
         PlotlyViaCDNModule.plotlyVersion = version;
     }
 
@@ -43,13 +43,32 @@ export class PlotlyViaCDNModule {
         PlotlyViaCDNModule.plotlyBundle = bundle;
     }
 
-    public static loadViaCDN(): void {
+    public static loadViaCDN(cdnProvider: PlotlyCDNProvider = 'plotly', cdnURL: string = ''): void {
         PlotlyService.setPlotly('waiting');
 
         const init = () => {
-            const src = PlotlyViaCDNModule.plotlyBundle == null
-                ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyVersion}.min.js`
-                : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyBundle}-${PlotlyViaCDNModule.plotlyVersion}.min.js`;
+            let src: string = '';
+            switch (cdnProvider) {
+                case 'cloudflare':
+                    if (PlotlyViaCDNModule.plotlyVersion == 'latest') {
+                        throw new Error(`As cloudflare hosts version specific files, 'latest' as a version is not supported. Please specify a version or you can choose 'plotly' as a CDN provider.`);
+                    }
+                    src = PlotlyViaCDNModule.plotlyBundle == null
+                        ? `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${PlotlyViaCDNModule.plotlyVersion}/plotly.min.js`
+                        : `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${PlotlyViaCDNModule.plotlyVersion}/plotly-${PlotlyViaCDNModule.plotlyBundle}.min.js`;
+                    break;
+                case 'custom':
+                    if(!(!!cdnURL && typeof cdnURL === 'string')) {
+                        throw new Error(`Invalid or missing CDN URL. Please provide a CDN URL in case of custom provider. Alternatively, you can choose from 'plotly' or 'cloudflare'.`);
+                    }
+                    src = cdnURL;
+                    break;
+                default:
+                    src = PlotlyViaCDNModule.plotlyBundle == null
+                        ? `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyVersion}.min.js`
+                        : `https://cdn.plot.ly/plotly-${PlotlyViaCDNModule.plotlyBundle}-${PlotlyViaCDNModule.plotlyVersion}.min.js`;
+                    break;
+            }
 
             const script: HTMLScriptElement = document.createElement('script');
             script.type = 'text/javascript';
