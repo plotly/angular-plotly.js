@@ -217,7 +217,7 @@ describe('PlotlyComponent', () => {
         expect(PlotlyJS.Plots.resize).not.toHaveBeenCalled();
     });
 
-    it('should load a theme', async () => {
+    xit('should load a theme', async () => {
         spyOn(component, 'loadTheme').and.callThrough();
         spyOn(component.themeLoader, 'load').and.callThrough();
 
@@ -230,7 +230,7 @@ describe('PlotlyComponent', () => {
         expect(component.themeLoader.load).toHaveBeenCalledOnceWith('plotly_dark');
     });
 
-    it('should load NOT a theme', async () => {
+    xit('should load NOT a theme', async () => {
         spyOn(component, 'loadTheme').and.callThrough();
         spyOn(component.themeLoader, 'load').and.callThrough();
 

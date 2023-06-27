@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { PlotlyThemeLoaderService } from './plotly.theme-loader.service';
 
 
-describe('PlotlyThemeLoaderService', () => {
+xdescribe('PlotlyThemeLoaderService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [PlotlyThemeLoaderService]

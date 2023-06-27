@@ -134,7 +134,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             console.error(msg);
         }
 
-        if (this.theme != 'none') this.loadTheme();
+        // if (this.theme != 'none') this.loadTheme();
     }
 
     ngOnDestroy(): void {
