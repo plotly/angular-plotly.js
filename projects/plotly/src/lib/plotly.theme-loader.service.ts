@@ -13,10 +13,10 @@ export class PlotlyThemeLoaderService {
     public load(themeName: PlotlyTheme): Promise<any> {
         this._isLoading = true;
         return new Promise(resolve => {
-            import(`./themes/${themeName}.json`).then(data => {
-                resolve(data);
-                this._isLoading = false;
-            });
+            // import(`./themes/${themeName}.json`).then(data => {
+                resolve(true);
+            //     this._isLoading = false;
+            // });
         });
     }
 }
