@@ -242,4 +242,9 @@ describe('PlotlyComponent', () => {
         expect(component.loadTheme).not.toHaveBeenCalled();
         expect(component.themeLoader.load).not.toHaveBeenCalledOnceWith('plotly_dark');
     });
+
+    it('should not cause errors if ngOnDestroy is called before plotly is initialized', () => {
+        // note that this test intentionally does not call ngOnInit/whenStable
+        expect(() => component.ngOnDestroy()).not.toThrow();
+    });
 });
