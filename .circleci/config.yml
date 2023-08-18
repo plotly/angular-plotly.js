@@ -4,12 +4,12 @@
 #
 version: 2.1
 orbs:
-  browser-tools: circleci/browser-tools@1.4.1
+  browser-tools: circleci/browser-tools@1.4.3
 jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: cimg/node:18.15.0-browsers
+      - image: cimg/node:20.2.0-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
