@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [5.2.1] - 2023-08-25
+### Fixed
+- Added null definition to setPlotlyBundle method parameter (see https://github.com/plotly/angular-plotly.js/pull/249)
+
 ## [5.2.0] - 2023-06-19
 ### Addded
 - Adding support to themes (see https://github.com/plotly/angular-plotly.js/issues/152)
