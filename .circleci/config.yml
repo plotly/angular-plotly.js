@@ -21,7 +21,7 @@ jobs:
     steps:
       - run: sudo apt-get update
       - browser-tools/install-chrome:
-          chrome-version: "128.0.6613.113-1"
+          chrome-version: "128.0.6613.113"
       - browser-tools/install-browser-tools
       - run:
           command: |
