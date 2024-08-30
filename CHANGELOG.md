@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [6.0.0] - 2024-08-30
+### Changed
+- Updated to Angular 16
+
 ## [5.2.2] - 2023-08-25
 ### Fixed
 - Added null definition to setPlotlyBundle method parameter (see https://github.com/plotly/angular-plotly.js/pull/249)
