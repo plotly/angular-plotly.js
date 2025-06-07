@@ -11,28 +11,28 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^18.2.13",
-    "@angular/common": "^18.2.13",
-    "@angular/compiler": "^18.2.13",
-    "@angular/core": "^18.2.13",
-    "@angular/forms": "^18.2.13",
-    "@angular/platform-browser": "^18.2.13",
-    "@angular/platform-browser-dynamic": "^18.2.13",
-    "@angular/router": "^18.2.13",
+    "@angular/animations": "^19.2.14",
+    "@angular/common": "^19.2.14",
+    "@angular/compiler": "^19.2.14",
+    "@angular/core": "^19.2.14",
+    "@angular/forms": "^19.2.14",
+    "@angular/platform-browser": "^19.2.14",
+    "@angular/platform-browser-dynamic": "^19.2.14",
+    "@angular/router": "^19.2.14",
     "plotly.js-dist": "^2.20.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.1",
-    "zone.js": "^0.14.10"
+    "zone.js": "^0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.2.19",
+    "@angular-devkit/build-angular": "^19.2.14",
     "@angular-eslint/builder": "18.4.3",
     "@angular-eslint/eslint-plugin": "18.4.3",
     "@angular-eslint/eslint-plugin-template": "18.4.3",
     "@angular-eslint/schematics": "18.4.3",
     "@angular-eslint/template-parser": "18.4.3",
-    "@angular/cli": "^18.2.19",
-    "@angular/compiler-cli": "^18.2.13",
+    "@angular/cli": "^19.2.14",
+    "@angular/compiler-cli": "^19.2.14",
     "@types/jasmine": "~4.3.1",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
@@ -47,8 +47,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "^2.0.0",
-    "ng-packagr": "^18.2.1",
+    "ng-packagr": "^19.2.2",
     "ts-node": "~10.9.1",
-    "typescript": "~5.4.5"
+    "typescript": "~5.8.3"
   }
 }

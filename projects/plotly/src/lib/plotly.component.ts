@@ -30,6 +30,7 @@ import { Plotly } from './plotly.interface';
       <ng-content></ng-content>
     </div>`,
     providers: [PlotlyService],
+    standalone: false
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     protected defaultClassName = 'js-plotly-plot';
