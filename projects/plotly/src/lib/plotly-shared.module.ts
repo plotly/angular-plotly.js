@@ -6,8 +6,7 @@ import { PlotlyComponent } from './plotly.component';
 
 
 @NgModule({
-    declarations: [PlotlyComponent],
-    imports: [CommonModule],
+    imports: [CommonModule, PlotlyComponent],
     providers: [PlotlyService],
     exports: [PlotlyComponent],
 })

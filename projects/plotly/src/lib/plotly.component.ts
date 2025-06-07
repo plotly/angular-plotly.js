@@ -18,6 +18,7 @@ import {
     output,
     OutputEmitterRef,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
 import { Plotly } from './plotly.interface';
@@ -25,11 +26,12 @@ import { Plotly } from './plotly.interface';
 // @dynamic
 @Component({
     selector: 'plotly-plot',
+    standalone: true,
+    imports: [CommonModule],
     template: `<div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="style()">
       <ng-content></ng-content>
     </div>`,
     providers: [PlotlyService],
-    standalone: false
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     protected defaultClassName = 'js-plotly-plot';

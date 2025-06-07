@@ -19,7 +19,7 @@ describe('PlotlyComponent', () => {
         windowSpy = jasmine.createSpyObj('Window', ['addEventListener', 'removeEventListener']);
 
         TestBed.configureTestingModule({
-            declarations: [PlotlyComponent],
+            imports: [PlotlyComponent],
             providers: [
                 PlotlyService,
             ],
