@@ -3,12 +3,9 @@
 import {
     Component,
     ElementRef,
-    EventEmitter,
-    Input,
     OnDestroy,
     OnChanges,
     OnInit,
-    Output,
     SimpleChange,
     SimpleChanges,
     ViewChild,
@@ -17,6 +14,9 @@ import {
     IterableDiffers,
     KeyValueDiffer,
     KeyValueDiffers,
+    input,
+    output,
+    OutputEmitterRef,
 } from '@angular/core';
 
 import { PlotlyService } from './plotly.service';
@@ -26,7 +26,7 @@ import { Plotly } from './plotly.interface';
 // @dynamic
 @Component({
     selector: 'plotly-plot',
-    template: `<div #plot [attr.id]="divId" [ngClass]="getClassName()" [ngStyle]="style">
+    template: `<div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="style()">
       <ng-content></ng-content>
     </div>`,
     providers: [PlotlyService],
@@ -42,73 +42,71 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     @ViewChild('plot', { static: true }) plotEl!: ElementRef;
 
-    @Input() data?: Plotly.Data[];
-    @Input() layout?: Partial<Plotly.Layout>;
-    @Input() config?: Partial<Plotly.Config>;
-    @Input() frames?: Partial<Plotly.Config>[];
-    @Input() style?: { [key: string]: string };
-    @Input() theme: PlotlyTheme = "none";
+    data = input<Plotly.Data[]>();
+    layout = input<Partial<Plotly.Layout>>();
+    config = input<Partial<Plotly.Config>>();
+    frames = input<Partial<Plotly.Config>[]>();
+    style = input<{ [key: string]: string }>();
+    theme = input<PlotlyTheme>('none');
 
-    @Input() divId?: string;
-    @Input() revision = 0;
-    @Input() className?: string | string[];
-    @Input() debug = false;
-    @Input() useResizeHandler = false;
+    divId = input<string>();
+    revision = input(0);
+    className = input<string | string[]>();
+    debug = input(false);
+    useResizeHandler = input(false);
 
-    @Input() updateOnLayoutChange = true;
-    @Input() updateOnDataChange = true;
-    @Input() updateOnlyWithRevision = false;
+    updateOnLayoutChange = input(true);
+    updateOnDataChange = input(true);
+    updateOnlyWithRevision = input(false);
 
-    @Output() initialized = new EventEmitter<Plotly.Figure>();
-    @Output() update = new EventEmitter<Plotly.Figure>();
-    @Output() purge = new EventEmitter<Plotly.Figure>();
-    // eslint-disable-next-line @angular-eslint/no-output-native
-    @Output() error = new EventEmitter<Error>();
+    initialized = output<Plotly.Figure>();
+    update = output<Plotly.Figure>();
+    purge = output<Plotly.Figure>();
+    error = output<Error>();
 
-    @Output() afterExport = new EventEmitter();
-    @Output() afterPlot = new EventEmitter();
-    @Output() animated = new EventEmitter();
-    @Output() animatingFrame = new EventEmitter();
-    @Output() animationInterrupted = new EventEmitter();
-    @Output() autoSize = new EventEmitter();
-    @Output() beforeExport = new EventEmitter();
-    @Output() beforeHover = new EventEmitter();
-    @Output() buttonClicked = new EventEmitter();
+    afterExport = output();
+    afterPlot = output();
+    animated = output();
+    animatingFrame = output();
+    animationInterrupted = output();
+    autoSize = output();
+    beforeExport = output();
+    beforeHover = output();
+    buttonClicked = output();
     /**
      * @deprecated DEPRECATED: Reconsider using `(plotlyClick)` instead of `(click)` to avoid event conflict. Please check https://github.com/plotly/angular-plotly.js#FAQ
      */
-    // eslint-disable-next-line @angular-eslint/no-output-native
-    @Output() click = new EventEmitter();
-    @Output() plotlyClick = new EventEmitter();
-    @Output() clickAnnotation = new EventEmitter();
-    @Output() deselect = new EventEmitter();
-    @Output() doubleClick = new EventEmitter();
-    @Output() framework = new EventEmitter();
-    @Output() hover = new EventEmitter();
-    @Output() legendClick = new EventEmitter();
-    @Output() legendDoubleClick = new EventEmitter();
+    click = output();
+    plotlyClick = output();
+    clickAnnotation = output();
+    deselect = output();
+    doubleClick = output();
+    framework = output();
+    hover = output();
+    legendClick = output();
+    legendDoubleClick = output();
     /**
      * @deprecated DEPRECATED: Event react is not list as an plotly.js event
      */
-    @Output() react = new EventEmitter();
-    @Output() relayout = new EventEmitter();
-    @Output() relayouting = new EventEmitter();
-    @Output() restyle = new EventEmitter();
-    @Output() redraw = new EventEmitter();
-    @Output() selected = new EventEmitter();
-    @Output() selecting = new EventEmitter();
-    @Output() sliderChange = new EventEmitter();
-    @Output() sliderEnd = new EventEmitter();
-    @Output() sliderStart = new EventEmitter();
-    @Output() sunburstclick = new EventEmitter();
-    @Output() transitioning = new EventEmitter();
-    @Output() transitionInterrupted = new EventEmitter();
-    @Output() unhover = new EventEmitter();
+    react = output();
+    relayout = output();
+    relayouting = output();
+    restyle = output();
+    redraw = output();
+    selected = output();
+    selecting = output();
+    sliderChange = output();
+    sliderEnd = output();
+    sliderStart = output();
+    sunburstclick = output();
+    transitioning = output();
+    transitionInterrupted = output();
+    unhover = output();
     /**
      * @deprecated DEPRECATED: Event treemapclick is not list as an plotly.js event
      */
-    @Output() treemapclick = new EventEmitter();
-    @Output() webglcontextlost = new EventEmitter();
+    treemapclick = output();
+    webglcontextlost = output();
 
 
     public eventNames = ['afterExport', 'afterPlot', 'animated', 'animatingFrame', 'animationInterrupted', 'autoSize',
@@ -127,15 +125,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         this.createPlot().then(() => {
             const figure = this.createFigure();
             this.initialized.emit(figure);
-        });
-
-        if (this.click.observers.length > 0) {
-            const msg = 'DEPRECATED: Reconsider using `(plotlyClick)` instead of `(click)` to avoid event conflict. '
-                + 'Please check https://github.com/plotly/angular-plotly.js#FAQ';
-            console.error(msg);
-        }
-
-        // if (this.theme != 'none') this.loadTheme();
+        });        
     }
 
     ngOnDestroy(): void {
@@ -172,33 +162,33 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     ngDoCheck(): boolean | void {
-        if (this.updateOnlyWithRevision) {
+        if (this.updateOnlyWithRevision()) {
             return false;
         }
 
         let shouldUpdate = false;
 
-        if (this.updateOnLayoutChange) {
+        if (this.updateOnLayoutChange()) {
             if (this.layoutDiffer) {
-                const layoutHasDiff = this.layoutDiffer.diff(this.layout!);
+                const layoutHasDiff = this.layoutDiffer.diff(this.layout()!);
                 if (layoutHasDiff) {
                     shouldUpdate = true;
                 }
-            } else if (this.layout) {
-                this.layoutDiffer = this.keyValueDiffers.find(this.layout).create();
+            } else if (this.layout()) {
+                this.layoutDiffer = this.keyValueDiffers.find(this.layout()).create();
             } else {
                 this.layoutDiffer = undefined;
             }
         }
 
-        if (this.updateOnDataChange) {
+        if (this.updateOnDataChange()) {
             if (this.dataDiffer) {
-                const dataHasDiff = this.dataDiffer.diff(this.data);
+                const dataHasDiff = this.dataDiffer.diff(this.data());
                 if (dataHasDiff) {
                     shouldUpdate = true;
                 }
-            } else if (Array.isArray(this.data)) {
-                this.dataDiffer = this.iterableDiffers.find(this.data).create(this.dataDifferTrackBy);
+            } else if (Array.isArray(this.data())) {
+                this.dataDiffer = this.iterableDiffers.find(this.data()).create(this.dataDifferTrackBy);
             } else {
                 this.dataDiffer = undefined;
             }
@@ -210,7 +200,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     getData(): Plotly.Data[] {
-        return this.data ?? [];
+        return this.data() ?? [];
     }
 
     getWindow(): any {
@@ -219,24 +209,31 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     getClassName(): string {
         let classes = [this.defaultClassName];
+        const className = this.className();
 
-        if (Array.isArray(this.className)) {
-            classes = classes.concat(this.className);
-        } else if (this.className) {
-            classes.push(this.className);
+        if (Array.isArray(className)) {
+            classes = classes.concat(className);
+        } else if (className) {
+            classes.push(className);
         }
 
         return classes.join(' ');
     }
 
     createPlot(): Promise<void> {
-        return this.plotly.newPlot(this.plotEl.nativeElement, this.getData(), this.layout, this.config, this.frames).then(plotlyInstance => {
+        return this.plotly.newPlot(
+            this.plotEl.nativeElement,
+            this.getData(),
+            this.layout(),
+            this.config(),
+            this.frames()
+        ).then(plotlyInstance => {
             this.plotlyInstance = plotlyInstance;
             this.getWindow().gd = this.debug ? plotlyInstance : undefined;
 
             this.eventNames.forEach(name => {
                 const eventName = `plotly_${name.toLowerCase()}`;
-                const event = (this as any)[name] as EventEmitter<void>;
+                const event = (this as any)[name] as OutputEmitterRef<any>;
 
                 plotlyInstance.on(eventName, (data: any) => event.emit(data));
             });
@@ -270,9 +267,15 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             throw error;
         }
 
-        const layout = { ...this.layout };
+        const layout = { ...this.layout() };
 
-        return this.plotly.update(this.plotlyInstance, this.getData(), layout, this.config, this.frames).then(() => {
+        return this.plotly.update(
+            this.plotlyInstance,
+            this.getData(),
+            layout,
+            this.config(),
+            this.frames()
+        ).then(() => {
             const figure = this.createFigure();
             this.update.emit(figure);
         }, err => {
@@ -282,7 +285,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     updateWindowResizeHandler(): void {
-        if (this.useResizeHandler) {
+        if (this.useResizeHandler()) {
             if (this.resizeHandler === undefined) {
                 this.resizeHandler = () => this.plotly.resize(this.plotlyInstance!);
                 this.getWindow().addEventListener('resize', this.resizeHandler as any);
@@ -300,12 +303,4 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return JSON.stringify(obj);
     }
 
-    loadTheme() {
-        if (this.layout !== undefined) {
-            const msg = 'You fulfill both `theme` and `layout` properties. This will overwrite the `layout` data with the `theme` data.';
-            console.warn(msg);
-        }
-
-        this.themeLoader.load(this.theme).then(theme => this.layout = theme);
-    }
 }
