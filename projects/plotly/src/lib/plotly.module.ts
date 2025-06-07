@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
-import { PlotlySharedModule } from './plotly-shared.module';
+import { PlotlyComponent } from './plotly.component';
 
 
 
 @NgModule({
-    declarations: [],
-    imports: [CommonModule, PlotlySharedModule],
-    providers: [PlotlyService],
-    exports: [PlotlySharedModule],
+  imports: [PlotlyComponent],
+  providers: [PlotlyService],
+  exports: [PlotlyComponent],
 })
 export class PlotlyModule {
     public static plotlyjs: any = {};
