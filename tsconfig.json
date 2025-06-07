@@ -22,9 +22,9 @@
         "dom"
       ],
       "paths": {
-        "plotly": [
-          "dist/plotly/plotly",
-          "dist/plotly"
+        "angular-plotly.js": [
+          "dist/plotly",
+          "dist/plotly/*"
         ]
       },
       "useDefineForClassFields": false
