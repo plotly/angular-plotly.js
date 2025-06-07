@@ -20,7 +20,6 @@ import {
 } from '@angular/core';
 
 import { PlotlyService } from './plotly.service';
-import { PlotlyThemeLoaderService, PlotlyTheme } from './plotly.theme-loader.service';
 import { Plotly } from './plotly.interface';
 
 // @dynamic
@@ -47,7 +46,6 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     config = input<Partial<Plotly.Config>>();
     frames = input<Partial<Plotly.Config>[]>();
     style = input<{ [key: string]: string }>();
-    theme = input<PlotlyTheme>('none');
 
     divId = input<string>();
     revision = input(0);
@@ -116,7 +114,6 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     constructor(
         public plotly: PlotlyService,
-        public themeLoader: PlotlyThemeLoaderService,
         public iterableDiffers: IterableDiffers,
         public keyValueDiffers: KeyValueDiffers,
     ) { }
