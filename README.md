@@ -27,8 +27,6 @@ Supports Angular 9.x and up. If you want to use with Angular 8.x, please use ver
 * [API](#api-reference)
   * [Basic props](#basic-props)
   * [Event handler props](#event-handler-props)
-* [Customizing the `plotly.js` bundle](#customizing-the-plotlyjs-bundle)
-  * [Plotly Via CDN Module](#plotly-via-cdn-module)
 * [Development](#development)
 
 ## Installation
@@ -91,7 +89,6 @@ For a full description of Plotly chart types and attributes see the following re
 * [Plotly JavaScript API documentation](https://plot.ly/javascript/)
 * [Full plotly.js attribute listing](https://plot.ly/javascript/reference/)
 
-The `plotly.js` is bundled within the angular code. To avoid this, please read [how to customize the plotlyjs bundle](#customizing-the-plotlyjs-bundle) below.
 
 ## API Reference
 
@@ -183,53 +180,6 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 ```
 will put the user template into the root *\<div\>* of the resulting *plotly.js* plot,
 in front of any plotly-generated elements. This could be useful for implementing plot overlays.
-
-
-## Customizing the `plotly.js` bundle
-
-By default, this library bundles `plotly.js` from the peer dependency together within the output. This results on huge outputs, for `plotly.js` itself is ~3MB when bundled. It also makes the build (with `ng serve --prod`) really slow, for it minifies everything together.
-
-If you wish to optimize loading `plotly.js` in a different way, please check the [`PlotlyViaCDNModule`](#plotly-via-cdn-module) module below.
-
-
-### Plotly Via CDN Module
-
-If you want to load `plotly.js` [from a CDN](https://github.com/plotly/plotly.js#use-the-plotlyjs-cdn-hosted-by-fastly), use the `PlotlyViaCDNModule` and set on the `PlotlyViaCDNModule.plotlyVersion` property the plotly.js's version you want to use and, optionally, you can also set on the `PlotlyViaCDNModule.plotlyBundle` property the plotly.js's build you want to use:
-
-```typescript
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { PlotlyViaCDNModule } from 'angular-plotly.js';
-
-
-PlotlyViaCDNModule.setPlotlyVersion('1.55.2'); // can be `latest` or any version number (i.e.: '1.40.0')
-PlotlyViaCDNModule.setPlotlyBundle('basic'); // optional: can be null (for full) or 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox' or 'finance'
-
-@NgModule({
-    imports: [
-        CommonModule,
-        PlotlyViaCDNModule,
-    ],
-    ...
-})
-export class AppModule { }
-```
-
-By default, plotly's CDN is used to fetch the requested bundle.js. However, you can either choose `plotly`, `cloudflare` or `custom`.
-
-```typescript
-...
-
-// For cloudflare
-PlotlyViaCDNModule.setPlotlyVersion('1.55.2', 'cloudflare'); // cloudflare doesn't support `latest`. It is mandatory to supply version.
-PlotlyViaCDNModule.setPlotlyBundle('basic'); // optional: can be null (for full) or 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox' or 'finance'
-
-// For custom CDN URL
-PlotlyViaCDNModule.loadViaCDN('custom', 'https://custom.cdn/url'); // can be used directly for any self hosted plotly bundle
-
-...
-```
 
 
 ## Development
