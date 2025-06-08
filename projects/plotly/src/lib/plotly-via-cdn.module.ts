@@ -40,7 +40,7 @@ export class PlotlyViaCDNModule {
         }
 
         const plotlyBundleNames: PlotlyBundleName[] = ['basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance']
-        isOk = config.bundleName === null || !plotlyBundleNames.includes(config.bundleName);
+        isOk = config.bundleName === null || plotlyBundleNames.includes(config.bundleName);
         if (!isOk) {
             const names = plotlyBundleNames.map(n => `"${n}"`).join(', ');
             throw new Error(`Invalid plotly bundle. Please set to null for full or ${names} for a partial bundle.`);
@@ -49,6 +49,10 @@ export class PlotlyViaCDNModule {
         isOk = ['plotly', 'cloudflare', 'custom'].includes(config.cdnProvider);
         if (!isOk) {
             throw new Error(`Invalid CDN provider. Please set to 'plotly', 'cloudflare' or 'custom'.`);
+        }
+
+        if (config.cdnProvider === 'cloudflare' && config.version == 'latest') {
+            throw new Error(`As cloudflare hosts version specific files, 'latest' as a version is not supported. Please specify a version or you can choose 'plotly' as a CDN provider.`);
         }
 
         if (config.cdnProvider === 'custom' && !config.customUrl) {
@@ -70,9 +74,6 @@ export class PlotlyViaCDNModule {
             let src: string = '';
             switch (config.cdnProvider) {
                 case 'cloudflare':
-                    if (config.version == 'latest') {
-                        throw new Error(`As cloudflare hosts version specific files, 'latest' as a version is not supported. Please specify a version or you can choose 'plotly' as a CDN provider.`);
-                    }
                     src = config.bundleName == null
                         ? `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${config.version}/plotly.min.js`
                         : `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${config.version}/plotly-${config.bundleName}.min.js`;
