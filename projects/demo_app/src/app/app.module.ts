@@ -7,6 +7,7 @@ import { PlotlyViaCDNModule } from 'projects/plotly/src/lib/plotly-via-cdn.modul
 
 
 import { AppComponent } from './app.component';
+import { PlotlyViaWindowModule } from 'projects/plotly/src/lib/plotly-via-window.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     // PlotlyModule.forRoot(PlotlyJS),
-    PlotlyViaCDNModule.forRoot({version: '3.0.1'}),
+    // PlotlyViaCDNModule.forRoot({version: '3.0.1'}),
+    PlotlyViaWindowModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
