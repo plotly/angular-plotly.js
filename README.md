@@ -17,7 +17,9 @@
 
 ---
 
-Supports Angular 9.x and up. If you want to use with Angular 8.x, please use version [`angular-plotly.js@1.x`](https://github.com/plotly/angular-plotly.js/tree/1.x).
+Since version 20, angular-plotly.js follows angular's version. So, if you're using angular 20.x, please use angular-plotly.js 20.x.
+
+If you want to use with Angular 8.x, please use version [`angular-plotly.js@1.x`](https://github.com/plotly/angular-plotly.js/tree/1.x).
 
 
 ## Content
