@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plotly } from './plotly.interface';
 
-type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow' | undefined;
+type PlotlyName = 'PlotlyJS' | 'ViaCDN' | 'ViaWindow' | undefined;
 
 
 @Injectable({
@@ -9,7 +9,7 @@ type PlotlyName = 'Plotly' | 'ViaCDN' | 'ViaWindow' | undefined;
 })
 export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
-    protected static plotly?: any = undefined;
+    public static plotly?: any = undefined;
     protected static moduleName?: PlotlyName = undefined;
 
     public static setModuleName(moduleName: PlotlyName): void {
@@ -25,6 +25,7 @@ export class PlotlyService {
             throw new Error('Invalid plotly.js version. Please, use any version above 1.40.0');
         }
 
+        PlotlyService.moduleName = 'PlotlyJS';
         PlotlyService.plotly = plotly;
     }
 
