@@ -199,12 +199,21 @@ describe('PlotlyComponent', () => {
         await component.createPlot();
         await fixture.whenStable();
 
-        spyOn(PlotlyJS.Plots, 'resize').and.callThrough();
+        const resizeSpy = spyOn(PlotlyJS.Plots, 'resize').and.callThrough();
 
         window.dispatchEvent(new Event('resize'));
         await fixture.whenStable();
 
         expect(PlotlyJS.Plots.resize).toHaveBeenCalled();
+        resizeSpy.calls.reset();
+
+        fixture.destroy();
+        await fixture.whenStable();
+
+        window.dispatchEvent(new Event('resize'));
+        await fixture.whenStable();
+
+        expect(resizeSpy).not.toHaveBeenCalled();
     });
 
 
