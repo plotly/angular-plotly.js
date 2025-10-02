@@ -1,8 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
-import PlotlyJS from 'plotly.js-dist';
+import PlotlyJS from 'plotly.js-dist-min';
 
 import { PlotlyService } from './plotly.service';
-import { Plotly } from './plotly.interface';
+import { PlotlyHTMLElement } from './plotly.interface';
+
 
 describe('PlotlyService', () => {
     beforeEach(() => {
@@ -13,7 +14,7 @@ describe('PlotlyService', () => {
     });
 
     it('should get a plotly instance by id', inject([PlotlyService], (service: PlotlyService) => {
-        const instance = { id: 'aidi' } as Plotly.PlotlyHTMLElement;
+        const instance = { id: 'aidi' } as PlotlyHTMLElement;
 
         PlotlyService.insert(instance);
         expect(service.getInstanceByDivId('aidi')).toBe(instance);

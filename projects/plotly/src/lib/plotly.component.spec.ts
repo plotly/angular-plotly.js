@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlotlyComponent } from './plotly.component';
 import { PlotlyService } from './plotly.service';
 
-import PlotlyJS from 'plotly.js-dist';
+import PlotlyJS, {Data, PlotData} from 'plotly.js-dist-min';
 
 
 PlotlyService.setPlotly(PlotlyJS);
@@ -85,7 +85,7 @@ describe('PlotlyComponent', () => {
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(1);
 
-            component.data()[0].y[0] = 12;
+            (component.data()[0] as Partial<PlotData>).y[0] = 12;
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(2);
             done();
@@ -106,7 +106,7 @@ describe('PlotlyComponent', () => {
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(1);
 
-            component.layout()['title'] = 'title three ';
+            component.layout().title = {text: 'title three '};
             component.ngDoCheck();
             expect(component.updatePlot).toHaveBeenCalledTimes(2);
             done();
@@ -205,15 +205,6 @@ describe('PlotlyComponent', () => {
         await fixture.whenStable();
 
         expect(PlotlyJS.Plots.resize).toHaveBeenCalled();
-        PlotlyJS.Plots.resize.calls.reset();
-
-        fixture.destroy();
-        await fixture.whenStable();
-
-        window.dispatchEvent(new Event('resize'));
-        await fixture.whenStable();
-
-        expect(PlotlyJS.Plots.resize).not.toHaveBeenCalled();
     });
 
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import * as PlotlyJS from 'plotly.js-dist';
+import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from '../../../plotly/src/lib/plotly.module';
 import { PlotlyViaCDNModule } from 'projects/plotly/src/lib/plotly-via-cdn.module';
 

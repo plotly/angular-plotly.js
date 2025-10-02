@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Plotly } from './plotly.interface';
+import { PlotlyHTMLElement, Figure } from './plotly.interface';
+import * as Plotly from "plotly.js-dist-min";
 
 type PlotlyName = 'PlotlyJS' | 'ViaCDN' | 'ViaWindow' | undefined;
 
@@ -8,7 +9,7 @@ type PlotlyName = 'PlotlyJS' | 'ViaCDN' | 'ViaWindow' | undefined;
     providedIn: 'root'
 })
 export class PlotlyService {
-    protected static instances: Plotly.PlotlyHTMLElement[] = [];
+    protected static instances: PlotlyHTMLElement[] = [];
     public static plotly?: any = undefined;
     protected static moduleName?: PlotlyName = undefined;
 
@@ -29,7 +30,7 @@ export class PlotlyService {
         PlotlyService.plotly = plotly;
     }
 
-    public static insert(instance: Plotly.PlotlyHTMLElement): Plotly.PlotlyHTMLElement {
+    public static insert(instance: PlotlyHTMLElement): PlotlyHTMLElement {
         const index = PlotlyService.instances.indexOf(instance);
         if (index === -1) {
             PlotlyService.instances.push(instance);
@@ -37,7 +38,7 @@ export class PlotlyService {
         return instance;
     }
 
-    public static remove(div: Plotly.PlotlyHTMLElement): void {
+    public static remove(div: PlotlyHTMLElement): void {
         const index = PlotlyService.instances.indexOf(div);
         if (index >= 0) {
             PlotlyService.instances.splice(index, 1);
@@ -45,7 +46,7 @@ export class PlotlyService {
         }
     }
 
-    public getInstanceByDivId(id: string): Plotly.PlotlyHTMLElement | undefined {
+    public getInstanceByDivId(id: string): PlotlyHTMLElement | undefined {
         for (const instance of PlotlyService.instances) {
             if (instance && instance.id === id) {
                 return instance;
@@ -92,7 +93,7 @@ export class PlotlyService {
         return this._getPlotly().newPlot(div, data, layout, config).then(() => PlotlyService.insert(div as any)) as Promise<any>;
     }
 
-    public plot(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
+    public plot(div: PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
         if (frames) {
             const obj = { data, layout, config, frames };
             return this._getPlotly().newPlot(div, obj) as Promise<any>;
@@ -101,7 +102,7 @@ export class PlotlyService {
         return this._getPlotly().newPlot(div, data, layout, config) as Promise<any>;
     }
 
-    public update(div: Plotly.PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
+    public update(div: PlotlyHTMLElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
         if (frames) {
             const obj = { data, layout, config, frames };
             return this._getPlotly().react(div, obj) as Promise<any>;
@@ -110,7 +111,7 @@ export class PlotlyService {
         return this._getPlotly().react(div, data, layout, config) as Promise<any>;
     }
 
-    public resize(div: Plotly.PlotlyHTMLElement): void {
+    public resize(div: PlotlyHTMLElement): void {
         return this._getPlotly().Plots.resize(div);
     }
 }

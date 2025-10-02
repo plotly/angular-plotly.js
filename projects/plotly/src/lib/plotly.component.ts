@@ -21,7 +21,8 @@ import {
 import { CommonModule } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
-import { Plotly } from './plotly.interface';
+import * as Plotly from 'plotly.js-dist-min';
+import { Figure, PlotlyHTMLElement } from "./plotly.interface";
 
 // @dynamic
 @Component({
@@ -36,8 +37,8 @@ import { Plotly } from './plotly.interface';
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     protected defaultClassName = 'js-plotly-plot';
 
-    public plotlyInstance?: Plotly.PlotlyHTMLElement;
-    public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
+    public plotlyInstance?: PlotlyHTMLElement;
+    public resizeHandler?: (instance: PlotlyHTMLElement) => void;
     public layoutDiffer?: KeyValueDiffer<string, any>;
     public dataDiffer?: IterableDiffer<Plotly.Data>;
 
@@ -59,9 +60,9 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     updateOnDataChange = input(true);
     updateOnlyWithRevision = input(false);
 
-    initialized = output<Plotly.Figure>();
-    update = output<Plotly.Figure>();
-    purge = output<Plotly.Figure>();
+    initialized = output<Figure>();
+    update = output<Figure>();
+    purge = output<Figure>();
     error = output<Error>();
 
     afterExport = output();
@@ -124,7 +125,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         this.createPlot().then(() => {
             const figure = this.createFigure();
             this.initialized.emit(figure);
-        });        
+        });
     }
 
     ngOnDestroy(): void {
@@ -248,9 +249,9 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         });
     }
 
-    createFigure(): Plotly.Figure {
+    createFigure(): Figure {
         const p: any = this.plotlyInstance;
-        const figure: Plotly.Figure = {
+        const figure: Figure = {
             data: p.data,
             layout: p.layout,
             frames: p._transitionData ? p._transitionData._frames : null

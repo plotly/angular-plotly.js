@@ -43,23 +43,20 @@ $ npm install @types/plotly.js-dist-min --save-dev
 
 ## Quick start
 
-Add the `PlotlyModule` into the main app module of your project
+Provide the `PlotlyModule` into the appConfig of your project
 ```typescript
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {ApplicationConfig, importProvidersFrom} from "@angular/core";
 
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 
 
-@NgModule({
-    imports: [
-        CommonModule,
-        PlotlyModule.forRoot(PlotlyJS)
+export const appConfig: ApplicationConfig = {
+    providers: [
+        importProvidersFrom(PlotlyModule.forRoot(PlotlyJS)),
     ],
     ...
-})
-export class AppModule { }
+}
 ```
 
 Then use the `<plotly-plot>` component to display the graph
