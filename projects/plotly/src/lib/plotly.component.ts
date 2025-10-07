@@ -28,9 +28,10 @@ import { Plotly } from './plotly.interface';
     selector: 'plotly-plot',
     standalone: true,
     imports: [CommonModule],
-    template: `<div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="style()">
-      <ng-content></ng-content>
-    </div>`,
+    template: `
+        <div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="innerStyle()">
+            <ng-content></ng-content>
+        </div>`,
     providers: [PlotlyService],
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
@@ -47,7 +48,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     layout = input<Partial<Plotly.Layout>>();
     config = input<Partial<Plotly.Config>>();
     frames = input<Partial<Plotly.Config>[]>();
-    style = input<{ [key: string]: string }>();
+    innerStyle = input<{ [key: string]: string }>();
 
     divId = input<string>();
     revision = input(0);

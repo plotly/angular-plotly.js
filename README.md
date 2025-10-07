@@ -99,7 +99,7 @@ For a full description of Plotly chart types and attributes see the following re
 ### Basic Props
 
 | Prop                       | Type                         | Default                                           | Description                                                                                                                                                           |
-| -------------------------- | ---------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------------| ---------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[data]`                   | `Array`                      | `[]`                                              | list of trace objects (see https://plot.ly/javascript/reference/)                                                                                                     |
 | `[layout]`                 | `Object`                     | `undefined`                                       | layout object (see https://plot.ly/javascript/reference/#layout)                                                                                                      |
 | `[frames]`                 | `Array`                      | `undefined`                                       | list of frame objects (see https://plot.ly/javascript/reference/)                                                                                                     |
@@ -114,7 +114,7 @@ For a full description of Plotly chart types and attributes see the following re
 | `(error)`                  | `Function(err)`              | `undefined`                                       | Callback executed when a plotly.js API method rejects                                                                                                                 |
 | `[divId]`                  | `string`                     | `undefined`                                       | id assigned to the `<div>` into which the plot is rendered.                                                                                                           |
 | `[className]`              | `string`                     | `undefined`                                       | applied to the `<div>` into which the plot is rendered                                                                                                                |
-| `[style]`                  | `Object`                     | `{position: 'relative', display: 'inline-block'}` | used to style the `<div>` into which the plot is rendered                                                                                                             |
+| `[innerStyle]`             | `Object`                     | `{position: 'relative', display: 'inline-block'}` | used to style the `<div>` into which the plot is rendered                                                                                                             |
 | `[debug]`                  | `Boolean`                    | `false`                                           | Assign the graph div to `window.gd` for debugging                                                                                                                     |
 | `[useResizeHandler]`       | `Boolean`                    | `false`                                           | When true, adds a call to `Plotly.Plot.resize()` as a `window.resize` event handler                                                                                   |
 
@@ -125,7 +125,7 @@ For a full description of Plotly chart types and attributes see the following re
     selector: 'plotly-example',
     template: `
     <plotly-plot [data]="graph.data" [layout]="graph.layout"
-       [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%'}">
+       [useResizeHandler]="true" [innerStyle]="{position: 'relative', width: '100%', height: '100%'}">
     </plotly-plot>`,
 })
 export class PlotlyExampleComponent {
