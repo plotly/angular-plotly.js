@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
 import { Plotly } from './plotly.interface';
+import {LegendClickEvent, PlotHoverEvent, PlotMouseEvent} from "plotly.js-dist-min";
 
 // @dynamic
 @Component({
@@ -77,13 +78,13 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
      * @deprecated DEPRECATED: Reconsider using `(plotlyClick)` instead of `(click)` to avoid event conflict. Please check https://github.com/plotly/angular-plotly.js#FAQ
      */
     click = output();
-    plotlyClick = output();
+    plotlyClick = output<PlotMouseEvent>();
     clickAnnotation = output();
     deselect = output();
     doubleClick = output();
     framework = output();
-    hover = output();
-    legendClick = output();
+    hover = output<PlotHoverEvent>();
+    legendClick = output<LegendClickEvent>();
     legendDoubleClick = output();
     /**
      * @deprecated DEPRECATED: Event react is not list as an plotly.js event
@@ -124,7 +125,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         this.createPlot().then(() => {
             const figure = this.createFigure();
             this.initialized.emit(figure);
-        });        
+        });
     }
 
     ngOnDestroy(): void {
@@ -237,7 +238,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
                 plotlyInstance.on(eventName, (data: any) => event.emit(data));
             });
 
-            plotlyInstance.on('plotly_click', (data: any) => {
+            plotlyInstance.on('plotly_click', (data: PlotMouseEvent) => {
                 this.plotlyClick.emit(data);
             });
 
