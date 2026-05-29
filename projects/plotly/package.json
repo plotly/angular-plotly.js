@@ -3,8 +3,8 @@
   "version": "20.0.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=20.0.0",
-    "@angular/core": ">=20.0.0"
+    "@angular/common": ">=21.0.0",
+    "@angular/core": ">=21.0.0"
   },
   "devDependencies": {
     "@types/plotly.js-dist-min": ">2.20.0",
