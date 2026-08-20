@@ -1,12 +1,11 @@
 # angular-plotly.js
 
-
-![angular-plotly-logo](angular-plotly.png)
-
 > A [plotly.js](https://github.com/plotly/plotly.js) Angular component from
 > [Plotly](https://plot.ly/).
 
 [![CI](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml/badge.svg)](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml)
+
+![angular-plotly-logo](angular-plotly.png)
 
 <div align="center">
   <a href="https://dash.plotly.com/project-maintenance">
