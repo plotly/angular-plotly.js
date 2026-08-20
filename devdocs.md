@@ -1,14 +1,7 @@
 ## How to publish on npm
 
-* Update the version in package.json
-* Update the version in projects/plotly/package.json
-* Update the CHANGELOG.md
-* `ng test --code-coverage=true --progress=true --watch=false`
-* `cp README.md angular-plotly.png projects/plotly`
-* `ng build plotly --configuration production`
-* `git commit -am "<version>"`
-* `git tag -a <version> -m <version>`
-* `git push --tags`
-* `git push`
-* `cd dist/plotly`
-* `npm publish`
+Follow [MAINTENANCE.md](MAINTENANCE.md). Releases are built from a clean
+checkout, validated by CI and `npm run verify:package`, published to the
+branch-specific `angularN` npm tag with 2FA, and then tagged with a signed
+annotated `vN.x.y` Git tag. Only the current Angular major is promoted to
+`latest`.

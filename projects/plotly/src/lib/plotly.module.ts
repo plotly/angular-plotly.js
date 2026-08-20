@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { PlotlyService } from './plotly.service';
 import { PlotlyComponent } from './plotly.component';

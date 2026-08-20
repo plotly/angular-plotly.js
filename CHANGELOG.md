@@ -1,5 +1,32 @@
 # Changelog
 
+## [22.0.0] - 2026-08-20
+### Changed
+- Added Angular 22 support using the official Angular 21→22 migrations.
+- Updated Angular to 22.1.3, CLI/build to 22.1.5, ng-packagr to 22.1.1,
+  Angular ESLint to 22.1, ESLint to 10, and TypeScript to 6.0.3.
+- Changed the Angular peer range and safe publish tag for the active `main` line.
+
+
+## [21.0.0] - 2026-08-20
+### Changed
+- Added Angular 21 support using the official Angular 20→21 migrations.
+- Updated Angular, CLI, and build tooling to 21.2.21, ng-packagr to 21.2.7,
+  and Angular ESLint to 21.4.
+- Changed the Angular peer range and safe publish tag for the `v21` line.
+
+
+## [20.0.1] - 2026-08-20
+### Fixed
+- Exported the documented CDN/window modules and Plotly public types.
+- Made Plotly initialization, destruction, debugging, and CDN failures deterministic.
+- Made browser-global integrations safe to instantiate during server rendering.
+- Made the demo consume the built package instead of library source files.
+
+### Changed
+- Updated the Angular 20 line to supported Angular 20.3 tooling and Plotly 2.35.
+- Added reproducible package assets, package verification, and branch-aware CI.
+
 
 ## [20.0.0] - 2025-06-07
 ### Changed

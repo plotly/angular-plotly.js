@@ -27,6 +27,9 @@ describe('PlotlyComponent', () => {
     });
 
     beforeEach(() => {
+        // Other module specs intentionally exercise the service's static configuration.
+        // Restore the direct Plotly dependency so test ordering cannot leak state here.
+        PlotlyService.setPlotly(PlotlyJS);
         fixture = TestBed.createComponent(PlotlyComponent);
         componentRef = fixture.componentRef;
         component = fixture.componentInstance;
@@ -38,10 +41,23 @@ describe('PlotlyComponent', () => {
         expect(component.plotEl.nativeElement).toBeDefined();
     });
 
-    it('should receive the style from the property', () => {
+    it('should receive the inner style from the property', () => {
+        componentRef.setInput('innerStyle', { 'background-color': 'red' });
+        fixture.detectChanges();
+        expect(component.plotEl.nativeElement.style.backgroundColor).toBe('red');
+    });
+
+    it('should retain style as a deprecated compatibility alias', () => {
         componentRef.setInput('style', { 'background-color': 'red' });
         fixture.detectChanges();
         expect(component.plotEl.nativeElement.style.backgroundColor).toBe('red');
+    });
+
+    it('should prefer innerStyle when both style inputs are provided', () => {
+        componentRef.setInput('style', { 'background-color': 'red' });
+        componentRef.setInput('innerStyle', { 'background-color': 'blue' });
+        fixture.detectChanges();
+        expect(component.plotEl.nativeElement.style.backgroundColor).toBe('blue');
     });
 
     it('should add the id in the #plotEl', () => {
@@ -130,7 +146,7 @@ describe('PlotlyComponent', () => {
 
     it('should add the gd property to window when passing true to debug', (done) => {
         spyOn(component, 'getWindow').and.callFake(() => windowSpy);
-        spyOn(component, 'updatePlot').and.callThrough();
+        spyOn(component, 'updatePlot');
 
         expect(component.getWindow().gd).toBeUndefined();
         component.plotlyInstance = document.createElement('div') as any;
@@ -138,11 +154,79 @@ describe('PlotlyComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ debug: new SimpleChange(false, component.debug(), false) });
 
-        expect(component.updatePlot).toHaveBeenCalled();
+        expect(component.updatePlot).not.toHaveBeenCalled();
         setTimeout(() => {
             expect(component.getWindow().gd).not.toBeUndefined();
             done();
         }, 13);
+    });
+
+    it('should not add the gd property when debug is false', async () => {
+        spyOn(component, 'getWindow').and.callFake(() => windowSpy);
+        componentRef.setInput('debug', false);
+
+        await component.createPlot();
+
+        expect(component.getWindow().gd).toBeUndefined();
+    });
+
+    it('should reject initialization errors after emitting them', async () => {
+        const error = new Error('plot failed');
+        spyOn(component.plotly, 'newPlot').and.returnValue(Promise.reject(error));
+        spyOn(component.error, 'emit');
+        spyOn(console, 'error');
+
+        await expectAsync(component.createPlot()).toBeRejectedWith(error);
+        expect(component.error.emit).toHaveBeenCalledWith(error);
+    });
+
+    it('should forward Plotly click events to both the current and deprecated outputs', async () => {
+        const callbacks = new Map<string, (data: unknown) => void>();
+        const instance = document.createElement('div') as any;
+        instance.on = (name: string, callback: (data: unknown) => void) => callbacks.set(name, callback);
+        spyOn(component.plotly, 'newPlot').and.resolveTo(instance);
+        const currentClick = jasmine.createSpy('plotlyClick');
+        const deprecatedClick = jasmine.createSpy('click');
+        component.plotlyClick.subscribe(currentClick);
+        component.click.subscribe(deprecatedClick);
+
+        await component.createPlot();
+        const event = { points: [{ x: 1, y: 2 }] };
+        callbacks.get('plotly_click')!(event);
+
+        expect(currentClick).toHaveBeenCalledWith(event);
+        expect(deprecatedClick).toHaveBeenCalledWith(event);
+    });
+
+    it('should skip Plotly initialization on the server', () => {
+        const serverComponent = TestBed.runInInjectionContext(() => new PlotlyComponent(
+            component.plotly,
+            component.iterableDiffers,
+            component.keyValueDiffers,
+            'server' as unknown as object,
+        ));
+        serverComponent.plotEl = { nativeElement: document.createElement('div') } as any;
+        spyOn(serverComponent.plotly, 'newPlot');
+
+        serverComponent.ngOnInit();
+
+        expect(serverComponent.plotly.newPlot).not.toHaveBeenCalled();
+        expect(() => serverComponent.ngOnDestroy()).not.toThrow();
+    });
+
+    it('should purge a plot that resolves after destruction', async () => {
+        const instance = document.createElement('div') as any;
+        let resolvePlot!: (value: any) => void;
+        spyOn(component.plotly, 'newPlot').and.returnValue(new Promise(resolve => resolvePlot = resolve));
+        spyOn(PlotlyService, 'remove');
+
+        const pendingPlot = component.createPlot();
+        component.ngOnDestroy();
+        resolvePlot(instance);
+        await pendingPlot;
+
+        expect(PlotlyService.remove).toHaveBeenCalledWith(instance);
+        expect(component.plotlyInstance).toBeUndefined();
     });
 
     it('should fail when plotlyInstance is undefined', () => {
@@ -162,6 +246,7 @@ describe('PlotlyComponent', () => {
         expect(component.getWindow().addEventListener).not.toHaveBeenCalled();
         expect(component.resizeHandler).toBeUndefined();
 
+        component.plotlyInstance = document.createElement('div') as any;
         componentRef.setInput('useResizeHandler', true);
         component.updateWindowResizeHandler();
         expect(component.resizeHandler).toBeDefined();

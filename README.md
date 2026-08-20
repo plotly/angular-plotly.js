@@ -1,15 +1,12 @@
 # angular-plotly.js
 
-
-![angular-plotly-logo](angular-plotly.png)
-
 > A [plotly.js](https://github.com/plotly/plotly.js) Angular component from
 > [Plotly](https://plot.ly/).
 
-[![CircleCI](https://circleci.com/gh/plotly/angular-plotly.js.svg?style=svg)](https://circleci.com/gh/plotly/angular-plotly.js)
-[![Coverage Status](https://coveralls.io/repos/github/plotly/angular-plotly.js/badge.svg?branch=master&i=1)](https://coveralls.io/github/plotly/angular-plotly.js?branch=master&i=1)
+[![CI](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml/badge.svg)](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml)
 
 <div align="center">
+<img src="angular-plotly.png" alt="angular-plotly-logo" />
   <a href="https://dash.plotly.com/project-maintenance">
     <img src="https://dash.plotly.com/assets/images/maintained-by-community.png" width="600px" alt="Maintained by the Plotly Community">
   </a>
@@ -17,7 +14,16 @@
 
 ---
 
-Since version 20, angular-plotly.js follows angular's version. So, if you're using angular 20.x, please use angular-plotly.js 20.x.
+Since version 20, the angular-plotly.js major follows the supported Angular
+major. Install the matching package line:
+
+| angular-plotly.js | Angular | Branch | Support |
+| --- | --- | --- | --- |
+| 22.x | 22.x | `master` | Active |
+| 21.x | 21.x | `v21` | LTS |
+| 20.x | 20.x | `v20` | LTS through 2026-11-28 |
+
+Maintenance and release details are documented in [MAINTENANCE.md](MAINTENANCE.md).
 
 If you want to use with Angular 8.x, please use version [`angular-plotly.js@1.x`](https://github.com/plotly/angular-plotly.js/tree/1.x).
 
@@ -99,7 +105,7 @@ For a full description of Plotly chart types and attributes see the following re
 ### Basic Props
 
 | Prop                       | Type                         | Default                                           | Description                                                                                                                                                           |
-|----------------------------| ---------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| -------------------------- | ---------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[data]`                   | `Array`                      | `[]`                                              | list of trace objects (see https://plot.ly/javascript/reference/)                                                                                                     |
 | `[layout]`                 | `Object`                     | `undefined`                                       | layout object (see https://plot.ly/javascript/reference/#layout)                                                                                                      |
 | `[frames]`                 | `Array`                      | `undefined`                                       | list of frame objects (see https://plot.ly/javascript/reference/)                                                                                                     |
@@ -115,10 +121,11 @@ For a full description of Plotly chart types and attributes see the following re
 | `[divId]`                  | `string`                     | `undefined`                                       | id assigned to the `<div>` into which the plot is rendered.                                                                                                           |
 | `[className]`              | `string`                     | `undefined`                                       | applied to the `<div>` into which the plot is rendered                                                                                                                |
 | `[innerStyle]`             | `Object`                     | `{position: 'relative', display: 'inline-block'}` | used to style the `<div>` into which the plot is rendered                                                                                                             |
+| `[style]`                  | `Object`                     | `undefined`                                       | deprecated compatibility alias for `[innerStyle]`                                                                                                                     |
 | `[debug]`                  | `Boolean`                    | `false`                                           | Assign the graph div to `window.gd` for debugging                                                                                                                     |
 | `[useResizeHandler]`       | `Boolean`                    | `false`                                           | When true, adds a call to `Plotly.Plot.resize()` as a `window.resize` event handler                                                                                   |
 
-**Note**: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use `style` or `className` to set the dimensions of the element (i.e. using `width: 100%; height: 100%` or some similar values) and set `useResizeHandler` to `true` while setting `layout.autosize` to `true` and leaving `layout.height` and `layout.width` undefined. This will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
+**Note**: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use `innerStyle` or `className` to set the dimensions of the element (i.e. using `width: 100%; height: 100%` or some similar values) and set `useResizeHandler` to `true` while setting `layout.autosize` to `true` and leaving `layout.height` and `layout.width` undefined. This will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
 
 ```typescript
 @Component({
@@ -208,8 +215,8 @@ import { PlotlyViaCDNModule } from 'angular-plotly.js';
     imports: [
         CommonModule,
         PlotlyViaCDNModule.forRoot({
-            version: '1.55.2' // can be `latest` or any version number (i.e.: '1.40.0')
-            bundleName: 'basic' // optional: can be null (for full) or 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox' or 'finance'
+            version: '2.35.3', // pin a Plotly version for reproducible builds
+            bundleName: 'basic' // optional: null (full), 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance', or 'strict'
         }),
     ],
     ...
@@ -231,7 +238,6 @@ PlotlyViaCDNModule.forRoot({
 
 
 // For custom CDN URL
-PlotlyViaCDNModule.loadViaCDN('custom', ); 
 PlotlyViaCDNModule.forRoot({
     cdnProvider: 'custom', // cloudflare doesn't support `latest`. It is mandatory to supply version.
     customUrl: 'https://custom.cdn/url' // can be used directly for any self hosted plotly bundle
@@ -305,6 +311,12 @@ To run the tests:
 
 ```bash
 $ npm run test
+```
+
+To verify the exact npm package contents:
+
+```bash
+$ npm run verify:package
 ```
 
 ## FAQ

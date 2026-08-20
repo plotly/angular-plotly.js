@@ -1,0 +1,49 @@
+<section class="page-heading shell loading-heading">
+  <p class="eyebrow">Bundle strategy</p>
+  <h1>Choose how Plotly.js loads</h1>
+  <p class="page-summary">Use exactly one integration module. The right option depends on whether your application prioritizes simple bundling, bundle size, or control over script delivery.</p>
+</section>
+
+<section class="shell loading-options" aria-label="Plotly loading strategies">
+  <article class="loading-card recommended-card">
+    <header>
+      <div><span class="option-number">01</span><h2>Static package</h2></div>
+      <span class="recommendation">Demo default</span>
+    </header>
+    <p>Import Plotly.js from npm and provide it directly. This is the simplest, most reproducible option and is what this demo runs.</p>
+    <dl>
+      <div><dt>Best for</dt><dd>Most applications</dd></div>
+      <div><dt>Network at runtime</dt><dd>None</dd></div>
+    </dl>
+    <app-code-block label="app.module.ts" [code]="staticCode"></app-code-block>
+  </article>
+
+  <article class="loading-card">
+    <header><div><span class="option-number">02</span><h2>Plotly CDN</h2></div></header>
+    <p>Let the library insert a pinned Plotly CDN script. Choose a smaller named bundle when your chart types allow it.</p>
+    <dl>
+      <div><dt>Best for</dt><dd>Smaller application bundles</dd></div>
+      <div><dt>Network at runtime</dt><dd>Required</dd></div>
+    </dl>
+    <app-code-block label="app.module.ts" [code]="cdnCode"></app-code-block>
+  </article>
+
+  <article class="loading-card">
+    <header><div><span class="option-number">03</span><h2>Browser window</h2></div></header>
+    <p>Use a Plotly instance already exposed on <code>window.Plotly</code>, useful when the host page owns script loading.</p>
+    <dl>
+      <div><dt>Best for</dt><dd>Existing script pipelines</dd></div>
+      <div><dt>Network at runtime</dt><dd>Host-controlled</dd></div>
+    </dl>
+    <app-code-block label="app.module.ts" [code]="windowCode"></app-code-block>
+  </article>
+</section>
+
+<section class="section shell loading-note">
+  <div>
+    <p class="eyebrow">Important</p>
+    <h2>Do not combine loading modules</h2>
+    <p>Each strategy provides the same Plotly service contract. Configure only one in an application and pin the Plotly.js version for reproducible behavior.</p>
+  </div>
+  <a class="text-link" href="https://github.com/plotly/angular-plotly.js#customizing-the-plotlyjs-bundle" target="_blank" rel="noopener">Read the complete loading documentation <span aria-hidden="true">↗</span></a>
+</section>

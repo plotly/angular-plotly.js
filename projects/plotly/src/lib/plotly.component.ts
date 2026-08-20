@@ -1,24 +1,26 @@
-/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
-
 import {
-    Component,
-    ElementRef,
-    OnDestroy,
-    OnChanges,
-    OnInit,
-    SimpleChange,
-    SimpleChanges,
-    ViewChild,
-    DoCheck,
-    IterableDiffer,
-    IterableDiffers,
-    KeyValueDiffer,
-    KeyValueDiffers,
-    input,
-    output,
-    OutputEmitterRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnChanges,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+  DoCheck,
+  IterableDiffer,
+  IterableDiffers,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  input,
+  output,
+  OutputEmitterRef,
+  Inject,
+  PLATFORM_ID,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 import { PlotlyService } from './plotly.service';
 import { Plotly } from './plotly.interface';
@@ -28,10 +30,10 @@ import { Plotly } from './plotly.interface';
     selector: 'plotly-plot',
     standalone: true,
     imports: [CommonModule],
-    template: `
-        <div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="innerStyle()">
-            <ng-content></ng-content>
-        </div>`,
+    template: `<div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="innerStyle() ?? style()">
+      <ng-content></ng-content>
+    </div>`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [PlotlyService],
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
@@ -41,6 +43,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
     public layoutDiffer?: KeyValueDiffer<string, any>;
     public dataDiffer?: IterableDiffer<Plotly.Data>;
+    private destroyed = false;
 
     @ViewChild('plot', { static: true }) plotEl!: ElementRef;
 
@@ -49,6 +52,10 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     config = input<Partial<Plotly.Config>>();
     frames = input<Partial<Plotly.Config>[]>();
     innerStyle = input<{ [key: string]: string }>();
+    /**
+     * @deprecated Use `innerStyle` to avoid conflicting with Angular's global style binding.
+     */
+    style = input<{ [key: string]: string }>();
 
     divId = input<string>();
     revision = input(0);
@@ -119,16 +126,25 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         public plotly: PlotlyService,
         public iterableDiffers: IterableDiffers,
         public keyValueDiffers: KeyValueDiffers,
+        @Inject(PLATFORM_ID) private platformId: object,
     ) { }
 
     ngOnInit(): void {
-        this.createPlot().then(() => {
-            const figure = this.createFigure();
-            this.initialized.emit(figure);
-        });        
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+
+        void this.createPlot()
+            .then(() => {
+                if (!this.destroyed && this.plotlyInstance) {
+                    this.initialized.emit(this.createFigure());
+                }
+            })
+            .catch(() => undefined);
     }
 
     ngOnDestroy(): void {
+        this.destroyed = true;
         if (typeof this.resizeHandler === 'function') {
             this.getWindow().removeEventListener('resize', this.resizeHandler as any);
             this.resizeHandler = undefined;
@@ -150,8 +166,8 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
 
         const debug: SimpleChange = changes['debug'];
-        if (debug && !debug.isFirstChange()) {
-            shouldUpdate = true;
+        if (debug && !debug.isFirstChange() && isPlatformBrowser(this.platformId)) {
+            this.getWindow().gd = this.debug() ? this.plotlyInstance : undefined;
         }
 
         if (shouldUpdate) {
@@ -203,7 +219,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         return this.data() ?? [];
     }
 
-    getWindow(): any {
+    getWindow(): Window & { gd?: Plotly.PlotlyHTMLElement } {
         return window;
     }
 
@@ -228,8 +244,13 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             this.config(),
             this.frames()
         ).then(plotlyInstance => {
+            if (this.destroyed) {
+                PlotlyService.remove(plotlyInstance);
+                return;
+            }
+
             this.plotlyInstance = plotlyInstance;
-            this.getWindow().gd = this.debug ? plotlyInstance : undefined;
+            this.getWindow().gd = this.debug() ? plotlyInstance : undefined;
 
             this.eventNames.forEach(name => {
                 const eventName = `plotly_${name.toLowerCase()}`;
@@ -240,12 +261,14 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
             plotlyInstance.on('plotly_click', (data: any) => {
                 this.plotlyClick.emit(data);
+                this.click.emit(data);
             });
 
             this.updateWindowResizeHandler();
-        }, err => {
+        }).catch(err => {
             console.error('Error while plotting:', err);
             this.error.emit(err);
+            throw err;
         });
     }
 
@@ -285,7 +308,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     updateWindowResizeHandler(): void {
-        if (this.useResizeHandler()) {
+        if (this.useResizeHandler() && this.plotlyInstance && isPlatformBrowser(this.platformId)) {
             if (this.resizeHandler === undefined) {
                 this.resizeHandler = () => this.plotly.resize(this.plotlyInstance!);
                 this.getWindow().addEventListener('resize', this.resizeHandler as any);

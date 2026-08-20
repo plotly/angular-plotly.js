@@ -1,0 +1,35 @@
+<app-example-page
+  title="Getting started"
+  description="Combine Plotly traces, layout options, and configuration in one responsive Angular component.">
+  <div class="example-two-column">
+    <app-chart-card
+      title="Product adoption"
+      description="A bar and line trace share the same responsive plot while keeping independent axes.">
+      <div class="plot-frame plot-frame-large">
+        <plotly-plot
+          [data]="data"
+          [layout]="layout"
+          [config]="config"
+          [innerStyle]="plotStyle"
+          [useResizeHandler]="true">
+        </plotly-plot>
+      </div>
+    </app-chart-card>
+
+    <aside class="learning-panel">
+      <p class="card-kicker">What this demonstrates</p>
+      <h2>Four inputs, one responsive chart</h2>
+      <ul class="feature-list">
+        <li><code>[data]</code> supplies one or more Plotly traces.</li>
+        <li><code>[layout]</code> controls axes, legends, margins, and sizing.</li>
+        <li><code>[config]</code> configures the modebar and Plotly behavior.</li>
+        <li><code>[useResizeHandler]</code> keeps the chart aligned with the viewport.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <div class="code-grid">
+    <app-code-block label="Template" [code]="templateCode"></app-code-block>
+    <app-code-block label="Component" [code]="componentCode"></app-code-block>
+  </div>
+</app-example-page>

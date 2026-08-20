@@ -10,6 +10,10 @@ import { PlotlyComponent } from './plotly.component';
 })
 export class PlotlyViaWindowModule {
     constructor() {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
         const plotly = (window as any).Plotly;
 
         if (typeof plotly === 'undefined') {

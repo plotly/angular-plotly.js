@@ -1,7 +1,6 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-      "baseUrl": "./",
       "outDir": "./dist/out-tsc",
       "forceConsistentCasingInFileNames": true,
       "esModuleInterop": true,
@@ -17,14 +16,10 @@
       "importHelpers": true,
       "target": "ES2022",
       "module": "es2020",
-      "lib": [
-        "es2020",
-        "dom"
-      ],
       "paths": {
         "angular-plotly.js": [
-          "dist/plotly",
-          "dist/plotly/*"
+          "./dist/plotly",
+          "./dist/plotly/*"
         ]
       },
       "useDefineForClassFields": false

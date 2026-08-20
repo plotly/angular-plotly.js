@@ -1,3 +1,4 @@
+import { fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
 import { PlotlyViaCDNModule, PlotlyModuleConfig, PlotlyCDNProvider, PlotlyBundleName } from './plotly-via-cdn.module';
 import { PlotlyService } from './plotly.service';
 
@@ -20,7 +21,7 @@ describe('PlotlyViaCDNModule', () => {
             expect(PlotlyViaCDNModule.loadViaCDN).toHaveBeenCalledWith({
                 bundleName: null,
                 cdnProvider: 'plotly',
-                version: 'latest',
+                version: '2.35.3',
                 customUrl: ''
             });
             expect(result.ngModule).toBe(PlotlyViaCDNModule);
@@ -34,10 +35,17 @@ describe('PlotlyViaCDNModule', () => {
                 );
         });
 
+        it('should accept multi-digit semantic versions', () => {
+            PlotlyViaCDNModule.forRoot({ version: '10.123.456' });
+            expect(PlotlyViaCDNModule.loadViaCDN).toHaveBeenCalledWith(jasmine.objectContaining({
+                version: '10.123.456'
+            }));
+        });
+
         it('should validate bundleName', () => {
             expect(() => PlotlyViaCDNModule.forRoot({ bundleName: 'unknown' as any } as PlotlyModuleConfig))
                 .toThrowError(
-                    'Invalid plotly bundle. Please set to null for full or "basic", "cartesian", "geo", "gl3d", "gl2d", "mapbox", "finance" for a partial bundle.'
+                    'Invalid plotly bundle. Please set to null for full or "basic", "cartesian", "geo", "gl3d", "gl2d", "mapbox", "finance", "strict" for a partial bundle.'
                 );
         });
 
@@ -79,5 +87,82 @@ describe('PlotlyViaCDNModule', () => {
             expect(result.ngModule).toBe(PlotlyViaCDNModule);
             expect(result.providers).toEqual([PlotlyService]);
         });
+    });
+
+    describe('script loading', () => {
+        const config: PlotlyModuleConfig = {
+            cdnProvider: 'custom',
+            customUrl: 'https://cdn.example.test/plotly.js',
+            version: '2.35.3',
+            bundleName: null as any,
+        };
+        const selector = 'script[data-angular-plotly-src]';
+        let originalPlotly: any;
+
+        beforeEach(() => {
+            originalPlotly = (window as any).Plotly;
+            delete (window as any).Plotly;
+            (PlotlyViaCDNModule.loadViaCDN as jasmine.Spy).and.callThrough();
+            (PlotlyViaCDNModule as any).loadingScripts.clear();
+            document.querySelectorAll(selector).forEach(script => script.remove());
+        });
+
+        afterEach(() => {
+            document.querySelectorAll(selector).forEach(script => script.remove());
+            (PlotlyViaCDNModule as any).loadingScripts.clear();
+            (window as any).Plotly = originalPlotly;
+            PlotlyService.setPlotly({ react(): void { } });
+        });
+
+        it('should load Plotly from the configured URL', fakeAsync(() => {
+            PlotlyViaCDNModule.loadViaCDN(config);
+            const script = document.querySelector(selector) as HTMLScriptElement;
+            const fakePlotly = { react(): void { } };
+            let loaded: any;
+
+            (window as any).Plotly = fakePlotly;
+            script.onload!(new Event('load'));
+            flushMicrotasks();
+            new PlotlyService().getPlotly().then(plotly => loaded = plotly);
+            flushMicrotasks();
+
+            expect(script.src).toBe(config.customUrl!);
+            expect(loaded).toBe(fakePlotly);
+        }));
+
+        it('should reject when the CDN script fails', fakeAsync(() => {
+            PlotlyViaCDNModule.loadViaCDN(config);
+            const script = document.querySelector(selector) as HTMLScriptElement;
+            let rejection: Error | undefined;
+
+            script.onerror!(new Event('error'));
+            flushMicrotasks();
+            new PlotlyService().getPlotly().catch(error => rejection = error);
+            flushMicrotasks();
+
+            expect(rejection?.message).toContain('Error loading plotly.js library');
+        }));
+
+        it('should reject and remove a CDN script after the timeout', fakeAsync(() => {
+            PlotlyViaCDNModule.loadViaCDN(config);
+            let rejection: Error | undefined;
+
+            tick(10_000);
+            flushMicrotasks();
+            new PlotlyService().getPlotly().catch(error => rejection = error);
+            flushMicrotasks();
+
+            expect(document.querySelector(selector)).toBeNull();
+            expect(rejection?.message).toContain('Timeout');
+        }));
+
+        it('should deduplicate concurrent requests for the same script', fakeAsync(() => {
+            PlotlyViaCDNModule.loadViaCDN(config);
+            PlotlyViaCDNModule.loadViaCDN(config);
+
+            expect(document.querySelectorAll(selector).length).toBe(1);
+            (document.querySelector(selector) as HTMLScriptElement).onerror!(new Event('error'));
+            flushMicrotasks();
+        }));
     });
 });

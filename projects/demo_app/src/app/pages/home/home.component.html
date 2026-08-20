@@ -1,0 +1,82 @@
+<section class="hero">
+  <div class="shell hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow eyebrow-bright">Angular 22 · Plotly.js 2</p>
+      <h1>Interactive charts.<br><span>Angular-native.</span></h1>
+      <p class="hero-summary">
+        Build responsive, production-ready Plotly.js visualizations with declarative Angular inputs, outputs, and lifecycle handling.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" routerLink="/examples/getting-started">Build your first chart <span aria-hidden="true">→</span></a>
+        <a class="button button-secondary" href="https://github.com/plotly/angular-plotly.js#readme" target="_blank" rel="noopener">Read the docs</a>
+      </div>
+      <div class="install-command" aria-label="Installation command">
+        <span aria-hidden="true">$</span>
+        <code>npm install angular-plotly.js plotly.js-dist</code>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-chart-card">
+        <div class="chart-window-bar">
+          <span></span><span></span><span></span>
+          <p>weekly-activity.component.html</p>
+        </div>
+        <div class="hero-chart-heading">
+          <div>
+            <p>Weekly activity</p>
+            <strong>104</strong>
+          </div>
+          <span class="trend-pill">+42.5%</span>
+        </div>
+        <div class="plot-frame hero-plot">
+          <plotly-plot
+            [data]="data"
+            [layout]="layout"
+            [config]="config"
+            [innerStyle]="plotStyle"
+            [useResizeHandler]="true">
+          </plotly-plot>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section shell" aria-labelledby="features-heading">
+  <div class="section-heading">
+    <p class="eyebrow">Built for Angular applications</p>
+    <h2 id="features-heading">The Plotly.js API, wrapped for Angular</h2>
+    <p>Keep the graphing power you know while expressing updates and interactions through Angular templates.</p>
+  </div>
+
+  <div class="feature-grid">
+    <article class="feature-card accent-purple">
+      <span class="feature-number">01</span>
+      <h3>Declarative configuration</h3>
+      <p>Bind data, layouts, frames, and Plotly configuration directly from your component.</p>
+    </article>
+    <article class="feature-card accent-pink">
+      <span class="feature-number">02</span>
+      <h3>Angular event outputs</h3>
+      <p>React to clicks, selections, hovers, relayouts, and the complete Plotly event lifecycle.</p>
+    </article>
+    <article class="feature-card accent-cyan">
+      <span class="feature-number">03</span>
+      <h3>Responsive and lifecycle-safe</h3>
+      <p>Resize with the browser and let the component initialize, update, and purge each plot.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="shell showcase-callout">
+    <div>
+      <p class="eyebrow">Explore by behavior</p>
+      <h2>More than a chart gallery</h2>
+      <p>Each example pairs a live visualization with the Angular code and integration behavior behind it.</p>
+    </div>
+    <a class="button button-dark" routerLink="/examples">View all examples <span aria-hidden="true">→</span></a>
+  </div>
+</section>

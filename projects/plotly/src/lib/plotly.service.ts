@@ -11,6 +11,7 @@ export class PlotlyService {
     protected static instances: Plotly.PlotlyHTMLElement[] = [];
     public static plotly?: any = undefined;
     protected static moduleName?: PlotlyName = undefined;
+    protected static loadError?: Error;
 
     public static setModuleName(moduleName: PlotlyName): void {
         PlotlyService.moduleName = moduleName;
@@ -27,6 +28,12 @@ export class PlotlyService {
 
         PlotlyService.moduleName = 'PlotlyJS';
         PlotlyService.plotly = plotly;
+        PlotlyService.loadError = undefined;
+    }
+
+    public static setPlotlyError(error: Error): void {
+        PlotlyService.plotly = undefined;
+        PlotlyService.loadError = error;
     }
 
     public static insert(instance: Plotly.PlotlyHTMLElement): Plotly.PlotlyHTMLElement {
@@ -55,7 +62,7 @@ export class PlotlyService {
     }
 
     public async getPlotly(): Promise<any> {
-        await this.waitFor(() => this._getPlotly() !== 'waiting');
+        await this.waitForPlotly();
         return this._getPlotly();
     }
 
@@ -74,15 +81,40 @@ export class PlotlyService {
     protected waitFor(fn: () => boolean): Promise<void> {
         return new Promise((resolve) => {
             const localFn = () => {
-                fn() ? resolve() : setTimeout(localFn, 10);
+                if (fn()) {
+                    resolve();
+                } else {
+                    setTimeout(localFn, 10);
+                }
             };
 
             localFn();
         });
     }
 
+    protected waitForPlotly(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const check = () => {
+                if (PlotlyService.loadError) {
+                    reject(PlotlyService.loadError);
+                } else if (PlotlyService.plotly === 'waiting') {
+                    setTimeout(check, 10);
+                } else {
+                    try {
+                        this._getPlotly();
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                }
+            };
+
+            check();
+        });
+    }
+
     public async newPlot(div: HTMLDivElement, data: Plotly.Data[], layout?: Partial<Plotly.Layout>, config?: Partial<Plotly.Config>, frames?: Partial<Plotly.Config>[]): Promise<any> {
-        await this.waitFor(() => this._getPlotly() !== 'waiting');
+        await this.waitForPlotly();
 
         if (frames) {
             const obj = { data, layout, config, frames };

@@ -1,0 +1,60 @@
+<app-example-page
+  title="Lifecycle and debugging"
+  description="Observe the wrapper initialize and purge Plotly instances as Angular creates and destroys the chart component.">
+  <div class="lifecycle-layout">
+    <app-chart-card
+      title="Job pipeline"
+      description="Unmount and remount the chart to watch lifecycle outputs without leaking the Plotly instance.">
+      <div card-actions class="control-row">
+        <button class="button button-small button-primary" type="button" (click)="togglePlot()">
+          {{ plotMounted ? 'Unmount plot' : 'Mount plot' }}
+        </button>
+        <button class="button button-small button-quiet" type="button" [attr.aria-pressed]="debugEnabled" (click)="toggleDebug()">
+          Debug {{ debugEnabled ? 'on' : 'off' }}
+        </button>
+      </div>
+
+      <div class="plot-stage" [class.plot-stage-empty]="!plotMounted">
+        @if (plotMounted) {
+          <div class="plot-frame lifecycle-plot">
+            <plotly-plot
+              [data]="data"
+              [layout]="layout"
+              [config]="config"
+              [innerStyle]="plotStyle"
+              [useResizeHandler]="true"
+              [debug]="debugEnabled"
+              (initialized)="record('initialized')"
+              (purge)="record('purge')"
+              (error)="recordError($event)">
+            </plotly-plot>
+          </div>
+        } @else {
+          <div class="empty-state">
+            <span aria-hidden="true">◇</span>
+            <strong>Plot component unmounted</strong>
+            <p>The purge output fired before Plotly removed the graph DOM.</p>
+          </div>
+        }
+      </div>
+    </app-chart-card>
+
+    <aside class="lifecycle-log" aria-live="polite">
+      <div class="inspector-heading">
+        <span class="live-dot" aria-hidden="true"></span>
+        <p>Lifecycle log</p>
+      </div>
+      <ol>
+        @for (entry of entries; track $index) {
+          <li>
+            <code>{{ entry.event }}</code>
+            <span>{{ entry.detail }}</span>
+          </li>
+        }
+      </ol>
+      <p class="log-note">With debug enabled, inspect <code>window.gd</code> in the browser console.</p>
+    </aside>
+  </div>
+
+  <app-code-block label="Template" [code]="templateCode"></app-code-block>
+</app-example-page>
