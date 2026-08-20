@@ -10,7 +10,6 @@ const requiredFiles = [
   'LICENSE',
   'CHANGELOG.md',
   'angular-plotly.png',
-  'index.d.ts',
   'package.json',
 ];
 
@@ -18,6 +17,10 @@ await Promise.all(requiredFiles.map(file => access(resolve(output, file))));
 
 const rootPackage = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
 const libraryPackage = JSON.parse(await readFile(resolve(output, 'package.json'), 'utf8'));
+const declarationsPath = libraryPackage.typings ?? 'index.d.ts';
+const bundlePath = libraryPackage.module;
+requiredFiles.push(declarationsPath, bundlePath);
+await Promise.all([declarationsPath, bundlePath].map(file => access(resolve(output, file))));
 if (rootPackage.version !== libraryPackage.version) {
   throw new Error(`Package versions differ: root=${rootPackage.version}, library=${libraryPackage.version}`);
 }
@@ -30,7 +33,7 @@ for (const dependency of ['@angular/common', '@angular/core']) {
   }
 }
 
-const declarations = await readFile(resolve(output, 'index.d.ts'), 'utf8');
+const declarations = await readFile(resolve(output, declarationsPath), 'utf8');
 for (const symbol of [
   'PlotlyComponent',
   'PlotlyModule',

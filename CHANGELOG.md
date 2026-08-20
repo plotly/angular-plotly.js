@@ -1,5 +1,13 @@
 # Changelog
 
+## [21.0.0] - 2026-08-20
+### Changed
+- Added Angular 21 support using the official Angular 20→21 migrations.
+- Updated Angular, CLI, and build tooling to 21.2.21, ng-packagr to 21.2.7,
+  and Angular ESLint to 21.4.
+- Changed the Angular peer range and safe publish tag for the `v21` line.
+
+
 ## [20.0.1] - 2026-08-20
 ### Fixed
 - Exported the documented CDN/window modules and Plotly public types.
