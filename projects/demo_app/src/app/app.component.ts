@@ -1,20 +1,20 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AppComponent {
-  title = 'demo_app';
+  navigationOpen = false;
 
-   public graph = {
-        data: [
-            { x: [1, 2, 3], y: [2, 6, 3], type: 'scatter', mode: 'lines+points', marker: {color: 'red'} },
-            { x: [1, 2, 3], y: [2, 5, 3], type: 'bar' },
-        ],
-        layout: {width: 320, height: 240, title: 'A Fancy Plot'}
-    };
+  toggleNavigation(): void {
+    this.navigationOpen = !this.navigationOpen;
+  }
+
+  closeNavigation(): void {
+    this.navigationOpen = false;
+  }
 }

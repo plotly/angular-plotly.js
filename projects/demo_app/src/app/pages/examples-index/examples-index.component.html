@@ -1,0 +1,32 @@
+<section class="page-heading shell examples-heading">
+  <p class="eyebrow">Live Angular examples</p>
+  <h1>Learn the wrapper by using it</h1>
+  <p class="page-summary">Every example focuses on an integration behavior, includes working controls, and shows the Angular code that makes it happen.</p>
+</section>
+
+<section class="shell examples-grid" aria-label="Example gallery">
+  @for (example of examples; track example.route) {
+    <a class="example-tile" [class]="'example-tile accent-' + example.accent" [routerLink]="example.route">
+      <div class="tile-topline">
+        <span>{{ example.number }}</span>
+        <span aria-hidden="true">↗</span>
+      </div>
+      <h2>{{ example.title }}</h2>
+      <p>{{ example.description }}</p>
+      <div class="tag-list">
+        @for (tag of example.tags; track tag) {
+          <span>{{ tag }}</span>
+        }
+      </div>
+    </a>
+  }
+</section>
+
+<section class="section shell loading-teaser">
+  <div>
+    <p class="eyebrow">Choose your bundle strategy</p>
+    <h2>Static, CDN, or window</h2>
+    <p>The library supports three ways to make Plotly.js available to your Angular application.</p>
+  </div>
+  <a class="text-link" routerLink="/loading">Compare loading strategies <span aria-hidden="true">→</span></a>
+</section>

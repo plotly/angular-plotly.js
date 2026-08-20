@@ -1,0 +1,38 @@
+<app-example-page
+  title="Events and selection"
+  description="Bridge Plotly.js interactions into Angular outputs without coupling application state to Plotly's internal graph DOM.">
+  <div class="event-layout">
+    <app-chart-card
+      title="Product portfolio"
+      description="Hover or click a bubble, or drag a selection box across several points.">
+      <div class="plot-frame plot-frame-large">
+        <plotly-plot
+          [data]="data"
+          [layout]="layout"
+          [config]="config"
+          [style]="plotStyle"
+          [useResizeHandler]="true"
+          (plotlyClick)="capture('plotlyClick', $event)"
+          (hover)="capture('hover', $event)"
+          (selected)="capture('selected', $event)">
+        </plotly-plot>
+      </div>
+    </app-chart-card>
+
+    <aside class="event-inspector" aria-live="polite">
+      <div class="inspector-heading">
+        <span class="live-dot" aria-hidden="true"></span>
+        <p>Angular event inspector</p>
+      </div>
+      <pre><code>{{ eventJson }}</code></pre>
+      <p>The demo extracts a small, serializable summary instead of storing Plotly's complete event object.</p>
+    </aside>
+  </div>
+
+  <div class="note-card">
+    <strong>Why <code>(plotlyClick)</code>?</strong>
+    <p>Use the explicit output to avoid conflicting with the browser's native click event. The deprecated <code>(click)</code> alias remains supported for compatibility.</p>
+  </div>
+
+  <app-code-block label="Template" [code]="templateCode"></app-code-block>
+</app-example-page>

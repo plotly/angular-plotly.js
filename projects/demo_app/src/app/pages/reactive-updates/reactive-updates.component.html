@@ -1,0 +1,36 @@
+<app-example-page
+  title="Reactive updates"
+  description="Make plot updates explicit and predictable by pairing immutable Angular state with the revision input.">
+  <app-chart-card
+    title="API traffic"
+    description="Add deterministic readings to the trace. Each action replaces the data and advances the plot revision.">
+    <div card-actions class="control-row">
+      <button class="button button-small button-primary" type="button" (click)="addPoint()" [disabled]="!canAddPoint">Add reading</button>
+      <button class="button button-small button-quiet" type="button" (click)="reset()">Reset</button>
+    </div>
+
+    <div class="status-row" aria-live="polite">
+      <span class="status-pill"><strong>{{ data[0].y.length }}</strong> points</span>
+      <span class="status-pill"><strong>{{ revision }}</strong> revision</span>
+      <span class="status-pill status-accent"><strong>{{ updateCount }}</strong> updates emitted</span>
+    </div>
+
+    <div class="plot-frame plot-frame-large">
+      <plotly-plot
+        [data]="data"
+        [layout]="layout"
+        [config]="config"
+        [style]="plotStyle"
+        [useResizeHandler]="true"
+        [revision]="revision"
+        [updateOnlyWithRevision]="true"
+        (update)="handleUpdate()">
+      </plotly-plot>
+    </div>
+  </app-chart-card>
+
+  <div class="code-grid">
+    <app-code-block label="Template" [code]="templateCode"></app-code-block>
+    <app-code-block label="Component" [code]="componentCode"></app-code-block>
+  </div>
+</app-example-page>
