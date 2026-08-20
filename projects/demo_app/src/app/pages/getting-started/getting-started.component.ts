@@ -55,7 +55,7 @@ export class GettingStartedComponent {
   [data]="data"
   [layout]="layout"
   [config]="config"
-  [style]="plotStyle"
+  [innerStyle]="plotStyle"
   [useResizeHandler]="true">
 </plotly-plot>`;
 

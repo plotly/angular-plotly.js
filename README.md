@@ -120,18 +120,19 @@ For a full description of Plotly chart types and attributes see the following re
 | `(error)`                  | `Function(err)`              | `undefined`                                       | Callback executed when a plotly.js API method rejects                                                                                                                 |
 | `[divId]`                  | `string`                     | `undefined`                                       | id assigned to the `<div>` into which the plot is rendered.                                                                                                           |
 | `[className]`              | `string`                     | `undefined`                                       | applied to the `<div>` into which the plot is rendered                                                                                                                |
-| `[style]`                  | `Object`                     | `{position: 'relative', display: 'inline-block'}` | used to style the `<div>` into which the plot is rendered                                                                                                             |
+| `[innerStyle]`             | `Object`                     | `{position: 'relative', display: 'inline-block'}` | used to style the `<div>` into which the plot is rendered                                                                                                             |
+| `[style]`                  | `Object`                     | `undefined`                                       | deprecated compatibility alias for `[innerStyle]`                                                                                                                     |
 | `[debug]`                  | `Boolean`                    | `false`                                           | Assign the graph div to `window.gd` for debugging                                                                                                                     |
 | `[useResizeHandler]`       | `Boolean`                    | `false`                                           | When true, adds a call to `Plotly.Plot.resize()` as a `window.resize` event handler                                                                                   |
 
-**Note**: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use `style` or `className` to set the dimensions of the element (i.e. using `width: 100%; height: 100%` or some similar values) and set `useResizeHandler` to `true` while setting `layout.autosize` to `true` and leaving `layout.height` and `layout.width` undefined. This will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
+**Note**: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use `innerStyle` or `className` to set the dimensions of the element (i.e. using `width: 100%; height: 100%` or some similar values) and set `useResizeHandler` to `true` while setting `layout.autosize` to `true` and leaving `layout.height` and `layout.width` undefined. This will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
 
 ```typescript
 @Component({
     selector: 'plotly-example',
     template: `
     <plotly-plot [data]="graph.data" [layout]="graph.layout"
-       [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%'}">
+       [useResizeHandler]="true" [innerStyle]="{position: 'relative', width: '100%', height: '100%'}">
     </plotly-plot>`,
 })
 export class PlotlyExampleComponent {

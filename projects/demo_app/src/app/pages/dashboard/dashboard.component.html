@@ -10,19 +10,19 @@
   <section class="dashboard-grid" aria-label="Analytics dashboard">
     <article class="dashboard-card dashboard-wide">
       <header><div><p>Revenue</p><h2>Monthly performance</h2></div><span class="status-pill">USD</span></header>
-      <div class="dashboard-plot"><plotly-plot [data]="revenueData" [layout]="revenueLayout" [config]="config" [style]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
+      <div class="dashboard-plot"><plotly-plot [data]="revenueData" [layout]="revenueLayout" [config]="config" [innerStyle]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
     </article>
     <article class="dashboard-card">
       <header><div><p>Customers</p><h2>Plan mix</h2></div></header>
-      <div class="dashboard-plot"><plotly-plot [data]="segmentData" [layout]="segmentLayout" [config]="config" [style]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
+      <div class="dashboard-plot"><plotly-plot [data]="segmentData" [layout]="segmentLayout" [config]="config" [innerStyle]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
     </article>
     <article class="dashboard-card">
       <header><div><p>Acquisition</p><h2>Channel comparison</h2></div></header>
-      <div class="dashboard-plot"><plotly-plot [data]="channelData" [layout]="channelLayout" [config]="config" [style]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
+      <div class="dashboard-plot"><plotly-plot [data]="channelData" [layout]="channelLayout" [config]="config" [innerStyle]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
     </article>
     <article class="dashboard-card dashboard-wide">
       <header><div><p>Engagement</p><h2>Sessions by weekday</h2></div></header>
-      <div class="dashboard-plot"><plotly-plot [data]="heatmapData" [layout]="heatmapLayout" [config]="config" [style]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
+      <div class="dashboard-plot"><plotly-plot [data]="heatmapData" [layout]="heatmapLayout" [config]="config" [innerStyle]="plotStyle" [useResizeHandler]="true"></plotly-plot></div>
     </article>
   </section>
 
