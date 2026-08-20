@@ -5,9 +5,8 @@
 
 [![CI](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml/badge.svg)](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml)
 
-![angular-plotly-logo](angular-plotly.png)
-
 <div align="center">
+<img src="angular-plotly.png" alt="angular-plotly-logo" />
   <a href="https://dash.plotly.com/project-maintenance">
     <img src="https://dash.plotly.com/assets/images/maintained-by-community.png" width="600px" alt="Maintained by the Plotly Community">
   </a>
