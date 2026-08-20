@@ -1,5 +1,11 @@
 # Changelog
 
+## [22.0.1] - 2026-08-20
+### Fixed
+- Added `[innerStyle]` as the preferred plot container styling input while
+  retaining `[style]` as a deprecated compatibility alias.
+
+
 ## [22.0.0] - 2026-08-20
 ### Changed
 - Added Angular 22 support using the official Angular 21→22 migrations.
