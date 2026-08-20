@@ -1,6 +1,6 @@
 {
   "name": "angular-plotly.js",
-  "version": "20.0.1",
+  "version": "20.0.2",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": ">=20.0.0 <21.0.0",

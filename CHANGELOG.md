@@ -1,5 +1,11 @@
 # Changelog
 
+## [20.0.2] - 2026-08-20
+### Fixed
+- Added `[innerStyle]` as the preferred plot container styling input while
+  retaining `[style]` as a deprecated compatibility alias.
+
+
 ## [20.0.1] - 2026-08-20
 ### Fixed
 - Exported the documented CDN/window modules and Plotly public types.
