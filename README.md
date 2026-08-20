@@ -21,7 +21,7 @@ major. Install the matching package line:
 
 | angular-plotly.js | Angular | Branch | Support |
 | --- | --- | --- | --- |
-| 22.x | 22.x | `main` | Active |
+| 22.x | 22.x | `master` | Active |
 | 21.x | 21.x | `v21` | LTS |
 | 20.x | 20.x | `v20` | LTS through 2026-11-28 |
 
