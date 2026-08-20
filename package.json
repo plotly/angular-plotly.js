@@ -18,7 +18,7 @@
     "@angular/common": "20.3.29",
     "@angular/core": "20.3.29",
     "@angular/platform-browser": "20.3.29",
-    "plotly.js-dist": "2.35.3",
+    "plotly.js-dist": "3.7.0",
     "rxjs": "7.8.2",
     "tslib": "2.8.1",
     "zone.js": "0.15.1"
