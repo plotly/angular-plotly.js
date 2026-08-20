@@ -29,7 +29,7 @@ import { Plotly } from './plotly.interface';
     selector: 'plotly-plot',
     standalone: true,
     imports: [CommonModule],
-    template: `<div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="style()">
+    template: `<div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="innerStyle() ?? style()">
       <ng-content></ng-content>
     </div>`,
     providers: [PlotlyService],
@@ -49,6 +49,10 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     layout = input<Partial<Plotly.Layout>>();
     config = input<Partial<Plotly.Config>>();
     frames = input<Partial<Plotly.Config>[]>();
+    innerStyle = input<{ [key: string]: string }>();
+    /**
+     * @deprecated Use `innerStyle` to avoid conflicting with Angular's global style binding.
+     */
     style = input<{ [key: string]: string }>();
 
     divId = input<string>();
