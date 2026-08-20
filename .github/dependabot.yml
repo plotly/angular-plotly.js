@@ -24,6 +24,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript-eslint"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "plotly.js-dist"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: npm
     directory: /
     target-branch: v20
@@ -48,6 +50,10 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript-eslint"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "plotly.js-dist"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "zone.js"
+        update-types: ["version-update:semver-minor"]
   - package-ecosystem: npm
     directory: /
     target-branch: v21
@@ -71,4 +77,6 @@ updates:
       - dependency-name: "@eslint/js"
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript-eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "plotly.js-dist"
         update-types: ["version-update:semver-major"]
