@@ -6,8 +6,7 @@
 > A [plotly.js](https://github.com/plotly/plotly.js) Angular component from
 > [Plotly](https://plot.ly/).
 
-[![CircleCI](https://circleci.com/gh/plotly/angular-plotly.js.svg?style=svg)](https://circleci.com/gh/plotly/angular-plotly.js)
-[![Coverage Status](https://coveralls.io/repos/github/plotly/angular-plotly.js/badge.svg?branch=master&i=1)](https://coveralls.io/github/plotly/angular-plotly.js?branch=master&i=1)
+[![CI](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml/badge.svg)](https://github.com/plotly/angular-plotly.js/actions/workflows/ci.yml)
 
 <div align="center">
   <a href="https://dash.plotly.com/project-maintenance">
