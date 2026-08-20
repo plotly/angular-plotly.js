@@ -41,10 +41,23 @@ describe('PlotlyComponent', () => {
         expect(component.plotEl.nativeElement).toBeDefined();
     });
 
-    it('should receive the style from the property', () => {
+    it('should receive the inner style from the property', () => {
+        componentRef.setInput('innerStyle', { 'background-color': 'red' });
+        fixture.detectChanges();
+        expect(component.plotEl.nativeElement.style.backgroundColor).toBe('red');
+    });
+
+    it('should retain style as a deprecated compatibility alias', () => {
         componentRef.setInput('style', { 'background-color': 'red' });
         fixture.detectChanges();
         expect(component.plotEl.nativeElement.style.backgroundColor).toBe('red');
+    });
+
+    it('should prefer innerStyle when both style inputs are provided', () => {
+        componentRef.setInput('style', { 'background-color': 'red' });
+        componentRef.setInput('innerStyle', { 'background-color': 'blue' });
+        fixture.detectChanges();
+        expect(component.plotEl.nativeElement.style.backgroundColor).toBe('blue');
     });
 
     it('should add the id in the #plotEl', () => {
