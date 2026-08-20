@@ -1,22 +1,23 @@
 import {
-    Component,
-    ElementRef,
-    OnDestroy,
-    OnChanges,
-    OnInit,
-    SimpleChange,
-    SimpleChanges,
-    ViewChild,
-    DoCheck,
-    IterableDiffer,
-    IterableDiffers,
-    KeyValueDiffer,
-    KeyValueDiffers,
-    input,
-    output,
-    OutputEmitterRef,
-    Inject,
-    PLATFORM_ID,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnChanges,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+  DoCheck,
+  IterableDiffer,
+  IterableDiffers,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  input,
+  output,
+  OutputEmitterRef,
+  Inject,
+  PLATFORM_ID,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
@@ -32,6 +33,7 @@ import { Plotly } from './plotly.interface';
     template: `<div #plot [attr.id]="divId()" [ngClass]="getClassName()" [ngStyle]="style()">
       <ng-content></ng-content>
     </div>`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [PlotlyService],
 })
 export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {

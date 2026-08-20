@@ -36,8 +36,19 @@ module.exports = tseslint.config(
     files: ['projects/plotly/src/lib/plotly.component.ts'],
     rules: {
       // Compatibility outputs. `click` is already deprecated; both names are
-      // retained throughout the Angular 20 line to avoid a patch-level break.
+      // retained on supported compatibility lines to avoid an API break.
       '@angular-eslint/no-output-native': 'off',
+    },
+  },
+  {
+    files: [
+      'projects/plotly/src/lib/plotly.component.ts',
+      'projects/demo_app/src/app/app.component.ts',
+    ],
+    rules: {
+      // Angular 22 migrated existing components to Eager to preserve their
+      // pre-v22 behavior. An OnPush conversion is a separate breaking change.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
     },
   },
   {

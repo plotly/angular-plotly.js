@@ -1,5 +1,13 @@
 # Changelog
 
+## [22.0.0] - 2026-08-20
+### Changed
+- Added Angular 22 support using the official Angular 21→22 migrations.
+- Updated Angular to 22.1.3, CLI/build to 22.1.5, ng-packagr to 22.1.1,
+  Angular ESLint to 22.1, ESLint to 10, and TypeScript to 6.0.3.
+- Changed the Angular peer range and safe publish tag for the active `main` line.
+
+
 ## [21.0.0] - 2026-08-20
 ### Changed
 - Added Angular 21 support using the official Angular 20→21 migrations.
