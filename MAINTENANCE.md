@@ -1,13 +1,13 @@
 # Maintenance and release policy
 
-The package major identifies its supported Angular major. `main` tracks the
+The package major identifies its supported Angular major. `master` tracks the
 latest Angular major; older supported majors use `vN` maintenance branches.
 
 | Package line | Angular | Branch | npm tag | Status |
 | --- | --- | --- | --- | --- |
 | 20.x | 20.x | `v20` | `angular20` | LTS through 2026-11-28 |
 | 21.x | 21.x | `v21` | `angular21` | LTS |
-| 22.x | 22.x | `main` | `angular22`, `latest` | Active |
+| 22.x | 22.x | `master` | `angular22`, `latest` | Active |
 
 ## Changes and forward ports
 
@@ -16,7 +16,7 @@ commit in ascending major order with `git cherry-pick -x`, one linked pull
 request per branch. Do not forward-port Angular migrations, dependency-major
 changes, package versions, or release metadata.
 
-`main` has no duplicate current-major branch. Before upgrading `main` to a new
+`master` has no duplicate current-major branch. Before upgrading `master` to a new
 Angular major, create `vN` from its final commit and protect that branch.
 
 ## Releases
