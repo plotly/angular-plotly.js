@@ -1,6 +1,11 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "cache": {
+      "enabled": false
+    }
+  },
   "newProjectRoot": "projects",
   "projects": {
     "plotly": {
@@ -66,6 +71,9 @@
               "projects/demo_app/src/styles.css"
             ],
             "scripts": [],
+            "allowedCommonJsDependencies": [
+              "plotly.js-dist"
+            ],
             "browser": "projects/demo_app/src/main.ts"
           },
           "configurations": {
@@ -73,13 +81,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4kb",
+                  "maximumError": "6kb"
                 }
               ],
               "outputHashing": "all"

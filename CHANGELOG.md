@@ -1,5 +1,16 @@
 # Changelog
 
+## [20.0.1] - 2026-08-20
+### Fixed
+- Exported the documented CDN/window modules and Plotly public types.
+- Made Plotly initialization, destruction, debugging, and CDN failures deterministic.
+- Made browser-global integrations safe to instantiate during server rendering.
+- Made the demo consume the built package instead of library source files.
+
+### Changed
+- Updated the Angular 20 line to supported Angular 20.3 tooling and Plotly 2.35.
+- Added reproducible package assets, package verification, and branch-aware CI.
+
 
 ## [20.0.0] - 2025-06-07
 ### Changed

@@ -38,6 +38,8 @@ speed-measure-plugin*.json
 /coverage
 /projects/plotly/coverage
 /projects/plotly/README.md
+/projects/plotly/LICENSE
+/projects/plotly/CHANGELOG.md
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log

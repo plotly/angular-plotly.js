@@ -39,6 +39,15 @@ describe('PlotlyService', () => {
         expect(await service.getPlotly()).toBe(PlotlyJS);
     }));
 
+    it('should reject a Plotly loading error', inject([PlotlyService], async (service: PlotlyService) => {
+        const error = new Error('CDN failed');
+        PlotlyService.setPlotly('waiting');
+        PlotlyService.setPlotlyError(error);
+
+        await expectAsync(service.getPlotly()).toBeRejectedWith(error);
+        PlotlyService.setPlotly(PlotlyJS);
+    }));
+
     it('should set the module name', () => {
         expect(PlotlyService.getModuleName()).toBe('PlotlyJS');
         PlotlyService.setModuleName('ViaCDN');

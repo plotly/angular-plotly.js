@@ -5,7 +5,7 @@ import { PlotlyService } from './plotly.service';
 import { PlotlyComponent } from './plotly.component';
 
 
-export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' | 'mapbox' | 'finance';
+export type PlotlyBundleName = 'basic' | 'cartesian' | 'geo' | 'gl3d' | 'gl2d' | 'mapbox' | 'finance' | 'strict';
 export type PlotlyCDNProvider = 'plotly' | 'cloudflare' | 'custom';
 
 export interface PlotlyModuleConfig {
@@ -22,6 +22,8 @@ export interface PlotlyModuleConfig {
     exports: [PlotlyComponent],
 })
 export class PlotlyViaCDNModule {
+    private static readonly loadingScripts = new Map<string, Promise<any>>();
+
     constructor(public plotlyService: PlotlyService) {
         PlotlyService.setModuleName('ViaCDN');
     }
@@ -30,16 +32,16 @@ export class PlotlyViaCDNModule {
         config = Object.assign({
             bundleName: null,
             cdnProvider: 'plotly',
-            version: 'latest',
+            version: '2.35.3',
             customUrl: ''
         }, config);
 
-        let isOk = config.version === 'latest' || /^(strict-)?\d\.\d{1,2}\.\d{1,2}$/.test(config.version);
+        let isOk = config.version === 'latest' || /^(strict-)?\d+\.\d+\.\d+$/.test(config.version);
         if (!isOk) {
             throw new Error(`Invalid plotly version. Please set 'latest' or version number (i.e.: 1.4.3) or strict version number (i.e.: strict-1.4.3)`);
         }
 
-        const plotlyBundleNames: PlotlyBundleName[] = ['basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance']
+        const plotlyBundleNames: PlotlyBundleName[] = ['basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance', 'strict'];
         isOk = config.bundleName === null || plotlyBundleNames.includes(config.bundleName);
         if (!isOk) {
             const names = plotlyBundleNames.map(n => `"${n}"`).join(', ');
@@ -68,51 +70,80 @@ export class PlotlyViaCDNModule {
     }
 
     public static loadViaCDN(config: PlotlyModuleConfig): void {
-        PlotlyService.setPlotly('waiting');
+        PlotlyService.setModuleName('ViaCDN');
 
-        const init = () => {
-            let src: string = '';
-            switch (config.cdnProvider) {
-                case 'cloudflare':
-                    src = config.bundleName == null
-                        ? `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${config.version}/plotly.min.js`
-                        : `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${config.version}/plotly-${config.bundleName}.min.js`;
-                    break;
-                case 'custom':
-                    src = config.customUrl;
-                    break;
-                default:
-                    src = config.bundleName == null
-                        ? `https://cdn.plot.ly/plotly-${config.version}.min.js`
-                        : `https://cdn.plot.ly/plotly-${config.bundleName}-${config.version}.min.js`;
-                    break;
+        if (typeof document === 'undefined' || typeof window === 'undefined') {
+            return;
+        }
+
+        PlotlyService.setPlotly('waiting');
+        const src = PlotlyViaCDNModule.getCdnUrl(config);
+        let loading = PlotlyViaCDNModule.loadingScripts.get(src);
+
+        if (!loading) {
+            loading = PlotlyViaCDNModule.createScriptLoader(src);
+            PlotlyViaCDNModule.loadingScripts.set(src, loading);
+        }
+
+        void loading.then(plotly => {
+            PlotlyService.setPlotly(plotly);
+        }).catch(error => {
+            PlotlyViaCDNModule.loadingScripts.delete(src);
+            PlotlyService.setPlotlyError(error);
+        });
+    }
+
+    private static getCdnUrl(config: PlotlyModuleConfig): string {
+        switch (config.cdnProvider) {
+            case 'cloudflare':
+                return config.bundleName == null
+                    ? `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${config.version}/plotly.min.js`
+                    : `https://cdnjs.cloudflare.com/ajax/libs/plotly.js/${config.version}/plotly-${config.bundleName}.min.js`;
+            case 'custom':
+                return config.customUrl!;
+            default:
+                return config.bundleName == null
+                    ? `https://cdn.plot.ly/plotly-${config.version}.min.js`
+                    : `https://cdn.plot.ly/plotly-${config.bundleName}-${config.version}.min.js`;
+        }
+    }
+
+    private static createScriptLoader(src: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const existingPlotly = (window as any).Plotly;
+            if (existingPlotly) {
+                resolve(existingPlotly);
+                return;
             }
 
-            const script: HTMLScriptElement = document.createElement('script');
+            const script = document.createElement('script');
+            const timeout = window.setTimeout(() => {
+                script.remove();
+                reject(new Error(`Error loading plotly.js library from ${src}. Timeout.`));
+            }, 10_000);
+
+            const rejectLoad = () => {
+                window.clearTimeout(timeout);
+                script.remove();
+                reject(new Error(`Error loading plotly.js library from ${src}`));
+            };
+
             script.type = 'text/javascript';
+            script.charset = 'utf-8';
             script.src = src;
-            script.onerror = () => console.error(`Error loading plotly.js library from ${src}`);
-
-            const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
-            head.appendChild(script);
-
-            let counter = 200; // equivalent of 10 seconds...
-
-            const fn = () => {
+            script.dataset['angularPlotlySrc'] = src;
+            script.onerror = rejectLoad;
+            script.onload = () => {
+                window.clearTimeout(timeout);
                 const plotly = (window as any).Plotly;
                 if (plotly) {
-                    PlotlyService.setPlotly(plotly);
-                } else if (counter > 0) {
-                    counter --;
-                    setTimeout(fn, 50);
+                    resolve(plotly);
                 } else {
-                    throw new Error(`Error loading plotly.js library from ${src}. Timeout.`);
+                    rejectLoad();
                 }
             };
 
-            fn();
-        };
-
-        setTimeout(init);
+            document.head.appendChild(script);
+        });
     }
 }

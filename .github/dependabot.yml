@@ -1,0 +1,74 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: main
+    schedule: { interval: weekly }
+    groups:
+      angular: { patterns: ["@angular/*", "angular-eslint", "@angular-eslint/*", "ng-packagr", "typescript"] }
+      development: { dependency-type: development, patterns: ["*"] }
+    ignore:
+      - dependency-name: "@angular/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "angular-eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@angular-eslint/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "ng-packagr"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript-eslint"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: npm
+    directory: /
+    target-branch: v20
+    schedule: { interval: weekly }
+    groups:
+      angular: { patterns: ["@angular/*", "angular-eslint", "@angular-eslint/*", "ng-packagr", "typescript"] }
+      development: { dependency-type: development, patterns: ["*"] }
+    ignore:
+      - dependency-name: "@angular/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "angular-eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@angular-eslint/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "ng-packagr"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript-eslint"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: npm
+    directory: /
+    target-branch: v21
+    schedule: { interval: weekly }
+    groups:
+      angular: { patterns: ["@angular/*", "angular-eslint", "@angular-eslint/*", "ng-packagr", "typescript"] }
+      development: { dependency-type: development, patterns: ["*"] }
+    ignore:
+      - dependency-name: "@angular/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "angular-eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@angular-eslint/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "ng-packagr"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript-eslint"
+        update-types: ["version-update:semver-major"]

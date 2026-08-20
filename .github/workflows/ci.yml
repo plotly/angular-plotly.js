@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, v20, v21, "v*"]
+  push:
+    branches: [main, v20, v21, "v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build:demo
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run verify:package
+      - run: npm run verify:consumer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: angular-plotly-package-${{ github.sha }}
+          path: dist/plotly
+          if-no-files-found: error
+          retention-days: 14

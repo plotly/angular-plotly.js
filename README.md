@@ -17,7 +17,16 @@
 
 ---
 
-Since version 20, angular-plotly.js follows angular's version. So, if you're using angular 20.x, please use angular-plotly.js 20.x.
+Since version 20, the angular-plotly.js major follows the supported Angular
+major. Install the matching package line:
+
+| angular-plotly.js | Angular | Branch | Support |
+| --- | --- | --- | --- |
+| 22.x | 22.x | `main` | Active |
+| 21.x | 21.x | `v21` | LTS |
+| 20.x | 20.x | `v20` | LTS through 2026-11-28 |
+
+Maintenance and release details are documented in [MAINTENANCE.md](MAINTENANCE.md).
 
 If you want to use with Angular 8.x, please use version [`angular-plotly.js@1.x`](https://github.com/plotly/angular-plotly.js/tree/1.x).
 
@@ -208,8 +217,8 @@ import { PlotlyViaCDNModule } from 'angular-plotly.js';
     imports: [
         CommonModule,
         PlotlyViaCDNModule.forRoot({
-            version: '1.55.2' // can be `latest` or any version number (i.e.: '1.40.0')
-            bundleName: 'basic' // optional: can be null (for full) or 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox' or 'finance'
+            version: '2.35.3', // pin a Plotly version for reproducible builds
+            bundleName: 'basic' // optional: null (full), 'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance', or 'strict'
         }),
     ],
     ...
@@ -231,7 +240,6 @@ PlotlyViaCDNModule.forRoot({
 
 
 // For custom CDN URL
-PlotlyViaCDNModule.loadViaCDN('custom', ); 
 PlotlyViaCDNModule.forRoot({
     cdnProvider: 'custom', // cloudflare doesn't support `latest`. It is mandatory to supply version.
     customUrl: 'https://custom.cdn/url' // can be used directly for any self hosted plotly bundle
@@ -305,6 +313,12 @@ To run the tests:
 
 ```bash
 $ npm run test
+```
+
+To verify the exact npm package contents:
+
+```bash
+$ npm run verify:package
 ```
 
 ## FAQ
