@@ -27,10 +27,14 @@ Maintenance and release details are documented in [MAINTENANCE.md](MAINTENANCE.m
 
 If you want to use with Angular 8.x, please use version [`angular-plotly.js@1.x`](https://github.com/plotly/angular-plotly.js/tree/1.x).
 
+For upgrade instructions and historical Angular/package compatibility, see
+the [migration guide](MIGRATION.md).
+
 
 ## Content
 
 * [Installation](#installation)
+* [Migration guide](MIGRATION.md)
 * [Quick start](#quick-start)
 * [API](#api-reference)
   * [Basic props](#basic-props)
