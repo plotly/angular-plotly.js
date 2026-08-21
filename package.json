@@ -29,7 +29,7 @@
     "@angular/compiler": "21.2.21",
     "@angular/compiler-cli": "21.2.21",
     "@eslint/js": "9.39.5",
-    "@types/jasmine": "5.1.9",
+    "@types/jasmine": "6.0.0",
     "@types/node": "24.10.1",
     "angular-eslint": "21.4.0",
     "eslint": "9.39.5",
