@@ -29,6 +29,12 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "plotly.js-dist"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "jasmine-core"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/jasmine"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: npm
     directory: /
     target-branch: v20
@@ -60,6 +66,12 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "zone.js"
         update-types: ["version-update:semver-minor"]
+      - dependency-name: "jasmine-core"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/jasmine"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: npm
     directory: /
     target-branch: v21
@@ -88,4 +100,10 @@ updates:
       - dependency-name: "typescript-eslint"
         update-types: ["version-update:semver-major"]
       - dependency-name: "plotly.js-dist"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jasmine-core"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/jasmine"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
