@@ -33,7 +33,7 @@
     "@types/jasmine": "6.0.0",
     "@types/node": "24.13.3",
     "angular-eslint": "22.1.0",
-    "eslint": "10.9.0",
+    "eslint": "10.9.1",
     "istanbul-lib-instrument": "6.0.3",
     "jasmine-core": "6.3.0",
     "karma": "6.4.4",
@@ -43,7 +43,7 @@
     "karma-jasmine-html-reporter": "2.3.0",
     "ng-packagr": "22.1.1",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.67.0"
+    "typescript-eslint": "8.69.0"
   },
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
