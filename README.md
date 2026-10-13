@@ -97,6 +97,34 @@ You should see a plot like this:
     <img src="example.png" alt="Example plot" width="320" height="240">
 </p>
 
+### Standalone applications
+
+`PlotlyComponent` is standalone. Configure the Plotly bundle once, then import
+the component wherever a chart is rendered:
+
+```typescript
+import { Component } from '@angular/core';
+import * as PlotlyJS from 'plotly.js-dist-min';
+import { PlotlyComponent, PlotlyService } from 'angular-plotly.js';
+
+PlotlyService.setPlotly(PlotlyJS);
+
+@Component({
+  standalone: true,
+  imports: [PlotlyComponent],
+  template: '<plotly-plot [data]="data" [layout]="layout" />',
+})
+export class SalesChartComponent {
+  data = [{ x: [1, 2, 3], y: [2, 6, 3], type: 'scatter' }];
+  layout = { autosize: true };
+}
+```
+
+To keep Plotly out of the initial bundle, put this setup in a component loaded
+through a lazy route. The `plotly.js-dist-min` import then belongs to that lazy
+chunk. Do not configure `PlotlyModule.forRoot()` in application-wide providers
+when the chart itself is intended to be lazy-loaded.
+
 
 For a full description of Plotly chart types and attributes see the following resources:
 
@@ -161,19 +189,19 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 | `(autoSize)`              | `Function` | `plotly_autosize`              |     |
 | `(beforeExport)`          | `Function` | `plotly_beforeexport`          |     |
 | `(buttonClicked)`         | `Function` | `plotly_buttonclicked`         |     |
-| `(plotlyClick)`           | `Function` | `plotly_click`                 | [why not (click)?](FAQ.md#why-using-plotlyclick-instead-of-click) |
+| `(plotlyClick)`           | `Plotly.PlotMouseEvent` | `plotly_click`                 | [why not (click)?](FAQ.md#why-using-plotlyclick-instead-of-click) |
 | `(clickAnnotation)`       | `Function` | `plotly_clickannotation`       |     |
 | `(deselect)`              | `Function` | `plotly_deselect`              |     |
 | `(doubleClick)`           | `Function` | `plotly_doubleclick`           |     |
 | `(framework)`             | `Function` | `plotly_framework`             |     |
-| `(hover)`                 | `Function` | `plotly_hover`                 |     |
+| `(hover)`                 | `Plotly.PlotMouseEvent` | `plotly_hover`                 |     |
 | `(legendClick)`           | `Function` | `plotly_legendclick`           |     |
 | `(legendDoubleClick)`     | `Function` | `plotly_legenddoubleclick`     |     |
 | `(react)`                 | `Function` | `plotly_react`                 |     |
-| `(relayout)`              | `Function` | `plotly_relayout`              |     |
-| `(restyle)`               | `Function` | `plotly_restyle`               |     |
+| `(relayout)`              | `Plotly.PlotRelayoutEvent` | `plotly_relayout`              |     |
+| `(restyle)`               | `Plotly.PlotRestyleEvent` | `plotly_restyle`               |     |
 | `(redraw)`                | `Function` | `plotly_redraw`                |     |
-| `(selected)`              | `Function` | `plotly_selected`              |     |
+| `(selected)`              | `Plotly.PlotSelectionEvent` | `plotly_selected`              |     |
 | `(selecting)`             | `Function` | `plotly_selecting`             |     |
 | `(sliderChange)`          | `Function` | `plotly_sliderchange`          |     |
 | `(sliderEnd)`             | `Function` | `plotly_sliderend`             |     |

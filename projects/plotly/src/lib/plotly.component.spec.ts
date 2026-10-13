@@ -1,13 +1,25 @@
-import { SimpleChange, ComponentRef } from '@angular/core';
+import { Component, SimpleChange, ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlotlyComponent } from './plotly.component';
+import { Plotly } from './plotly.interface';
 import { PlotlyService } from './plotly.service';
 
 import PlotlyJS from 'plotly.js-dist';
 
 
 PlotlyService.setPlotly(PlotlyJS);
+
+@Component({
+    standalone: true,
+    imports: [PlotlyComponent],
+    template: '<plotly-plot (plotlyClick)="capture($event)" />',
+})
+class TypedEventHostComponent {
+    capture(event: Plotly.PlotMouseEvent): void {
+        void event.points;
+    }
+}
 
 describe('PlotlyComponent', () => {
     let component: PlotlyComponent;
@@ -19,7 +31,7 @@ describe('PlotlyComponent', () => {
         windowSpy = jasmine.createSpyObj('Window', ['addEventListener', 'removeEventListener']);
 
         TestBed.configureTestingModule({
-            imports: [PlotlyComponent],
+            imports: [PlotlyComponent, TypedEventHostComponent],
             providers: [
                 PlotlyService,
             ],
@@ -196,6 +208,40 @@ describe('PlotlyComponent', () => {
 
         expect(currentClick).toHaveBeenCalledWith(event);
         expect(deprecatedClick).toHaveBeenCalledWith(event);
+    });
+
+    it('should type-check plotlyClick handlers in standalone templates', () => {
+        expect(TestBed.createComponent(TypedEventHostComponent).componentInstance).toBeTruthy();
+    });
+
+    it('should resize an autosized plot after a layout update', async () => {
+        const instance = document.createElement('div') as any;
+        component.plotlyInstance = instance;
+        componentRef.setInput('layout', { autosize: true });
+        spyOn(component.plotly, 'update').and.resolveTo(instance);
+        spyOn(component.plotly, 'resize');
+        spyOn(component, 'getWindow').and.returnValue({
+            requestAnimationFrame: (callback: FrameRequestCallback) => {
+                callback(0);
+                return 1;
+            },
+        } as Window);
+
+        await component.updatePlot();
+
+        expect(component.plotly.resize).toHaveBeenCalledWith(instance);
+    });
+
+    it('should not resize after a layout update with explicit dimensions', async () => {
+        const instance = document.createElement('div') as any;
+        component.plotlyInstance = instance;
+        componentRef.setInput('layout', { autosize: true, height: 400 });
+        spyOn(component.plotly, 'update').and.resolveTo(instance);
+        spyOn(component.plotly, 'resize');
+
+        await component.updatePlot();
+
+        expect(component.plotly.resize).not.toHaveBeenCalled();
     });
 
     it('should skip Plotly initialization on the server', () => {
