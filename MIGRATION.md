@@ -49,23 +49,8 @@ package compatible.
    ng test --watch=false
    ```
 
-### Compatibility reference
-
-| `angular-plotly.js` | Angular | Notes |
-| --- | --- | --- |
-| `2.x` | 9 | Not compatible with Angular 13 |
-| `3.x` | 10 | Angular 10 library-format release |
-| `4.x` | 11–12 | Declares Angular greater than 10.0.9 |
-| `5.x` | 13–15 | Angular 13 compatibility line |
-| `6.x` | 16–19 | Declares Angular 16 or newer; validate your application before a major Angular upgrade |
-| `20.x` | 20 | Angular 20 compatibility line |
-| `21.x` | 21 | Peer dependencies are capped below Angular 22 |
-| `22.x` | 22 | Current compatibility line; peer dependencies are capped below Angular 23 |
-
-The package version does not increase for every Angular major. Check the
-package peer dependencies before upgrading across an Angular major, and use
-the package line that declares support for the Angular version in the
-application.
+The [README compatibility table](README.md#angular-compatibility) is the
+single reference for matching `angular-plotly.js` and Angular versions.
 
 ### Plotly.js bundles and Angular 19
 

@@ -14,26 +14,33 @@
 
 ---
 
+## Angular compatibility
+
 Since version 20, the angular-plotly.js major follows the supported Angular
 major. Install the matching package line:
 
-| angular-plotly.js | Angular | Branch | Support |
+| `angular-plotly.js` | Angular | Branch | Support / notes |
 | --- | --- | --- | --- |
-| 22.x | 22.x | `master` | Active |
-| 21.x | 21.x | `v21` | LTS |
-| 20.x | 20.x | `v20` | LTS through 2026-11-28 |
+| `2.x` | 9 | — | Historical; not compatible with Angular 13 |
+| `3.x` | 10 | — | Historical Angular 10 library-format release |
+| `4.x` | 11–12 | — | Historical; declares Angular greater than 10.0.9 |
+| `5.x` | 13–15 | — | Historical Angular 13 compatibility line |
+| `6.x` | 16–19 | — | Historical; declares Angular 16 or newer; validate before a major Angular upgrade |
+| `20.x` | 20 | `v20` | LTS through 2026-11-28 |
+| `21.x` | 21 | `v21` | LTS; peer dependencies are capped below Angular 22 |
+| `22.x` | 22 | `master` | Active; peer dependencies are capped below Angular 23 |
 
 Maintenance and release details are documented in [MAINTENANCE.md](MAINTENANCE.md).
 
 If you want to use with Angular 8.x, please use version [`angular-plotly.js@1.x`](https://github.com/plotly/angular-plotly.js/tree/1.x).
 
-For upgrade instructions and historical Angular/package compatibility, see
-the [migration guide](MIGRATION.md).
+For upgrade instructions, see the [migration guide](MIGRATION.md).
 
 
 ## Content
 
 * [Installation](#installation)
+* [Angular compatibility](#angular-compatibility)
 * [Migration guide](MIGRATION.md)
 * [Quick start](#quick-start)
 * [API](#api-reference)
