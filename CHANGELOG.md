@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [22.0.2] - 2026-10-13
 ### Added
 - Added typed Plotly event payloads for click, hover, selection, relayout, and
   restyle outputs, including standalone-template type-check coverage.
