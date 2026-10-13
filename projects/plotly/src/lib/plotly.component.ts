@@ -41,9 +41,11 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     public plotlyInstance?: Plotly.PlotlyHTMLElement;
     public resizeHandler?: (instance: Plotly.PlotlyHTMLElement) => void;
+    public resizeObserver?: ResizeObserver;
     public layoutDiffer?: KeyValueDiffer<string, any>;
     public dataDiffer?: IterableDiffer<Plotly.Data>;
     private destroyed = false;
+    private resizeAnimationFrame?: number;
 
     @ViewChild('plot', { static: true }) plotEl!: ElementRef;
 
@@ -72,49 +74,49 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     purge = output<Plotly.Figure>();
     error = output<Error>();
 
-    afterExport = output();
-    afterPlot = output();
-    animated = output();
-    animatingFrame = output();
-    animationInterrupted = output();
-    autoSize = output();
-    beforeExport = output();
-    beforeHover = output();
-    buttonClicked = output();
+    afterExport = output<Plotly.Event>();
+    afterPlot = output<Plotly.Event>();
+    animated = output<Plotly.Event>();
+    animatingFrame = output<Plotly.Event>();
+    animationInterrupted = output<Plotly.Event>();
+    autoSize = output<Plotly.Event>();
+    beforeExport = output<Plotly.Event>();
+    beforeHover = output<Plotly.Event>();
+    buttonClicked = output<Plotly.Event>();
     /**
      * @deprecated DEPRECATED: Reconsider using `(plotlyClick)` instead of `(click)` to avoid event conflict. Please check https://github.com/plotly/angular-plotly.js#FAQ
      */
-    click = output();
-    plotlyClick = output();
-    clickAnnotation = output();
-    deselect = output();
-    doubleClick = output();
-    framework = output();
-    hover = output();
-    legendClick = output();
-    legendDoubleClick = output();
+    click = output<Plotly.PlotMouseEvent>();
+    plotlyClick = output<Plotly.PlotMouseEvent>();
+    clickAnnotation = output<Plotly.Event>();
+    deselect = output<Plotly.Event>();
+    doubleClick = output<Plotly.Event>();
+    framework = output<Plotly.Event>();
+    hover = output<Plotly.PlotMouseEvent>();
+    legendClick = output<Plotly.Event>();
+    legendDoubleClick = output<Plotly.Event>();
     /**
      * @deprecated DEPRECATED: Event react is not list as an plotly.js event
      */
-    react = output();
-    relayout = output();
-    relayouting = output();
-    restyle = output();
-    redraw = output();
-    selected = output();
-    selecting = output();
-    sliderChange = output();
-    sliderEnd = output();
-    sliderStart = output();
-    sunburstclick = output();
-    transitioning = output();
-    transitionInterrupted = output();
-    unhover = output();
+    react = output<Plotly.Event>();
+    relayout = output<Plotly.PlotRelayoutEvent>();
+    relayouting = output<Plotly.PlotRelayoutEvent>();
+    restyle = output<Plotly.PlotRestyleEvent>();
+    redraw = output<Plotly.Event>();
+    selected = output<Plotly.PlotSelectionEvent>();
+    selecting = output<Plotly.PlotSelectionEvent>();
+    sliderChange = output<Plotly.Event>();
+    sliderEnd = output<Plotly.Event>();
+    sliderStart = output<Plotly.Event>();
+    sunburstclick = output<Plotly.PlotMouseEvent>();
+    transitioning = output<Plotly.Event>();
+    transitionInterrupted = output<Plotly.Event>();
+    unhover = output<Plotly.PlotMouseEvent>();
     /**
      * @deprecated DEPRECATED: Event treemapclick is not list as an plotly.js event
      */
-    treemapclick = output();
-    webglcontextlost = output();
+    treemapclick = output<Plotly.PlotMouseEvent>();
+    webglcontextlost = output<Plotly.Event>();
 
 
     public eventNames = ['afterExport', 'afterPlot', 'animated', 'animatingFrame', 'animationInterrupted', 'autoSize',
@@ -148,6 +150,12 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         if (typeof this.resizeHandler === 'function') {
             this.getWindow().removeEventListener('resize', this.resizeHandler as any);
             this.resizeHandler = undefined;
+        }
+        this.resizeObserver?.disconnect();
+        this.resizeObserver = undefined;
+        if (this.resizeAnimationFrame !== undefined) {
+            this.getWindow().cancelAnimationFrame?.(this.resizeAnimationFrame);
+            this.resizeAnimationFrame = undefined;
         }
 
         if (this.plotlyInstance) {
@@ -254,14 +262,14 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
             this.eventNames.forEach(name => {
                 const eventName = `plotly_${name.toLowerCase()}`;
-                const event = (this as any)[name] as OutputEmitterRef<any>;
+                const event = (this as any)[name] as OutputEmitterRef<Plotly.Event>;
 
-                plotlyInstance.on(eventName, (data: any) => event.emit(data));
+                plotlyInstance.on(eventName, (data: unknown) => event.emit(data as Plotly.Event));
             });
 
-            plotlyInstance.on('plotly_click', (data: any) => {
-                this.plotlyClick.emit(data);
-                this.click.emit(data);
+            plotlyInstance.on('plotly_click', (data: unknown) => {
+                this.plotlyClick.emit(data as Plotly.PlotMouseEvent);
+                this.click.emit(data as Plotly.PlotMouseEvent);
             });
 
             this.updateWindowResizeHandler();
@@ -299,6 +307,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             this.config(),
             this.frames()
         ).then(() => {
+            this.scheduleResizeAfterLayoutUpdate();
             const figure = this.createFigure();
             this.update.emit(figure);
         }, err => {
@@ -319,6 +328,51 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
                 this.resizeHandler = undefined;
             }
         }
+
+        this.updateResizeObserver();
+    }
+
+    private updateResizeObserver(): void {
+        const shouldObserve = this.useResizeHandler()
+            && this.plotlyInstance
+            && isPlatformBrowser(this.platformId)
+            && typeof ResizeObserver !== 'undefined';
+
+        if (shouldObserve) {
+            if (this.resizeObserver === undefined) {
+                this.resizeObserver = new ResizeObserver(() => this.scheduleResize());
+                this.resizeObserver.observe(this.plotEl.nativeElement);
+            }
+        } else {
+            this.resizeObserver?.disconnect();
+            this.resizeObserver = undefined;
+        }
+    }
+
+    private scheduleResizeAfterLayoutUpdate(): void {
+        const layout = this.layout();
+        if (layout?.['autosize'] === true && layout['height'] === undefined && layout['width'] === undefined) {
+            this.scheduleResize();
+        }
+    }
+
+    private scheduleResize(): void {
+        if (this.destroyed || !this.plotlyInstance || !isPlatformBrowser(this.platformId) || this.resizeAnimationFrame !== undefined) {
+            return;
+        }
+
+        const requestAnimationFrame = this.getWindow().requestAnimationFrame;
+        if (typeof requestAnimationFrame !== 'function') {
+            this.plotly.resize(this.plotlyInstance);
+            return;
+        }
+
+        this.resizeAnimationFrame = requestAnimationFrame.call(this.getWindow(), () => {
+            this.resizeAnimationFrame = undefined;
+            if (!this.destroyed && this.plotlyInstance) {
+                this.plotly.resize(this.plotlyInstance);
+            }
+        });
     }
 
     dataDifferTrackBy(_: number, item: any): unknown {

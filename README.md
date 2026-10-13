@@ -14,26 +14,33 @@
 
 ---
 
+## Angular compatibility
+
 Since version 20, the angular-plotly.js major follows the supported Angular
 major. Install the matching package line:
 
-| angular-plotly.js | Angular | Branch | Support |
+| `angular-plotly.js` | Angular | Branch | Support / notes |
 | --- | --- | --- | --- |
-| 22.x | 22.x | `master` | Active |
-| 21.x | 21.x | `v21` | LTS |
-| 20.x | 20.x | `v20` | LTS through 2026-11-28 |
+| `2.x` | 9 | — | Historical; not compatible with Angular 13 |
+| `3.x` | 10 | — | Historical Angular 10 library-format release |
+| `4.x` | 11–12 | — | Historical; declares Angular greater than 10.0.9 |
+| `5.x` | 13–15 | — | Historical Angular 13 compatibility line |
+| `6.x` | 16–19 | — | Historical; declares Angular 16 or newer; validate before a major Angular upgrade |
+| `20.x` | 20 | `v20` | LTS through 2026-11-28 |
+| `21.x` | 21 | `v21` | LTS; peer dependencies are capped below Angular 22 |
+| `22.x` | 22 | `master` | Active; peer dependencies are capped below Angular 23 |
 
 Maintenance and release details are documented in [MAINTENANCE.md](MAINTENANCE.md).
 
 If you want to use with Angular 8.x, please use version [`angular-plotly.js@1.x`](https://github.com/plotly/angular-plotly.js/tree/1.x).
 
-For upgrade instructions and historical Angular/package compatibility, see
-the [migration guide](MIGRATION.md).
+For upgrade instructions, see the [migration guide](MIGRATION.md).
 
 
 ## Content
 
 * [Installation](#installation)
+* [Angular compatibility](#angular-compatibility)
 * [Migration guide](MIGRATION.md)
 * [Quick start](#quick-start)
 * [API](#api-reference)
@@ -96,6 +103,34 @@ You should see a plot like this:
 <p align="center">
     <img src="example.png" alt="Example plot" width="320" height="240">
 </p>
+
+### Standalone applications
+
+`PlotlyComponent` is standalone. Configure the Plotly bundle once, then import
+the component wherever a chart is rendered:
+
+```typescript
+import { Component } from '@angular/core';
+import * as PlotlyJS from 'plotly.js-dist-min';
+import { PlotlyComponent, PlotlyService } from 'angular-plotly.js';
+
+PlotlyService.setPlotly(PlotlyJS);
+
+@Component({
+  standalone: true,
+  imports: [PlotlyComponent],
+  template: '<plotly-plot [data]="data" [layout]="layout" />',
+})
+export class SalesChartComponent {
+  data = [{ x: [1, 2, 3], y: [2, 6, 3], type: 'scatter' }];
+  layout = { autosize: true };
+}
+```
+
+To keep Plotly out of the initial bundle, put this setup in a component loaded
+through a lazy route. The `plotly.js-dist-min` import then belongs to that lazy
+chunk. Do not configure `PlotlyModule.forRoot()` in application-wide providers
+when the chart itself is intended to be lazy-loaded.
 
 
 For a full description of Plotly chart types and attributes see the following resources:
@@ -161,19 +196,19 @@ Event handlers for specific [`plotly.js` events](https://plot.ly/javascript/plot
 | `(autoSize)`              | `Function` | `plotly_autosize`              |     |
 | `(beforeExport)`          | `Function` | `plotly_beforeexport`          |     |
 | `(buttonClicked)`         | `Function` | `plotly_buttonclicked`         |     |
-| `(plotlyClick)`           | `Function` | `plotly_click`                 | [why not (click)?](FAQ.md#why-using-plotlyclick-instead-of-click) |
+| `(plotlyClick)`           | `Plotly.PlotMouseEvent` | `plotly_click`                 | [why not (click)?](FAQ.md#why-using-plotlyclick-instead-of-click) |
 | `(clickAnnotation)`       | `Function` | `plotly_clickannotation`       |     |
 | `(deselect)`              | `Function` | `plotly_deselect`              |     |
 | `(doubleClick)`           | `Function` | `plotly_doubleclick`           |     |
 | `(framework)`             | `Function` | `plotly_framework`             |     |
-| `(hover)`                 | `Function` | `plotly_hover`                 |     |
+| `(hover)`                 | `Plotly.PlotMouseEvent` | `plotly_hover`                 |     |
 | `(legendClick)`           | `Function` | `plotly_legendclick`           |     |
 | `(legendDoubleClick)`     | `Function` | `plotly_legenddoubleclick`     |     |
 | `(react)`                 | `Function` | `plotly_react`                 |     |
-| `(relayout)`              | `Function` | `plotly_relayout`              |     |
-| `(restyle)`               | `Function` | `plotly_restyle`               |     |
+| `(relayout)`              | `Plotly.PlotRelayoutEvent` | `plotly_relayout`              |     |
+| `(restyle)`               | `Plotly.PlotRestyleEvent` | `plotly_restyle`               |     |
 | `(redraw)`                | `Function` | `plotly_redraw`                |     |
-| `(selected)`              | `Function` | `plotly_selected`              |     |
+| `(selected)`              | `Plotly.PlotSelectionEvent` | `plotly_selected`              |     |
 | `(selecting)`             | `Function` | `plotly_selecting`             |     |
 | `(sliderChange)`          | `Function` | `plotly_sliderchange`          |     |
 | `(sliderEnd)`             | `Function` | `plotly_sliderend`             |     |

@@ -49,19 +49,28 @@ package compatible.
    ng test --watch=false
    ```
 
-### Compatibility reference
+The [README compatibility table](README.md#angular-compatibility) is the
+single reference for matching `angular-plotly.js` and Angular versions.
 
-| `angular-plotly.js` | Angular | Notes |
-| --- | --- | --- |
-| `2.x` | 9 | Not compatible with Angular 13 |
-| `3.x` | 10 | Angular 10 library-format release |
-| `5.x` | 13 | Use this line for Angular 13 |
-| `6.x` | 16 | Angular 16 release |
+### Plotly.js bundles and Angular 19
 
-The package version does not increase for every Angular major. Check the
-package peer dependencies before upgrading across an Angular major, and use
-the package line that declares support for the Angular version in the
-application.
+`angular-plotly.js` does not install a Plotly.js bundle for an application.
+The bundle is selected by the application and passed to `PlotlyModule.forRoot`
+or `PlotlyService.setPlotly`. The library's own tested baseline is currently
+`plotly.js-dist` 2.35.3.
+
+If an Angular 19 test build fails to resolve the `d3-*` modules from
+`plotly.js-dist-min` 3.x, pin the bundle to the known-good 2.x line while
+investigating the application build configuration:
+
+```bash
+npm install plotly.js-dist-min@^2.35.3
+```
+
+The wrapper only requires a Plotly object with `newPlot`/`react`; the missing
+module errors occur while Angular bundles Plotly.js, before the wrapper runs.
+Use a small production build and a test build to validate a move to Plotly.js
+3.x before changing the pin.
 
 ### Angular 13 follow-up notes
 
