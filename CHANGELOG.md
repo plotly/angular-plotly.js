@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased]
+### Added
+- Added typed Plotly event payloads for click, hover, selection, relayout, and
+  restyle outputs, including standalone-template type-check coverage.
+- Added standalone Angular and lazy-loading guidance.
+- Expanded the Angular compatibility reference and documented the Angular 19
+  Plotly.js bundle workaround.
+
+### Fixed
+- Resize autosized plots after layout updates and observe responsive plot
+  container size changes when `[useResizeHandler]` is enabled.
+
 ## [22.0.1] - 2026-08-20
 ### Fixed
 - Added `[innerStyle]` as the preferred plot container styling input while
