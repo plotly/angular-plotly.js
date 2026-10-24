@@ -42,6 +42,7 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public layoutDiffer?: KeyValueDiffer<string, any>;
     public dataDiffer?: IterableDiffer<Plotly.Data>;
     private destroyed = false;
+    private pendingUpdate = false;
 
     @ViewChild('plot', { static: true }) plotEl!: ElementRef;
 
@@ -208,8 +209,12 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             }
         }
 
-        if (shouldUpdate && this.plotlyInstance) {
-            this.updatePlot();
+        if (shouldUpdate) {
+            if (this.plotlyInstance) {
+                this.updatePlot();
+            } else {
+                this.pendingUpdate = true;
+            }
         }
     }
 
@@ -263,6 +268,11 @@ export class PlotlyComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
             });
 
             this.updateWindowResizeHandler();
+
+            if (this.pendingUpdate) {
+                this.pendingUpdate = false;
+                void this.updatePlot();
+            }
         }).catch(err => {
             console.error('Error while plotting:', err);
             this.error.emit(err);
