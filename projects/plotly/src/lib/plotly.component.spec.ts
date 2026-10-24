@@ -229,6 +229,27 @@ describe('PlotlyComponent', () => {
         expect(component.plotlyInstance).toBeUndefined();
     });
 
+    it('should apply data changes made while the plot is initializing', async () => {
+        const instance = document.createElement('div') as any;
+        instance.on = () => undefined;
+        let resolvePlot!: (value: any) => void;
+        spyOn(component.plotly, 'newPlot').and.returnValue(new Promise(resolve => resolvePlot = resolve));
+        spyOn(component, 'updatePlot');
+
+        componentRef.setInput('data', [{ y: [10, 15, 13, 17], type: 'box' }]);
+        component.ngDoCheck();
+        const pendingPlot = component.createPlot();
+
+        componentRef.setInput('data', [{ y: [11, 15, 13, 17], type: 'box' }]);
+        component.ngDoCheck();
+        expect(component.updatePlot).not.toHaveBeenCalled();
+
+        resolvePlot(instance);
+        await pendingPlot;
+
+        expect(component.updatePlot).toHaveBeenCalledTimes(1);
+    });
+
     it('should fail when plotlyInstance is undefined', () => {
         component.plotlyInstance = undefined;
 
